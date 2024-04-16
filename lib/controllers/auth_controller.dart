@@ -44,7 +44,7 @@ class AuthController extends GetxController  with GetTickerProviderStateMixin {
     if (isAlreadyLogin.value == true) {
       displayWidget.value = const HomeScreen();
     }else{
-      displayWidget.value = const HomeScreen();
+      displayWidget.value = const LoginScreen();
     }
   }
 

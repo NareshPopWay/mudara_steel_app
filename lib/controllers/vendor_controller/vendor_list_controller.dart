@@ -11,6 +11,11 @@ import 'package:mudara_steel_app/model/field_item_value_model.dart';
 class VendorListController extends GetxController {
 
   RxList vendorList = RxList();
+  ScrollController leadScrollController = ScrollController();
+  TextEditingController searchTextEditController = TextEditingController();
+
+  RxBool isSearching = RxBool(false);
+  int leadPage = 0;
 
   RxBool isLoading = false.obs;
   RxBool isVendorListLoading = false.obs;
@@ -18,6 +23,7 @@ class VendorListController extends GetxController {
   TextEditingController fromDate = TextEditingController();
   @override
   void onInit() async {
+    leadScrollController.addListener(vendorScrollListener);
     super.onInit();
   }
 
@@ -31,5 +37,49 @@ class VendorListController extends GetxController {
   RxBool isJobNameSearching = RxBool(false);
   Rx<TextEditingController> textJobName = TextEditingController().obs;
 
+  RxList<FieldItemValueModel> vendorNameList = <FieldItemValueModel>[].obs;
+  RxBool isVendorNameExpanded = false.obs;
+  RxString selectedVendorName = "".obs;
+  RxString selectedVendorNameId = "".obs;
+  RxString tampSelectedVendorName = "".obs;
+  RxString tampSelectedVendorNameId = "".obs;
+  RxBool isVendorNameSearching = RxBool(false);
+  Rx<TextEditingController> textVendorName = TextEditingController().obs;
+
+
+
+  void vendorScrollListener() async {
+    double maxScroll = leadScrollController.position.maxScrollExtent;
+    double currentScroll = leadScrollController.position.pixels;
+    double delta = Get.height / 3;
+    if (maxScroll - currentScroll <= delta && !isVendorListLoading.value) {
+      // await getVendor(pagination: true);
+    }
+  }
+
+  // Future<void> getVendor({bool pagination = false}) async {
+  //   isLoading.value = true;
+  //
+  //   var leadResponse = await APIProvider().getLeadList(
+  //       pageNumber: leadPage,
+  //       rowsOfPage: showCountVal,
+  //       orderByName: selectedShortByVal,
+  //       searchVal: searchTextEditController.text,
+  //       fromDate: startDate.value,
+  //       toDate: endDate.value,
+  //       followupDate: followUPDate.value,
+  //       leadStatusID: selectedLeadStatusId.value,
+  //       empIdList: selectedSalesPersonList.map((e) => e.value).toList(),
+  //       sortDirection: isDescending.value == true ? ascending.value: descending.value,
+  //       followUpStatus: selectedFollowUpStatusId.value.isNotEmpty ? selectedFollowUpStatusId.value : 0,
+  //       sellOrderNo:""
+  //   );
+  //   if (leadResponse.isNotEmpty) {
+  //     leadPage++;
+  //     leads.addAll(leadResponse);
+  //   }
+  //   isLoading.value = false;
+  //   return;
+  // }
 
 }

@@ -1,65 +1,49 @@
 
 // ignore_for_file: iterable_contains_unrelated_type, unrelated_type_equality_checks, list_remove_unrelated_type
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mudara_steel_app/model/field_item_value_model.dart';
 
 
-class CreateJobController extends GetxController {
+class VendorProfileController extends GetxController {
 
   final key =  GlobalKey<FormState>();
   final key1 =  GlobalKey<FormState>();
   final FocusNode noteFocus = FocusNode();
-  TextEditingController jobName = TextEditingController();
-  TextEditingController fromLocation = TextEditingController();
-  TextEditingController weight = TextEditingController();
-  TextEditingController toLocation = TextEditingController();
-  TextEditingController deliveryDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
+  TextEditingController driverName = TextEditingController();
+  TextEditingController driverAge = TextEditingController();
+  TextEditingController phone = TextEditingController();
+  TextEditingController companyName = TextEditingController();
+  TextEditingController address = TextEditingController();
+  TextEditingController drLicenseNo = TextEditingController();
+  TextEditingController vehicleInNO = TextEditingController();
+  TextEditingController tempNextFollowUp = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
   RxString nextFollowUp = "".obs;
 
-  Map data ={};
 
   RxBool isLoading = false.obs;
-  RxBool isSaveArchitech = false.obs;
 
 
-  RxList<FieldItemValueModel> jobTypeList = <FieldItemValueModel>[].obs;
-  RxBool isJobTypeExpanded = false.obs;
-  RxString selectedJobType = "".obs;
-  RxString selectedJobTypeId = "".obs;
-  RxString tampSelectedJobType = "".obs;
-  RxString tampSelectedJobTypeId = "".obs;
-  RxBool isJobTypeSearching = RxBool(false);
-  Rx<TextEditingController> textJobType = TextEditingController().obs;
 
-
-  RxList<FieldItemValueModel> jobStatusList = <FieldItemValueModel>[].obs;
-  RxBool isJobStatusExpanded = false.obs;
-  RxString selectedJobStatus = "".obs;
-  RxString selectedJobStatusId = "".obs;
-  RxString tampSelectedJobStatus = "".obs;
-  RxString tampSelectedJobStatusId = "".obs;
-  RxBool isJobStatusSearching = RxBool(false);
-  Rx<TextEditingController> textJobStatus = TextEditingController().obs;
-
+  RxString getFilePath = "".obs;
+  Rx<File?> selectedFile = Rx(null);
   @override
   void onInit() async {
-
-    if (Get.arguments != null && Get.arguments is Map) {
-      data = Get.arguments;
-
-      jobName.text = data["jobName"].toString();
-      fromLocation.text = data["fromLocation"].toString();
-      toLocation.text = data["toLocation"].toString();
-      deliveryDate.text = data["deliveryDate"].toString();
-      weight.text = data["weight"].toString();
-    }
     super.onInit();
   }
 
 
-
+  Future pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    if (result?.files.single.path != null) {
+      String path = result!.files.single.path!;
+      File file = File(path);
+      selectedFile.value = file;
+    }
+  }
 // Future<void> addLead()async{
 //   bool isInternet = await Constants.isInternetAvail();
 //   if (!isInternet) {

@@ -12,6 +12,7 @@ import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
+import 'package:mudara_steel_app/common/widget/empty_widget.dart';
 import 'package:mudara_steel_app/common/widget/lead_card_widget.dart';
 import 'package:mudara_steel_app/controllers/job_controller/job_list_controller.dart';
 import 'package:mudara_steel_app/controllers/vendor_controller/vendor_list_controller.dart';
@@ -66,7 +67,7 @@ class JobListScreen extends GetView<JobListController> {
                           ),
                           SizedBox(width: AppSpacings.s10),
                           Text(
-                            "job List",
+                            controller.appTitle.value,
                             style: Get.textTheme.headlineSmall!.copyWith(
                               fontWeight: FontWeight.w600,
                               color: ThemeService.primaryColor,
@@ -124,10 +125,18 @@ class JobListScreen extends GetView<JobListController> {
               ),
               Expanded(
                   child:  ListView(
+                    controller: controller.leadScrollController,
                     shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.zero,
+                    padding: EdgeInsets.fromLTRB(0,0, 0, AppSpacings.s55),
+                    primary: false,
+                    physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
                     children: [
+                      if (controller.jobList.isEmpty && !controller.isJobListLoading.value)
+                        Padding(
+                          padding:  EdgeInsets.only(top: AppSpacings.s50),
+                          child: const EmptyDataWidget(),
+                        )
+                      else
                       ListView.builder(
                           padding: EdgeInsets.only(
                             left: AppSpacings.s20,
@@ -136,8 +145,7 @@ class JobListScreen extends GetView<JobListController> {
                           ),
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          // itemCount: controller.jobList.length,
-                          itemCount: 10,
+                          itemCount: controller.jobList.length,
                           itemBuilder:(context,index){
 
                             return  Container(
@@ -175,7 +183,9 @@ class JobListScreen extends GetView<JobListController> {
                                           children: [
                                             Icon(Icons.calendar_month, size: AppSpacings.s25),
                                             Text(
-                                              "15/04/24",
+                                              controller.jobList[index].createdOn != null
+                                                  ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].createdOn.toString()))
+                                                  : "-",
                                               overflow: TextOverflow.ellipsis,
                                               style: Get.textTheme.displayMedium!.copyWith(
                                                 color: Colors.black,
@@ -188,7 +198,7 @@ class JobListScreen extends GetView<JobListController> {
                                         Row(
                                           children: [
                                             Text(
-                                              "JOB",
+                                              controller.jobList[index].jobName ?? "-",
                                               overflow: TextOverflow.ellipsis,
                                               style: Get.textTheme.displayMedium!.copyWith(
                                                 color: Colors.black,
@@ -202,121 +212,213 @@ class JobListScreen extends GetView<JobListController> {
                                     ),
                                   ),
                                   const Divider(
-                                      height: 10,
-                                      endIndent: 15,
-                                      indent: 15,
+                                      height: 5,
+                                      endIndent: 10,
+                                      indent: 10,
                                       color: ThemeService.primaryColor,
                                       thickness: 2),
                                   dataRow(
                                     title1: "From Location",
-                                    value1: "Ahmedabad",
+                                    value1: controller.jobList[index].fromLocation ?? "-",
                                     title2: "To Location",
-                                    value2:  "Surat",
+                                    value2:  controller.jobList[index].toLocation ?? "-",
                                   ),
                                   Divider(
-                                      height: 10,
-                                      endIndent: 15,
-                                      indent: 15,
+                                      height: 2,
+                                      endIndent: 10,
+                                      indent: 10,
                                       color: ThemeService.primaryColor.withOpacity(0.2),
                                       thickness: 1),
                                   dataRow(
                                     title1: "Delivery Date",
-                                    value1: "16/04/24",
+                                    value1: controller.jobList[index].deliveryDate != null
+                                        ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].deliveryDate.toString()))
+                                        : "-",
                                     title2: "Weight",
-                                    value2: "32",
+                                    value2: controller.jobList[index].weight ?? "-",
                                   ),
                                   Divider(
-                                      height: 10,
-                                      endIndent: 15,
-                                      indent: 15,
+                                      height: 2,
+                                      endIndent: 10,
+                                      indent: 10,
                                       color: ThemeService.primaryColor.withOpacity(0.2),
                                       thickness: 1),
-                                  Padding(
+                                  dataRow(
+                                    title1: "Job Status",
+                                    value1: controller.jobList[index].jobStatus ?? "-",
+                                    title2: "Job Type",
+                                    value2: controller.jobList[index].jobType ?? "-",
+                                  ),
+                                  Divider(
+                                      height: 2,
+                                      endIndent: 10,
+                                      indent: 10,
+                                      color: ThemeService.primaryColor.withOpacity(0.2),
+                                      thickness: 1),
+
+                                       ///Admin Login
+                                       if(controller.userTypeID.value == "1")
+                                       Padding(
                                     padding: EdgeInsets.symmetric(horizontal: AppSpacings.s14, vertical: AppSpacings.s10),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
-                                          padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
-                                          decoration: BoxDecoration(
-                                              color: ThemeService.white,
-                                              boxShadow:  [
-                                                BoxShadow(
-                                                    color: ThemeService.primaryColor.withOpacity(0.5),
-                                                    blurRadius: 9.5,
-                                                    blurStyle: BlurStyle.inner,
-                                                    offset: const Offset(1.5,1.5),
-                                                    spreadRadius: 1.0
-                                                )
-                                              ],
-                                              border: Border.all(
-                                                color: ThemeService.primaryColor,
-                                              ),
-                                              borderRadius: BorderRadius.circular(12)),
-                                          child: const Center(
-                                            child: Icon(Icons.delete,color: ThemeService.primaryColor,)
-                                            // Text(
-                                            //   "Update",
-                                            //   style: Get.textTheme.headlineLarge!.copyWith(
-                                            //     color: ThemeService.primaryColor,
-                                            //     fontSize: AppSpacings.s20,
-                                            //     fontWeight: FontWeight.w600,
-                                            //   ),
-                                            // ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: AppSpacings.s15,
-                                        ),
-                                        GestureDetector(
-                                          onTap: (){
-                                            Get.toNamed(Routes.createJob,arguments: {
-                                              "jobName" : "Job",
-                                              "fromLocation":"Ahmedabad",
-                                              "toLocation" :"Surat",
-                                              "deliveryDate":"16/01/24",
-                                              "weight":"32"
-                                            });
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
-                                            decoration: BoxDecoration(
-                                                color: ThemeService.white,
-                                                boxShadow:  [
-                                                  BoxShadow(
-                                                      color: ThemeService.primaryColor.withOpacity(0.5),
-                                                      blurRadius: 9.5,
-                                                      blurStyle: BlurStyle.inner,
-                                                      offset: const Offset(1.5,1.5),
-                                                      spreadRadius: 1.0
-                                                  )
-                                                ],
-                                                border: Border.all(
-                                                  color: ThemeService.primaryColor,
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Truck/Trailer",
+                                                style: Get.textTheme.bodyText2!.copyWith(
+                                                  color: ThemeService.disable,
+                                                  fontSize: AppSpacings.s15,
                                                 ),
-                                                borderRadius: BorderRadius.circular(12)),
-                                            child: const Center(
-                                              child: Icon(Icons.edit,color: ThemeService.primaryColor,)
-                                              // Text(
-                                              //   "Delete",
-                                              //   style: Get.textTheme.headlineLarge!.copyWith(
-                                              //     color: ThemeService.primaryColor,
-                                              //     fontSize: AppSpacings.s20,
-                                              //     fontWeight: FontWeight.w600,
-                                              //   ),
-                                              // ),
-                                            ),
+                                              ),
+                                              Text(
+                                                controller.jobList[index].isTruck == true ? "Truck" : "Trailer",
+                                                style: Get.textTheme.headline4!.copyWith(
+                                                  fontSize: AppSpacings.s18,
+                                                  color: ThemeService.black,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
                                           ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
+                                              decoration: BoxDecoration(
+                                                  color: ThemeService.white,
+                                                  boxShadow:  [
+                                                    BoxShadow(
+                                                        color: ThemeService.primaryColor.withOpacity(0.5),
+                                                        blurRadius: 9.5,
+                                                        blurStyle: BlurStyle.inner,
+                                                        offset: const Offset(1.5,1.5),
+                                                        spreadRadius: 1.0
+                                                    )
+                                                  ],
+                                                  border: Border.all(
+                                                    color: ThemeService.primaryColor,
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(12)),
+                                              child: const Center(
+                                                child: Icon(Icons.delete,color: ThemeService.primaryColor,)
+                                                // Text(
+                                                //   "Update",
+                                                //   style: Get.textTheme.headlineLarge!.copyWith(
+                                                //     color: ThemeService.primaryColor,
+                                                //     fontSize: AppSpacings.s20,
+                                                //     fontWeight: FontWeight.w600,
+                                                //   ),
+                                                // ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: AppSpacings.s15,
+                                            ),
+                                            GestureDetector(
+                                              onTap: (){
+                                                Get.toNamed(Routes.createJob,arguments: {
+                                                  "jobName" : controller.jobList[index].jobName,
+                                                  "fromLocation":controller.jobList[index].fromLocation,
+                                                  "toLocation" :controller.jobList[index].toLocation,
+                                                  "deliveryDate":controller.jobList[index].deliveryDate != null
+                                                      ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].deliveryDate.toString()))
+                                                      : "-",
+                                                  "weight":controller.jobList[index].weight ?? ""
+                                                });
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
+                                                decoration: BoxDecoration(
+                                                    color: ThemeService.white,
+                                                    boxShadow:  [
+                                                      BoxShadow(
+                                                          color: ThemeService.primaryColor.withOpacity(0.5),
+                                                          blurRadius: 9.5,
+                                                          blurStyle: BlurStyle.inner,
+                                                          offset: const Offset(1.5,1.5),
+                                                          spreadRadius: 1.0
+                                                      )
+                                                    ],
+                                                    border: Border.all(
+                                                      color: ThemeService.primaryColor,
+                                                    ),
+                                                    borderRadius: BorderRadius.circular(12)),
+                                                child: const Center(
+                                                    child: Icon(Icons.edit,color: ThemeService.primaryColor,)
+                                                  // Text(
+                                                  //   "Delete",
+                                                  //   style: Get.textTheme.headlineLarge!.copyWith(
+                                                  //     color: ThemeService.primaryColor,
+                                                  //     fontSize: AppSpacings.s20,
+                                                  //     fontWeight: FontWeight.w600,
+                                                  //   ),
+                                                  // ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                  )
+                                   )
+                                       else
+                                      ///Vendor Login
+                                      Padding(
+                                padding: EdgeInsets.symmetric(horizontal: AppSpacings.s14, vertical: AppSpacings.s8),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Bounce(
+                                      duration: const Duration(milliseconds: 100),
+                                      onPressed: (){
+
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
+                                        decoration: BoxDecoration(
+                                            color: ThemeService.white,
+                                            boxShadow:  [
+                                              BoxShadow(
+                                                  color: ThemeService.primaryColor.withOpacity(0.5),
+                                                  blurRadius: 9.5,
+                                                  blurStyle: BlurStyle.inner,
+                                                  offset: const Offset(1.5,1.5),
+                                                  spreadRadius: 1.0
+                                              )
+                                            ],
+                                            border: Border.all(
+                                              color: ThemeService.primaryColor,
+                                            ),
+                                            borderRadius: BorderRadius.circular(12)),
+                                        child: Center(
+                                          child: Text(
+                                            "Apply",
+                                            style: Get.textTheme.headlineLarge!.copyWith(
+                                              color: ThemeService.primaryColor,
+                                              fontSize: AppSpacings.s20,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                                  SizedBox(height: AppSpacings.s5),
                                 ],
                               ),
                             );
                           }
                       ),
-                      if (controller.isVendorListLoading.value == true)  Padding(
+                      if (controller.isJobListLoading.value == true)  Padding(
                         padding: EdgeInsets.fromLTRB(0, AppSpacings.s150, 0,0),
                         child: CupertinoActivityIndicator(radius: AppSpacings.s20,),
                       )
@@ -331,309 +433,354 @@ class JobListScreen extends GetView<JobListController> {
   }
 
   Filter(context) {
+
+    controller.tempFromDate.text = controller.fromDate.value;
+    controller.tempToDate.text = controller.toDate.value;
+
     return Padding(
       padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: AppSpacings.s5),
-          Container(
-            width: Get.width*0.15,
-            height: Get.height*0.008,
-            decoration: BoxDecoration(
-                color: ThemeService.primaryColor.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(10)
+      child: Container(
+        decoration: const BoxDecoration(
+            color: ThemeService.white,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25), topRight: Radius.circular(25))
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: AppSpacings.s5),
+            Container(
+              width: Get.width*0.15,
+              height: Get.height*0.008,
+              decoration: BoxDecoration(
+                  color: ThemeService.primaryColor.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(10)
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.filter_list,
-                      color: ThemeService.primaryColor,
-                      size: AppSpacings.s35,
-                    ),
-                    SizedBox(width: AppSpacings.s6),
-                    Text(
-                      "Filter",
-                      style: Get.textTheme.headlineSmall!.copyWith(
-                        fontWeight: FontWeight.w400,
-                        fontSize: AppSpacings.s25,
-                      ),
-                    ),
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () {
-                    // Get.back();
-                  },
-                  child: Text(
-                    "Clear all",
-                    style: Get.textTheme.headlineSmall!.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: ThemeService.primaryColor,
-                      fontSize: AppSpacings.s18,
-                    ),
-                  ),
-                  // CircleAvatar(
-                  //   maxRadius: AppSpacings.s22,
-                  //   backgroundColor: ThemeService.primaryColor,
-                  //   child: Icon(
-                  //     Icons.close_rounded,
-                  //     size: AppSpacings.s30,
-                  //     color: Colors.white,
-                  //   ),
-                  // ),
-                ),
-              ],
-            ),
-          ),
-          const Divider(
-            color: ThemeService.primaryColor,
-            height: 0,
-            endIndent: 15,
-            indent: 15,
-            thickness: 3,
-          ),
-          Expanded(
-            child: AnimationLimiter(
-                child: Obx(() => ListView(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(
-                    left: AppSpacings.s25,
-                    right: AppSpacings.s25,
-                    top: AppSpacings.s30,
-                  ),
-                  children: AnimationConfiguration.toStaggeredList(
-                    duration: const Duration(milliseconds: 275),
-                    childAnimationBuilder: (widget) => SlideAnimation(
-                      verticalOffset: 50.0,
-                      child: FadeInAnimation(
-                        child: widget,
-                      ),
-                    ),
+            Padding(
+              padding: const EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
                     children: [
-                      TextFormField(
-                        controller: controller.toDate,
-                        enabled: true,
-                        maxLines: 1,
-                        keyboardType: TextInputType.text,
-                        cursorColor: ThemeService.primaryColor,
-                        readOnly: true,
-                        style: const TextStyle(
-                          fontSize: 14,
+                      Icon(
+                        Icons.filter_list,
+                        color: ThemeService.primaryColor,
+                        size: AppSpacings.s35,
+                      ),
+                      SizedBox(width: AppSpacings.s6),
+                      Text(
+                        "Filter",
+                        style: Get.textTheme.headlineSmall!.copyWith(
+                          fontWeight: FontWeight.w400,
+                          fontSize: AppSpacings.s25,
                         ),
-                        onTap: () async {
-                          // initialDate = textEditingController.text != "" ? DateTime.parse(textEditingController.text.toString()) : DateTime.now();
-                          DateTime? followUpPickedDate =
-                          await showDatePicker(
-                            context: context,
-                            initialDate: controller.toDate.text != "" ? DateTime.parse(controller.toDate.text.toString()) : DateTime.now(),
-                            // initialDate: DateTime.parse(DateFormat('yyyy-MM-dd').format(DateTime.now())),
-                            firstDate: DateTime(DateTime.now().year - 10),
-                            lastDate: DateTime(DateTime.now().year + 10),
-                          );
-                          if (followUpPickedDate != null) {
-                            String formattedDate = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
-                            controller.toDate.text = formattedDate;
-                            log(controller.toDate.text);
-                            // controller.nextFollowUp.value = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
-                          }
-                        },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: ThemeService.primaryColor.withOpacity(0.1),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ThemeService.primaryColor
-                                    .withOpacity(.5)),
-                            borderRadius: const BorderRadius.all(
-                                Radius.circular(10)),
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ThemeService.primaryColor,
-                                width: 1.5),
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(10)),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ThemeService.primaryColor
-                                    .withOpacity(.5)),
-                            borderRadius: const BorderRadius.all(
-                                Radius.circular(10)),
-                          ),
-                          labelText: "From Date",
-                          suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
-                          contentPadding:
-                          const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                          labelStyle:  TextStyle(
-                            color: ThemeService.primaryColor.withOpacity(0.5),
-                            fontSize: AppSpacings.s18,
-                          ),
-                          // floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintStyle:
-                          const TextStyle(color: ThemeService.white),
-                        ),
-                      ),
-                      SizedBox(
-                        height: AppSpacings.s15,
-                      ),
-                      TextFormField(
-                        controller: controller.fromDate,
-                        enabled: true,
-                        maxLines: 1,
-                        keyboardType: TextInputType.text,
-                        cursorColor: ThemeService.primaryColor,
-                        readOnly: true,
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ),
-                        onTap: () async {
-                          // initialDate = textEditingController.text != "" ? DateTime.parse(textEditingController.text.toString()) : DateTime.now();
-                          DateTime? followUpPickedDate =
-                          await showDatePicker(
-                            context: context,
-                            initialDate: controller.fromDate.text != "" ? DateTime.parse(controller.fromDate.text.toString()) : DateTime.now(),
-                            // initialDate: DateTime.parse(DateFormat('yyyy-MM-dd').format(DateTime.now())),
-                            firstDate: DateTime(DateTime.now().year - 10),
-                            lastDate: DateTime(DateTime.now().year + 10),
-                          );
-                          if (followUpPickedDate != null) {
-                            String formattedDate = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
-                            controller.fromDate.text = formattedDate;
-                            log(controller.fromDate.text);
-                            // controller.nextFollowUp.value = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
-                          }
-                        },
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: ThemeService.primaryColor.withOpacity(0.1),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ThemeService.primaryColor
-                                    .withOpacity(.5)),
-                            borderRadius: const BorderRadius.all(
-                                Radius.circular(10)),
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ThemeService.primaryColor,
-                                width: 1.5),
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(10)),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: ThemeService.primaryColor
-                                    .withOpacity(.5)),
-                            borderRadius: const BorderRadius.all(
-                                Radius.circular(10)),
-                          ),
-                          labelText: "To Date",
-                          suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
-                          contentPadding:
-                          const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                          labelStyle:  TextStyle(
-                            color: ThemeService.primaryColor.withOpacity(0.5),
-                            fontSize: AppSpacings.s18,
-                          ),
-                          // floatingLabelBehavior: FloatingLabelBehavior.always,
-                          hintStyle:
-                          const TextStyle(color: ThemeService.white),
-                        ),
-                      ),
-                      SizedBox(
-                        height: AppSpacings.s15,
-                      ),
-                      searchDropDwonWidget(
-                        selectedValue: controller.tampSelectedJobName,
-                        selectedId: controller.tampSelectedJobNameId,
-                        emptyTitle: "Job Name",
-                        list: controller.jobNameList,
-                        isExpanded: controller.isJobNameExpanded,
-                        isSearching: controller.isJobNameSearching,
-                        textfield: controller.textJobName,
-                      ),
-                      SizedBox(
-                        height: AppSpacings.s20,
                       ),
                     ],
                   ),
-                ),)
-            ),
-          ),
-          SizedBox(height: AppSpacings.s30),
-          Bounce(
-            duration: const Duration(milliseconds: 100),
-            onPressed: (){
+                  GestureDetector(
+                    onTap: () {
+                      controller.tempFromDate.text = "";
+                      controller.tempToDate.text = "";
 
-              Get.back();
-            },
-            child: Container(
-              margin: EdgeInsets.only(
-                left: AppSpacings.s25,
-                right: AppSpacings.s25,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: ThemeService.white,
-                boxShadow:  [
-                  BoxShadow(
-                      color: ThemeService.primaryColor.withOpacity(0.5),
-                      blurRadius: 9.5,
-                      blurStyle: BlurStyle.inner,
-                      offset: Offset(1.5,1.5),
-                      spreadRadius: 1.5
-                  )
-                ],
-                border: Border.all(color: ThemeService.primaryColor.withOpacity(0.8)),
-              ),
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.all(
-                    AppSpacings.s12,
+                      controller.fromDate.value = "";
+                      controller.toDate.value = "";
+
+                      // Get.back();
+                    },
+                    child: Text(
+                      "Clear all",
+                      style: Get.textTheme.headlineSmall!.copyWith(
+                        fontWeight: FontWeight.w400,
+                        color: ThemeService.primaryColor,
+                        fontSize: AppSpacings.s18,
+                      ),
+                    ),
+                    // CircleAvatar(
+                    //   maxRadius: AppSpacings.s22,
+                    //   backgroundColor: ThemeService.primaryColor,
+                    //   child: Icon(
+                    //     Icons.close_rounded,
+                    //     size: AppSpacings.s30,
+                    //     color: Colors.white,
+                    //   ),
+                    // ),
                   ),
-                  child: Text(
-                    "Apply",
-                    style: Get.textTheme.headline1!.copyWith(
-                      color: ThemeService.black,
-                      fontSize: AppSpacings.s22,
-                      fontWeight: FontWeight.w700,
+                ],
+              ),
+            ),
+            const Divider(
+              color: ThemeService.primaryColor,
+              height: 0,
+              endIndent: 15,
+              indent: 15,
+              thickness: 3,
+            ),
+            Expanded(
+              child: AnimationLimiter(
+                  child: Obx(() => ListView(
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(
+                      left: AppSpacings.s25,
+                      right: AppSpacings.s25,
+                      top: AppSpacings.s30,
+                    ),
+                    children: AnimationConfiguration.toStaggeredList(
+                      duration: const Duration(milliseconds: 275),
+                      childAnimationBuilder: (widget) => SlideAnimation(
+                        verticalOffset: 50.0,
+                        child: FadeInAnimation(
+                          child: widget,
+                        ),
+                      ),
+                      children: [
+                        TextFormField(
+                          controller: controller.tempToDate,
+                          enabled: true,
+                          maxLines: 1,
+                          keyboardType: TextInputType.text,
+                          cursorColor: ThemeService.primaryColor,
+                          readOnly: true,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                          onTap: () async {
+                            // initialDate = textEditingController.text != "" ? DateTime.parse(textEditingController.text.toString()) : DateTime.now();
+                            DateTime? followUpPickedDate =
+                            await showDatePicker(
+                              context: context,
+                              initialDate: controller.tempToDate.text != "" ? DateTime.parse(controller.tempToDate.text.toString()) : DateTime.now(),
+                              // initialDate: DateTime.parse(DateFormat('yyyy-MM-dd').format(DateTime.now())),
+                              firstDate: DateTime(DateTime.now().year - 10),
+                              lastDate: DateTime(DateTime.now().year + 10),
+                            );
+                            if (followUpPickedDate != null) {
+                              String formattedDate = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
+                              controller.tempToDate.text = formattedDate;
+                              log(controller.tempToDate.text);
+                              // controller.nextFollowUp.value = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
+                            }
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ThemeService.primaryColor
+                                      .withOpacity(.5)),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ThemeService.primaryColor,
+                                  width: 1.5),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ThemeService.primaryColor
+                                      .withOpacity(.5)),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            labelText: "From Date",
+                            suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
+                            contentPadding:
+                            const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                            labelStyle:  TextStyle(
+                              color: ThemeService.primaryColor.withOpacity(0.5),
+                              fontSize: AppSpacings.s18,
+                            ),
+                            // floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintStyle:
+                            const TextStyle(color: ThemeService.white),
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppSpacings.s15,
+                        ),
+                        TextFormField(
+                          controller: controller.tempFromDate,
+                          enabled: true,
+                          maxLines: 1,
+                          keyboardType: TextInputType.text,
+                          cursorColor: ThemeService.primaryColor,
+                          readOnly: true,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                          onTap: () async {
+                            // initialDate = textEditingController.text != "" ? DateTime.parse(textEditingController.text.toString()) : DateTime.now();
+                            DateTime? followUpPickedDate =
+                            await showDatePicker(
+                              context: context,
+                              initialDate: controller.tempFromDate.text != "" ? DateTime.parse(controller.tempFromDate.text.toString()) : DateTime.now(),
+                              // initialDate: DateTime.parse(DateFormat('yyyy-MM-dd').format(DateTime.now())),
+                              firstDate: DateTime(DateTime.now().year - 10),
+                              lastDate: DateTime(DateTime.now().year + 10),
+                            );
+                            if (followUpPickedDate != null) {
+                              String formattedDate = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
+                              controller.tempFromDate.text = formattedDate;
+                              log(controller.tempFromDate.text);
+                              // controller.nextFollowUp.value = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
+                            }
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ThemeService.primaryColor
+                                      .withOpacity(.5)),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ThemeService.primaryColor,
+                                  width: 1.5),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ThemeService.primaryColor
+                                      .withOpacity(.5)),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            labelText: "To Date",
+                            suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
+                            contentPadding:
+                            const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                            labelStyle:  TextStyle(
+                              color: ThemeService.primaryColor.withOpacity(0.5),
+                              fontSize: AppSpacings.s18,
+                            ),
+                            // floatingLabelBehavior: FloatingLabelBehavior.always,
+                            hintStyle:
+                            const TextStyle(color: ThemeService.white),
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppSpacings.s15,
+                        ),
+                        searchDropDwonWidget(
+                          selectedValue: controller.tampSelectedJobName,
+                          selectedId: controller.tampSelectedJobNameId,
+                          emptyTitle: "Job Name",
+                          list: controller.jobNameList,
+                          isExpanded: controller.isJobNameExpanded,
+                          isSearching: controller.isJobNameSearching,
+                          textfield: controller.textJobName,
+                        ),
+                        SizedBox(
+                          height: AppSpacings.s20,
+                        ),
+                        searchDropDwonWidget(
+                          selectedValue: controller.tampSelectedJobStatus,
+                          selectedId: controller.tampSelectedJobStatusId,
+                          emptyTitle: "Job Status",
+                          list: controller.jobStatusList,
+                          isExpanded: controller.isJobStatusExpanded,
+                          isSearching: controller.isJobStatusSearching,
+                          textfield: controller.textJobStatus,
+                        ),
+                        SizedBox(
+                          height: AppSpacings.s20,
+                        ),
+                        searchDropDwonWidget(
+                          selectedValue: controller.tampSelectedJobType,
+                          selectedId: controller.tampSelectedJobTypeId,
+                          emptyTitle: "Job Type",
+                          list: controller.jobTypeList,
+                          isExpanded: controller.isJobTypeExpanded,
+                          isSearching: controller.isJobTypeSearching,
+                          textfield: controller.textJobType,
+                        ),
+                        SizedBox(
+                          height: AppSpacings.s20,
+                        ),
+                      ],
+                    ),
+                  ),)
+              ),
+            ),
+            SizedBox(height: AppSpacings.s30),
+            Bounce(
+              duration: const Duration(milliseconds: 100),
+              onPressed: (){
+                controller.toDate.value = controller.tempToDate.text;
+                controller.fromDate.value = controller.tempFromDate.text;
+
+                controller.tempFromDate.text = "";
+                controller.tempToDate.text = "";
+                Get.back();
+              },
+              child: Container(
+                margin: EdgeInsets.only(
+                  left: AppSpacings.s25,
+                  right: AppSpacings.s25,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: ThemeService.white,
+                  boxShadow:  [
+                    BoxShadow(
+                        color: ThemeService.primaryColor.withOpacity(0.5),
+                        blurRadius: 9.5,
+                        blurStyle: BlurStyle.inner,
+                        offset: const Offset(1.5,1.5),
+                        spreadRadius: 1.5
+                    )
+                  ],
+                  border: Border.all(color: ThemeService.primaryColor.withOpacity(0.8)),
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(
+                      AppSpacings.s12,
+                    ),
+                    child: Text(
+                      "Apply",
+                      style: Get.textTheme.headline1!.copyWith(
+                        color: ThemeService.black,
+                        fontSize: AppSpacings.s22,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-          SizedBox(height: AppSpacings.s30),
-          // TextButton(
-          //   style: TextButton.styleFrom(
-          //     foregroundColor: ThemeService.white,
-          //     backgroundColor: ThemeService.primaryColor,
-          //     // shape: RoundedRectangleBorder(
-          //     //   side: const BorderSide(
-          //     //     color: ThemeService.primaryColor,
-          //     //     width: 1.5,
-          //     //   ),
-          //     //   borderRadius: BorderRadius.circular(30.0),
-          //     // ),
-          //   ),
-          //   onPressed: () async {
-          //
-          //   },
-          //   child: Text("Apply", style: Get.textTheme.displayMedium!.copyWith(color: ThemeService.white)),
-          // ),
+            SizedBox(height: AppSpacings.s30),
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     foregroundColor: ThemeService.white,
+            //     backgroundColor: ThemeService.primaryColor,
+            //     // shape: RoundedRectangleBorder(
+            //     //   side: const BorderSide(
+            //     //     color: ThemeService.primaryColor,
+            //     //     width: 1.5,
+            //     //   ),
+            //     //   borderRadius: BorderRadius.circular(30.0),
+            //     // ),
+            //   ),
+            //   onPressed: () async {
+            //
+            //   },
+            //   child: Text("Apply", style: Get.textTheme.displayMedium!.copyWith(color: ThemeService.white)),
+            // ),
 
-        ],
+          ],
+        ),
       ),
     );
   }

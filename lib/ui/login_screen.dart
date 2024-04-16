@@ -93,17 +93,68 @@ class LoginScreen extends GetView<LoginController> {
                                 //   ),
                                 // ),
                                 SizedBox(height: AppSpacings.s35),
-                                TextField(
+                                // TextField(
+                                //   controller: controller.userName,
+                                //   enabled: true,
+                                //   maxLines: 1,
+                                //   keyboardType: TextInputType.text,
+                                //   cursorColor: ThemeService.primaryColor,
+                                //   style: const TextStyle(
+                                //     fontSize: 14,
+                                //   ),
+                                //   decoration: InputDecoration(
+                                //     filled: true,
+                                //     prefixIcon: Container(
+                                //       padding: const EdgeInsets.all(06.0),
+                                //       child: SvgPicture.asset(
+                                //         'assets/user.svg',
+                                //         height: 20,
+                                //         color: ThemeService.primaryColor,
+                                //       ),
+                                //     ),
+                                //     fillColor: ThemeService.backgroundColor,
+                                //     enabledBorder: const OutlineInputBorder(
+                                //       borderSide: BorderSide(
+                                //           color: ThemeService.primaryColor),
+                                //       borderRadius: BorderRadius.all(
+                                //           Radius.circular(5)),
+                                //     ),
+                                //     focusedBorder: const OutlineInputBorder(
+                                //       borderSide: BorderSide(
+                                //           color: ThemeService.primaryColor,
+                                //           width: 1.5),
+                                //       borderRadius: BorderRadius.all(
+                                //           Radius.circular(5)),
+                                //     ),
+                                //     disabledBorder: const OutlineInputBorder(
+                                //       borderSide: BorderSide(
+                                //           color: ThemeService.primaryColor),
+                                //       borderRadius: BorderRadius.all(
+                                //           Radius.circular(5)),
+                                //     ),
+                                //     labelText: "Email / Phone Number",
+                                //     contentPadding: const EdgeInsets.fromLTRB(
+                                //         10, 10, 0, 0),
+                                //     labelStyle: const TextStyle(
+                                //         color: ThemeService.black),
+                                //     hintStyle: const TextStyle(
+                                //         color: ThemeService.primaryColor),
+                                //   ),
+                                // ),
+                                TextFormField(
                                   controller: controller.userName,
                                   enabled: true,
                                   maxLines: 1,
                                   keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.next,
                                   cursorColor: ThemeService.primaryColor,
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
+
                                   decoration: InputDecoration(
                                     filled: true,
+                                    fillColor: ThemeService.primaryColor.withOpacity(0.1),
                                     prefixIcon: Container(
                                       padding: const EdgeInsets.all(06.0),
                                       child: SvgPicture.asset(
@@ -112,48 +163,130 @@ class LoginScreen extends GetView<LoginController> {
                                         color: ThemeService.primaryColor,
                                       ),
                                     ),
-                                    fillColor: ThemeService.backgroundColor,
-                                    enabledBorder: const OutlineInputBorder(
+                                    enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: ThemeService.primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5)),
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
                                     ),
                                     focusedBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: ThemeService.primaryColor,
                                           width: 1.5),
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(5)),
+                                          Radius.circular(10)),
                                     ),
-                                    disabledBorder: const OutlineInputBorder(
+                                    disabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: ThemeService.primaryColor),
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    errorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(5)),
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedErrorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
                                     ),
                                     labelText: "Email / Phone Number",
-                                    contentPadding: const EdgeInsets.fromLTRB(
-                                        10, 10, 0, 0),
-                                    labelStyle: const TextStyle(
-                                        color: ThemeService.black),
-                                    hintStyle: const TextStyle(
-                                        color: ThemeService.primaryColor),
+                                    contentPadding:
+                                    const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                    labelStyle: TextStyle(
+                                      color: ThemeService.primaryColor.withOpacity(0.5),
+                                      fontSize: AppSpacings.s18,
+
+                                    ),
+                                    errorStyle:TextStyle(
+                                        fontSize: AppSpacings.s16,
+                                        color: Colors.redAccent
+                                    ),
+                                    hintStyle:
+                                    const TextStyle(color: ThemeService.white),
                                   ),
                                 ),
                                 SizedBox(height: AppSpacings.s25),
-                                TextField(
+                                // TextField(
+                                //   controller: controller.password,
+                                //   enabled: true,
+                                //   maxLines: 1,
+                                //   obscureText: controller.secureText.value,
+                                //   keyboardType: TextInputType.text,
+                                //   cursorColor: ThemeService.primaryColor,
+                                //   style: const TextStyle(
+                                //     fontSize: 14,
+                                //   ),
+                                //   decoration: InputDecoration(
+                                //     filled: true,
+                                //     prefixIcon: Container(
+                                //       padding: const EdgeInsets.all(12.0),
+                                //       child: SvgPicture.asset(
+                                //         'assets/password.svg',
+                                //         height: 15,
+                                //         color: ThemeService.primaryColor,
+                                //       ),
+                                //     ),
+                                //     suffixIcon: IconButton(
+                                //       onPressed: () {
+                                //         controller.secureText.value =
+                                //         !controller.secureText.value;
+                                //       },
+                                //       icon: Icon(controller.secureText.value
+                                //           ? Icons.visibility_outlined
+                                //           : Icons.visibility_off_outlined),
+                                //       color: ThemeService.primaryColor,
+                                //     ),
+                                //     fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                                //     enabledBorder: const OutlineInputBorder(
+                                //       borderSide: BorderSide(
+                                //           color: ThemeService.primaryColor),
+                                //       borderRadius: BorderRadius.all(
+                                //           Radius.circular(10)),
+                                //     ),
+                                //     focusedBorder: const OutlineInputBorder(
+                                //       borderSide: BorderSide(
+                                //           color: ThemeService.primaryColor,
+                                //           width: 1.5),
+                                //       borderRadius: BorderRadius.all(
+                                //           Radius.circular(10)),
+                                //     ),
+                                //     disabledBorder: const OutlineInputBorder(
+                                //       borderSide: BorderSide(
+                                //           color: ThemeService.primaryColor),
+                                //       borderRadius: BorderRadius.all(
+                                //           Radius.circular(10)),
+                                //     ),
+                                //     labelText: "Password",
+                                //     labelStyle: const TextStyle(
+                                //         color: ThemeService.black),
+                                //     contentPadding: const EdgeInsets.fromLTRB(
+                                //         10, 10, 0, 0),
+                                //     hintStyle: const TextStyle(
+                                //         color: ThemeService.primaryColor),
+                                //   ),
+                                // ),
+                                TextFormField(
                                   controller: controller.password,
                                   enabled: true,
                                   maxLines: 1,
-                                  obscureText: controller.secureText.value,
                                   keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.done,
+                                  obscureText: controller.secureText.value,
                                   cursorColor: ThemeService.primaryColor,
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
+
                                   decoration: InputDecoration(
                                     filled: true,
+                                    fillColor: ThemeService.primaryColor.withOpacity(0.1),
                                     prefixIcon: Container(
                                       padding: const EdgeInsets.all(12.0),
                                       child: SvgPicture.asset(
@@ -172,33 +305,49 @@ class LoginScreen extends GetView<LoginController> {
                                           : Icons.visibility_off_outlined),
                                       color: ThemeService.primaryColor,
                                     ),
-                                    fillColor: ThemeService.backgroundColor,
-                                    enabledBorder: const OutlineInputBorder(
+                                    enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: ThemeService.primaryColor),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(5)),
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
                                     ),
                                     focusedBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: ThemeService.primaryColor,
                                           width: 1.5),
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(5)),
+                                          Radius.circular(10)),
                                     ),
-                                    disabledBorder: const OutlineInputBorder(
+                                    disabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: ThemeService.primaryColor),
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    errorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
                                       borderRadius: BorderRadius.all(
-                                          Radius.circular(5)),
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedErrorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
                                     ),
                                     labelText: "Password",
-                                    labelStyle: const TextStyle(
-                                        color: ThemeService.black),
-                                    contentPadding: const EdgeInsets.fromLTRB(
-                                        10, 10, 0, 0),
-                                    hintStyle: const TextStyle(
-                                        color: ThemeService.primaryColor),
+                                    contentPadding:
+                                    const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                    labelStyle: TextStyle(
+                                      color: ThemeService.primaryColor.withOpacity(0.5),
+                                      fontSize: AppSpacings.s18,
+
+                                    ),
+                                    hintStyle:
+                                    const TextStyle(color: ThemeService.white),
                                   ),
                                 ),
                                 SizedBox(height: AppSpacings.s70),
@@ -218,8 +367,8 @@ class LoginScreen extends GetView<LoginController> {
                                     } else {
 
                                       FocusScope.of(context).unfocus();
-                                      // controller.login();
-                                      Get.toNamed(Routes.home);
+                                      controller.login();
+                                      // Get.toNamed(Routes.home);
                                     }
 
 
@@ -258,6 +407,68 @@ class LoginScreen extends GetView<LoginController> {
                                   ),
                                 ),
                                 SizedBox(height: AppSpacings.s30),
+                                Row(
+                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                     Expanded(
+                                      child: Divider(
+                                        color:ThemeService.primaryColor.withOpacity(0.5),
+                                        thickness: 1,
+                                        indent: 20,
+                                      ),
+                                    ),
+                                    SizedBox(width: AppSpacings.s10),
+                                    Text(
+                                      "OR",
+                                      style: Get.textTheme.headline1!
+                                          .copyWith(
+                                        color: ThemeService.primaryColor,
+                                        fontSize: AppSpacings.s15,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    SizedBox(width: AppSpacings.s10),
+                                     Expanded(
+                                      child: Divider(
+                                        color:ThemeService.primaryColor.withOpacity(0.5),
+                                        thickness: 1,
+                                        endIndent: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: AppSpacings.s20),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "For Vendor Registration",
+                                      style: Get.textTheme.headline1!
+                                          .copyWith(
+                                        color: ThemeService.primaryColor.withOpacity(0.8),
+                                        fontSize: AppSpacings.s18,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    SizedBox(width: AppSpacings.s5),
+                                    Bounce(
+                                      duration: const Duration(milliseconds: 100),
+                                      onPressed: (){
+                                        Get.toNamed(Routes.vendorReg);
+                                      },
+                                      child: Text(
+                                        "Click here",
+                                        style: Get.textTheme.headline1!
+                                            .copyWith(
+                                          color: Colors.blueAccent,
+                                          fontSize: AppSpacings.s18,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: AppSpacings.s20),
                               ],
                             ),
                           ),

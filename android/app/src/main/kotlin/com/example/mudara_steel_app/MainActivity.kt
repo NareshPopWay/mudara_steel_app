@@ -1,4 +1,4 @@
-package com.mudra_steel_app
+package com.mudrasteel
 
 import io.flutter.embedding.android.FlutterActivity
 

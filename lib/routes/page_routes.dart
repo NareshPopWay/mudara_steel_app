@@ -7,6 +7,8 @@ import 'package:mudara_steel_app/binders/job_list_binder.dart';
 import 'package:mudara_steel_app/binders/login_binder.dart';
 import 'package:mudara_steel_app/binders/register_vendor_binder.dart';
 import 'package:mudara_steel_app/binders/vendor_list_binder.dart';
+import 'package:mudara_steel_app/binders/vendor_profile_binder.dart';
+import 'package:mudara_steel_app/binders/vendor_reg_binder.dart';
 import 'package:mudara_steel_app/ui/drawer/bid/bid_list.dart';
 import 'package:mudara_steel_app/ui/drawer/job/create_job.dart';
 import 'package:mudara_steel_app/ui/drawer/job/job_allocation_list.dart';
@@ -14,6 +16,8 @@ import 'package:mudara_steel_app/ui/drawer/job/job_list.dart';
 import 'package:mudara_steel_app/ui/drawer/vendor/register_vendor.dart';
 import 'package:mudara_steel_app/ui/drawer/vendor/vendor_list.dart';
 import 'package:mudara_steel_app/ui/login_screen.dart';
+import 'package:mudara_steel_app/ui/vendor_profile.dart';
+import 'package:mudara_steel_app/ui/vendor_reg_screen.dart';
 import '../common/widget/auth_widget.dart';
 import 'app_routes.dart';
 
@@ -30,6 +34,11 @@ class PageRoutes {
       name: Routes.login,
       page: () => const LoginScreen(),
       binding: LoginBinder(),
+    ),
+    GetPage(
+      name: Routes.vendorReg,
+      page: () => const VendorRegScreen(),
+      binding: VendorRegBinder(),
     ),
     GetPage(
       name: Routes.registerVendor,
@@ -60,6 +69,11 @@ class PageRoutes {
       name: Routes.jobAllocationList,
       page: () =>   JobAllocationListScreen(),
       binding: JobAllocationListBinder(),
+    ),
+    GetPage(
+      name: Routes.vendorProfile,
+      page: () =>   const VendorProfileScreen(),
+      binding: VendorProfileBinder(),
     ),
   ];
 }

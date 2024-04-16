@@ -13,6 +13,8 @@ class RegisterVendorController extends GetxController {
   final key =  GlobalKey<FormState>();
   final key1 =  GlobalKey<FormState>();
   final FocusNode noteFocus = FocusNode();
+  TextEditingController vendorName = TextEditingController();
+  TextEditingController password = TextEditingController();
   TextEditingController driverName = TextEditingController();
   TextEditingController driverAge = TextEditingController();
   TextEditingController phone = TextEditingController();

@@ -11,9 +11,9 @@ class RootController extends GetxController with GetTickerProviderStateMixin {
   RxInt currentTab = 0.obs;
   RxBool shearShow = false.obs;
   RxString userName = "".obs;
+  RxString userTypeID = "".obs;
   RxString token="".obs;
   RxString roleId = "".obs;
-  RxString username="".obs;
   ValueNotifier<bool> isDialOpen = ValueNotifier(false);
   final GlobalKey<ScaffoldState> scaffoldKey =  GlobalKey<ScaffoldState>();
 
@@ -26,6 +26,7 @@ class RootController extends GetxController with GetTickerProviderStateMixin {
     // treatments.bindStream(FirebaseService().getTreatments());
     // products.bindStream(FirebaseService().getProducts());
     userName.value = GetStorage().read(Constants.userName) ?? "";
+    userTypeID.value = GetStorage().read(Constants.userTypeID) ?? "";
     currentTab.value =0;
 
   }

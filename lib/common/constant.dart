@@ -11,7 +11,7 @@ class Constants{
   static const String name = 'Name';
   static const String token = 'token';
   static const String password = 'password';
-  static const String employeeTypeID = 'EmployeeTypeID';
+  static const String userTypeID = 'userTypeID';
   static Future<bool> isInternetAvail() async {
     try {
       final result = await InternetAddress.lookup('google.com');

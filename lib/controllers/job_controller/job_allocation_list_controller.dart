@@ -11,7 +11,7 @@ import 'package:mudara_steel_app/model/field_item_value_model.dart';
 class JobAllocationListController extends GetxController {
 
   RxList jobList = RxList();
-
+  RxString appTitle = "".obs;
   RxBool isLoading = false.obs;
   RxBool isVendorListLoading = false.obs;
   TextEditingController toDate = TextEditingController();
@@ -19,6 +19,8 @@ class JobAllocationListController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+
+    appTitle.value = Get.arguments;
   }
 
   RxList<FieldItemValueModel> jobNameList = <FieldItemValueModel>[].obs;

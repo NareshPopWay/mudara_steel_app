@@ -49,7 +49,7 @@ class HomeScreen extends GetView<RootController> {
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Image.asset(
-                      "assets/menu.png",
+                      "assets/menu1.png",
                       height: AppSpacings.s30,
                       alignment: Alignment.center,
                     ),
@@ -110,74 +110,218 @@ class HomeScreen extends GetView<RootController> {
               width: AppSpacings.s350,
               child: Column(
                 children: [
-                  // SizedBox(height: AppSpacings.s20),
-                  DrawerHeader(
-                      decoration: BoxDecoration(
-                        color: ThemeService.primaryColor.withOpacity(0.1),
-                        border: Border(
-                            bottom: BorderSide(
-                                color: ThemeService.primaryColor.withOpacity(0.1),
-                                width: AppSpacings.s3)),
-                      ),
-                      child:ListView(
-                        shrinkWrap: true,
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: ThemeService.primaryColor.withOpacity(0.3),
-                            maxRadius: AppSpacings.s40,
-                            child: Obx(
-                                  () => Text(
-                                controller.userName.value != "" ? controller.userName.value.characters.first : "A",
-                                style: TextStyle(fontSize: AppSpacings.s30, color: ThemeService.primaryColor,fontWeight: FontWeight.w700),
+                  if(controller.userTypeID.value == "1")
+                  ///Admin Login
+                  Container(
+                    height: AppSpacings.s200,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: ThemeService.primaryColor.withOpacity(0.1),
+                      borderRadius: const BorderRadius.only(
+                          bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25)),
+                      border: Border(
+                          bottom: BorderSide(
+                              color: ThemeService.primaryColor.withOpacity(0.5),
+                              width: AppSpacings.s3)),
+                    ),
+                    padding:EdgeInsets.only(top: AppSpacings.s45,right:AppSpacings.s20,left: AppSpacings.s20,bottom: AppSpacings.s20),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(width: AppSpacings.s12),
+                        CircleAvatar(
+                          backgroundColor: ThemeService.primaryColor.withOpacity(0.6),
+                          maxRadius: AppSpacings.s35,
+                          child: Obx(
+                                () => Text(
+                              controller.userName.value != "" ? controller.userName.value.characters.first.toUpperCase() : "U",
+                              style: TextStyle(fontSize: AppSpacings.s30, color: Colors.white),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: AppSpacings.s12),
+                        Obx(
+                              () => Expanded(
+                            child: Text(
+                              controller.userName.value != "" ? controller.userName.value : "USER",
+                              style:  TextStyle(
+                                fontSize:  AppSpacings.s30,
+                                color: ThemeService.primaryColor,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
-                          SizedBox(height: AppSpacings.s12),
-                          Obx(
-                                () => Center(
-                                  child: Text(
-                                    controller.userName.value != "" ? controller.userName.value : "Admin",
-                                    style:  TextStyle(
-                                      fontSize: controller.userName.value.length <= 5 ? AppSpacings.s35 : AppSpacings.s20,
-                                      color: ThemeService.primaryColor,
-                                      fontWeight: FontWeight.w700,
-                                    ),
+                        ),
+                        // Flexible(
+                        //   child: Row(
+                        //     children: [
+                        //       Expanded(
+                        //         child: ListView(
+                        //           // shrinkWrap: true,
+                        //           physics: const NeverScrollableScrollPhysics(),
+                        //           children: [
+                        //             Obx(
+                        //                   () => Expanded(
+                        //                 child: Text(
+                        //                   controller.userName.value != "" ? controller.userName.value : "Vendor",
+                        //                   style:  TextStyle(
+                        //                     fontSize:  AppSpacings.s30,
+                        //                     color: ThemeService.primaryColor,
+                        //                     fontWeight: FontWeight.w600,
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Text(
+                        //               "View Profile",
+                        //               style: TextStyle(
+                        //                   color: ThemeService.grayScalecon,
+                        //                   fontSize: AppSpacings.s15
+                        //               ),
+                        //             )
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       Icon(
+                        //         Icons.arrow_forward_ios,
+                        //         color: ThemeService.primaryColor.withOpacity(0.6),
+                        //         size: AppSpacings.s20,
+                        //       ),
+                        //     ],
+                        //   ),
+                        // )
+                      ],
+                    ),
+                  )
+                  else
+                  ///Vendor Login
+                  Container(
+                    height: AppSpacings.s200,
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                      color: ThemeService.primaryColor.withOpacity(0.1),
+                        borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(25), bottomLeft: Radius.circular(25)),
+                      border: Border(
+                          bottom: BorderSide(
+                              color: ThemeService.primaryColor.withOpacity(0.5),
+                              width: AppSpacings.s3)),
+                    ),
+                    padding:EdgeInsets.only(top: AppSpacings.s45,right:AppSpacings.s20,left: AppSpacings.s20,bottom: AppSpacings.s20),
+                    child: GestureDetector(
+                      onTap: (){
+                        Get.back();
+                        Get.toNamed(Routes.vendorProfile);
+                      },
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(width: AppSpacings.s12),
+                          CircleAvatar(
+                            backgroundColor: ThemeService.primaryColor.withOpacity(0.6),
+                            maxRadius: AppSpacings.s35,
+                            child: Obx(
+                                  () => Text(
+                                controller.userName.value != "" ? controller.userName.value.characters.first.toUpperCase() : "V",
+                                style: TextStyle(fontSize: AppSpacings.s30, color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: AppSpacings.s12),
+                          Column(
+                            mainAxisSize : MainAxisSize.min,
+                            children: [
+                              Obx(
+                                    () => Text(
+                                  controller.userName.value != "" ? controller.userName.value : "Vendor",
+                                  style:  TextStyle(
+                                    fontSize:  AppSpacings.s30,
+                                    color: ThemeService.primaryColor,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
+                              ),
+                              Text(
+                                "View Profile",
+                                style: TextStyle(
+                                    color: ThemeService.grayScalecon,
+                                    fontSize: AppSpacings.s15
+                                ),
+                              )
+                            ],
                           ),
-
+                          // Expanded(
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //     children: [
+                          //       Column(
+                          //         mainAxisSize : MainAxisSize.min,
+                          //         children: [
+                          //           Obx(
+                          //                 () => Text(
+                          //                   controller.userName.value != "" ? controller.userName.value : "Vendor",
+                          //                   style:  TextStyle(
+                          //                     fontSize:  AppSpacings.s30,
+                          //                     color: ThemeService.primaryColor,
+                          //                     fontWeight: FontWeight.w600,
+                          //                   ),
+                          //                 ),
+                          //           ),
+                          //           Text(
+                          //             "View Profile",
+                          //             style: TextStyle(
+                          //               color: ThemeService.grayScalecon,
+                          //               fontSize: AppSpacings.s15
+                          //             ),
+                          //           )
+                          //         ],
+                          //       ),
+                          //       // Expanded(
+                          //       //   child: Icon(
+                          //       //       Icons.arrow_forward_ios,
+                          //       //       color: ThemeService.primaryColor.withOpacity(0.6),
+                          //       //       size: AppSpacings.s20,
+                          //       //     ),
+                          //       // ),
+                          //     ],
+                          //   ),
+                          // ),
                         ],
-                      )),
-                  Divider(
-                    color: ThemeService.primaryColor.withOpacity(0.4),
-                    thickness: 5,
-                    height: 5,
+                      ),
+                    ),
                   ),
+
+                  // Divider(
+                  //   color: ThemeService.primaryColor.withOpacity(0.4),
+                  //   thickness: 5,
+                  //   height: .005,
+                  // ),
                   Expanded(
                       child:ListView(
                         padding: EdgeInsets.zero,
                         physics: const BouncingScrollPhysics(),
                         children: [
+                          SizedBox(height: AppSpacings.s5),
+                          if(controller.userTypeID.value == "1")
                           ListTile(
                             dense: true,
                             visualDensity: VisualDensity(vertical: -AppSpacings.s5),
                             leading: Image.asset(
-                              "assets/drawer_icon/add-user.png",
+                              "assets/drawer_icon/add-user1.png",
                               height: AppSpacings.s35,
                               color: ThemeService.primaryColor,
                               alignment: Alignment.center,
                             ),
-                            // trailing: Icon(
-                            //   Icons.arrow_forward_ios,
-                            //   color: ThemeService.primaryColor.withOpacity(0.6),
-                            //   size: AppSpacings.s20,
-                            // ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: ThemeService.primaryColor.withOpacity(0.6),
+                              size: AppSpacings.s20,
+                            ),
                             title: Text(
                               "Register Vendor",
                               style: Get.textTheme.bodyLarge!.copyWith(
                                 fontSize: AppSpacings.s20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w500,
                                 color: ThemeService.primaryColor.withOpacity(0.7),
                               ),
                             ),
@@ -186,31 +330,33 @@ class HomeScreen extends GetView<RootController> {
                               Get.toNamed(Routes.registerVendor);
                             },
                           ),
+                          if(controller.userTypeID.value == "1")
                           Divider(
                             color:ThemeService.primaryColor.withOpacity(0.4),
                             thickness: 1,
                             indent: 10,
                             endIndent: 10,
                           ),
+                          if(controller.userTypeID.value == "1")
                           ListTile(
                             dense: true,
                             visualDensity: VisualDensity(vertical: -AppSpacings.s5),
                             leading: Image.asset(
-                              "assets/drawer_icon/add-user.png",
+                              "assets/drawer_icon/vendor_list.png",
                               height: AppSpacings.s35,
                               color: ThemeService.primaryColor,
                               alignment: Alignment.center,
                             ),
-                            // trailing: Icon(
-                            //   Icons.arrow_forward_ios,
-                            //   color: ThemeService.primaryColor.withOpacity(0.6),
-                            //   size: AppSpacings.s20,
-                            // ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: ThemeService.primaryColor.withOpacity(0.6),
+                              size: AppSpacings.s20,
+                            ),
                             title: Text(
                               "Vendor List",
                               style: Get.textTheme.bodyLarge!.copyWith(
                                 fontSize: AppSpacings.s20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w500,
                                 color: ThemeService.primaryColor.withOpacity(0.7),
                               ),
                             ),
@@ -219,31 +365,33 @@ class HomeScreen extends GetView<RootController> {
                               Get.toNamed(Routes.vendorList);
                             },
                           ),
+                          if(controller.userTypeID.value == "1")
                           Divider(
                             color:ThemeService.primaryColor.withOpacity(0.4),
                             thickness: 1,
                             indent: 10,
                             endIndent: 10,
                           ),
+                          if(controller.userTypeID.value == "1")
                           ListTile(
                             dense: true,
                             visualDensity: VisualDensity(vertical: -AppSpacings.s5),
                             leading: Image.asset(
-                              "assets/drawer_icon/add-user.png",
+                              "assets/drawer_icon/create_job.png",
                               height: AppSpacings.s35,
                               color: ThemeService.primaryColor,
                               alignment: Alignment.center,
                             ),
-                            // trailing: Icon(
-                            //   Icons.arrow_forward_ios,
-                            //   color: ThemeService.primaryColor.withOpacity(0.6),
-                            //   size: AppSpacings.s20,
-                            // ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: ThemeService.primaryColor.withOpacity(0.6),
+                              size: AppSpacings.s20,
+                            ),
                             title: Text(
                               "Create Job",
                               style: Get.textTheme.bodyLarge!.copyWith(
                                 fontSize: AppSpacings.s20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w500,
                                 color: ThemeService.primaryColor.withOpacity(0.7),
                               ),
                             ),
@@ -252,105 +400,219 @@ class HomeScreen extends GetView<RootController> {
                               Get.toNamed(Routes.createJob);
                             },
                           ),
+                          if(controller.userTypeID.value == "1")
                           Divider(
                             color:ThemeService.primaryColor.withOpacity(0.4),
                             thickness: 1,
                             indent: 10,
                             endIndent: 10,
                           ),
+                          if(controller.userTypeID.value == "1")
                           ListTile(
                             dense: true,
                             visualDensity: VisualDensity(vertical: -AppSpacings.s5),
                             leading: Image.asset(
-                              "assets/drawer_icon/add-user.png",
+                              "assets/drawer_icon/job_list.png",
                               height: AppSpacings.s35,
                               color: ThemeService.primaryColor,
                               alignment: Alignment.center,
                             ),
-                            // trailing: Icon(
-                            //   Icons.arrow_forward_ios,
-                            //   color: ThemeService.primaryColor.withOpacity(0.6),
-                            //   size: AppSpacings.s20,
-                            // ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: ThemeService.primaryColor.withOpacity(0.6),
+                              size: AppSpacings.s20,
+                            ),
                             title: Text(
                               "Job List",
                               style: Get.textTheme.bodyLarge!.copyWith(
                                 fontSize: AppSpacings.s20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w500,
                                 color: ThemeService.primaryColor.withOpacity(0.7),
                               ),
                             ),
                             onTap: () {
                               Get.back();
-                              Get.toNamed(Routes.jobList);
+                              Get.toNamed(Routes.jobList,arguments: "Job List");
                             },
                           ),
+                          if(controller.userTypeID.value == "1")
                           Divider(
                             color:ThemeService.primaryColor.withOpacity(0.4),
                             thickness: 1,
                             indent: 10,
                             endIndent: 10,
                           ),
+                          if(controller.userTypeID.value == "1")
                           ListTile(
                             dense: true,
                             visualDensity: VisualDensity(vertical: -AppSpacings.s5),
                             leading: Image.asset(
-                              "assets/drawer_icon/add-user.png",
+                              "assets/drawer_icon/bid_list.png",
                               height: AppSpacings.s35,
                               color: ThemeService.primaryColor,
                               alignment: Alignment.center,
                             ),
-                            // trailing: Icon(
-                            //   Icons.arrow_forward_ios,
-                            //   color: ThemeService.primaryColor.withOpacity(0.6),
-                            //   size: AppSpacings.s20,
-                            // ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: ThemeService.primaryColor.withOpacity(0.6),
+                              size: AppSpacings.s20,
+                            ),
                             title: Text(
                               "Job Bid List",
                               style: Get.textTheme.bodyLarge!.copyWith(
                                 fontSize: AppSpacings.s20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w500,
                                 color: ThemeService.primaryColor.withOpacity(0.7),
                               ),
                             ),
                             onTap: () {
                               Get.back();
-                              Get.toNamed(Routes.bidList);
+                              Get.toNamed(Routes.bidList,arguments: "Job Bid List");
                             },
                           ),
+                          if(controller.userTypeID.value == "1")
                           Divider(
                             color:ThemeService.primaryColor.withOpacity(0.4),
                             thickness: 1,
                             indent: 10,
                             endIndent: 10,
                           ),
+                          if(controller.userTypeID.value == "1")
                           ListTile(
                             dense: true,
                             visualDensity: VisualDensity(vertical: -AppSpacings.s5),
                             leading: Image.asset(
-                              "assets/drawer_icon/add-user.png",
+                              "assets/drawer_icon/joballocation_list.png",
                               height: AppSpacings.s35,
                               color: ThemeService.primaryColor,
                               alignment: Alignment.center,
                             ),
-                            // trailing: Icon(
-                            //   Icons.arrow_forward_ios,
-                            //   color: ThemeService.primaryColor.withOpacity(0.6),
-                            //   size: AppSpacings.s20,
-                            // ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: ThemeService.primaryColor.withOpacity(0.6),
+                              size: AppSpacings.s20,
+                            ),
                             title: Text(
                               "Job Allocation List",
                               style: Get.textTheme.bodyLarge!.copyWith(
                                 fontSize: AppSpacings.s20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w500,
                                 color: ThemeService.primaryColor.withOpacity(0.7),
                               ),
                             ),
                             onTap: () {
                               Get.back();
-                              Get.toNamed(Routes.jobAllocationList);
+                              Get.toNamed(Routes.jobAllocationList,arguments: "Job Allocation List");
                             },
                           ),
+                          if(controller.userTypeID.value == "1")
+                          Divider(
+                            color:ThemeService.primaryColor.withOpacity(0.4),
+                            thickness: 1,
+                            indent: 10,
+                            endIndent: 10,
+                          ),
+
+                          /// Vendor Login
+                          if(controller.userTypeID.value == "2")
+                          ListTile(
+                            dense: true,
+                            visualDensity: VisualDensity(vertical: -AppSpacings.s5),
+                            leading: Image.asset(
+                              "assets/drawer_icon/job_list.png",
+                              height: AppSpacings.s35,
+                              color: ThemeService.primaryColor,
+                              alignment: Alignment.center,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: ThemeService.primaryColor.withOpacity(0.6),
+                              size: AppSpacings.s20,
+                            ),
+                            title: Text(
+                              "My Job",
+                              style: Get.textTheme.bodyLarge!.copyWith(
+                                fontSize: AppSpacings.s20,
+                                fontWeight: FontWeight.w500,
+                                color: ThemeService.primaryColor.withOpacity(0.7),
+                              ),
+                            ),
+                            onTap: () {
+                              Get.back();
+                              Get.toNamed(Routes.jobList,arguments: "My Job");
+                            },
+                          ),
+                          if(controller.userTypeID.value == "2")
+                          Divider(
+                            color:ThemeService.primaryColor.withOpacity(0.4),
+                            thickness: 1,
+                            indent: 10,
+                            endIndent: 10,
+                          ),
+                          if(controller.userTypeID.value == "2")
+                          ListTile(
+                            dense: true,
+                            visualDensity: VisualDensity(vertical: -AppSpacings.s5),
+                            leading: Image.asset(
+                              "assets/drawer_icon/bid_list.png",
+                              height: AppSpacings.s35,
+                              color: ThemeService.primaryColor,
+                              alignment: Alignment.center,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: ThemeService.primaryColor.withOpacity(0.6),
+                              size: AppSpacings.s20,
+                            ),
+                            title: Text(
+                              "My Bid",
+                              style: Get.textTheme.bodyLarge!.copyWith(
+                                fontSize: AppSpacings.s20,
+                                fontWeight: FontWeight.w500,
+                                color: ThemeService.primaryColor.withOpacity(0.7),
+                              ),
+                            ),
+                            onTap: () {
+                              Get.back();
+                              Get.toNamed(Routes.bidList,arguments: "My Bid");
+                            },
+                          ),
+                          if(controller.userTypeID.value == "2")
+                          Divider(
+                            color:ThemeService.primaryColor.withOpacity(0.4),
+                            thickness: 1,
+                            indent: 10,
+                            endIndent: 10,
+                          ),
+                          if(controller.userTypeID.value == "2")
+                          ListTile(
+                            dense: true,
+                            visualDensity: VisualDensity(vertical: -AppSpacings.s5),
+                            leading: Image.asset(
+                              "assets/drawer_icon/joballocation_list.png",
+                              height: AppSpacings.s35,
+                              color: ThemeService.primaryColor,
+                              alignment: Alignment.center,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: ThemeService.primaryColor.withOpacity(0.6),
+                              size: AppSpacings.s20,
+                            ),
+                            title: Text(
+                              "My Allocated Job",
+                              style: Get.textTheme.bodyLarge!.copyWith(
+                                fontSize: AppSpacings.s20,
+                                fontWeight: FontWeight.w500,
+                                color: ThemeService.primaryColor.withOpacity(0.7),
+                              ),
+                            ),
+                            onTap: () {
+                              Get.back();
+                              Get.toNamed(Routes.jobAllocationList,arguments: "My Allocated Job");
+                            },
+                          ),
+                          if(controller.userTypeID.value == "2")
                           Divider(
                             color:ThemeService.primaryColor.withOpacity(0.4),
                             thickness: 1,
@@ -361,12 +623,13 @@ class HomeScreen extends GetView<RootController> {
                       )
                   ),
                   Bounce(
-                    duration: Duration(milliseconds: 90),
+                    duration: const Duration(milliseconds: 90),
                     onPressed: () async {
                       try {
                         log('log out Successfully');
                         await GetStorage().remove(Constants.userName);
                         await GetStorage().remove(Constants.password);
+                        await GetStorage().remove(Constants.token);
                         Get.find<AuthController>().isAlreadyLogin.value = false;
                         await Get.offAllNamed(Routes.login);
                       } catch (e) {
@@ -384,7 +647,7 @@ class HomeScreen extends GetView<RootController> {
                               color: ThemeService.primaryColor.withOpacity(0.5),
                               blurRadius: 9.5,
                               blurStyle: BlurStyle.inner,
-                              offset: Offset(1.5,1.5),
+                              offset: const Offset(1.5,1.5),
                               spreadRadius: 1.5
                           )
                         ],

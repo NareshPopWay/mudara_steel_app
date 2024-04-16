@@ -33,7 +33,7 @@ searchDropDwonWidget({
     () => Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: isExpanded == true ? ThemeService.primaryColor : ThemeService.grey,
+          color: isExpanded == true ? ThemeService.primaryColor : ThemeService.primaryColor.withOpacity(.5),
         ),
         borderRadius: BorderRadius.circular(AppSpacings.s15),
       ),
@@ -46,7 +46,7 @@ searchDropDwonWidget({
             CustomExpansionPanel(
               headerBuilder: (context, isExpandeds) {
                 return Container(
-                  color:  isExpanded == true ? ThemeService.primaryColor : ThemeService.white,
+                  color:  isExpanded == true ? ThemeService.primaryColor : ThemeService.primaryColor.withOpacity(0.1),
                   padding: EdgeInsets.zero,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -63,15 +63,15 @@ searchDropDwonWidget({
                             style: Get.textTheme.bodyLarge!.copyWith(
                               fontSize: AppSpacings.s20,
                               fontWeight: FontWeight.w600,
-                              color: isExpanded == true ? ThemeService.white :ThemeService.black,
+                              color: isExpanded == true ? ThemeService.white : ThemeService.black,
                             ),
                           )
                               : Text(
                             emptyTitle,
                             style: Get.textTheme.bodyLarge!.copyWith(
                               fontSize: AppSpacings.s20,
-                              fontWeight: FontWeight.w600,
-                              color: isExpanded == true ?  ThemeService.white :ThemeService.grayScalecon,
+                              fontWeight: FontWeight.w400,
+                              color: isExpanded == true ?  ThemeService.white :ThemeService.primaryColor.withOpacity(0.5),
                             ),
                           ),
                         ),

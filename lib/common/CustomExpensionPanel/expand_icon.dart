@@ -168,7 +168,7 @@ class _CustomExpandIconState extends State<CustomExpandIcon> with SingleTickerPr
       onTapHint: widget.onPressed == null ? null : onTapHint,
       child: Container(
         decoration: BoxDecoration(
-          color: widget.isExpanded ? ThemeService.primaryColor: ThemeService.white,
+          color: widget.isExpanded ? ThemeService.primaryColor: ThemeService.primaryColor.withOpacity(0.1),
           // border: Border.all(
           //   color: isExpanded == true ? ThemeService.primaryColor : ThemeService.grey,
           // ),
