@@ -8,8 +8,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
+import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_list_model.dart';
+import 'package:mudara_steel_app/model/success_model.dart';
 
 
 class JobListController extends GetxController {
@@ -41,9 +43,13 @@ class JobListController extends GetxController {
   @override
   void onInit() async {
     appTitle.value = Get.arguments;
-    getJob();
-    leadScrollController.addListener(jobScrollListener);
     userTypeID.value = GetStorage().read(Constants.userTypeID) ?? "";
+    leadScrollController.addListener(jobScrollListener);
+    getJob();
+    jobNameList.value = await APIProvider().getJobNameList();
+    jobStatusList.value = await APIProvider().getJobStatusList();
+    jobTypeList.value = await APIProvider().getJobTypeList();
+
     super.onInit();
   }
 
@@ -107,6 +113,28 @@ class JobListController extends GetxController {
     return;
   }
 
+  RxBool isDeleteJob = false.obs;
 
+  Future<void> deleteJob(context,{int? jobId})async{
+    try{
+      FocusScope.of(context).unfocus();
+      isDeleteJob.value = true;
+      SuccessModel successModel =  await  APIProvider().deleteJob(jobId: jobId);
+      if(successModel.msgType == 0){
+        isDeleteJob.value = false;
+        Get.back();
+        jobPage = 0;
+        jobList.clear();
+        getJob();
+        Ui.SuccessSnackBar(title:'Successful',message:'Job deleted successful');
+      }else if(successModel.msgType == 1){
+        isDeleteJob.value = false;
+        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+      }
 
+    }catch(e){
+      isDeleteJob.value = false;
+      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Lead not added");
+    }
+  }
 }

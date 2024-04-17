@@ -24,7 +24,6 @@ class VendorRegScreen extends GetView<VendorRegController> {
     return Obx(() => Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: ThemeService.white,
-
       body: OverlayLoaderWithAppIcon(
         isLoading: controller.isLoading.value,
         overlayBackgroundColor: ThemeService.grayScalecon,
@@ -81,6 +80,77 @@ class VendorRegScreen extends GetView<VendorRegController> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          SizedBox(
+                            height: AppSpacings.s15,
+                          ),
+                          TextFormField(
+                            controller: controller.vendorName,
+                            enabled: true,
+                            maxLines: 1,
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.next,
+                            cursorColor: ThemeService.primaryColor,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                            validator: (e) {
+                              if (e!.isEmpty) {
+                                return "Vendor name is Required";
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ThemeService.primaryColor
+                                        .withOpacity(.5)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10)),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ThemeService.primaryColor,
+                                    width: 1.5),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(10)),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ThemeService.primaryColor
+                                        .withOpacity(.5)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10)),
+                              ),
+                              errorBorder:const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.redAccent),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(10)),
+                              ),
+                              focusedErrorBorder:const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.redAccent),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(10)),
+                              ),
+                              labelText: "Vendor name*",
+                              contentPadding:
+                              const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                              labelStyle: TextStyle(
+                                color: ThemeService.primaryColor.withOpacity(0.5),
+                                fontSize: AppSpacings.s18,
+
+                              ),
+                              errorStyle:TextStyle(
+                                  fontSize: AppSpacings.s16,
+                                  color: Colors.redAccent
+                              ),
+                              hintStyle:
+                              const TextStyle(color: ThemeService.white),
+                            ),
+                          ),
                           SizedBox(
                             height: AppSpacings.s15,
                           ),
@@ -593,6 +663,77 @@ class VendorRegScreen extends GetView<VendorRegController> {
                           SizedBox(
                             height: AppSpacings.s15,
                           ),
+                          SizedBox(
+                            height: AppSpacings.s15,
+                          ),
+                          TextFormField(
+                            controller: controller.password,
+                            enabled: true,
+                            maxLines: 1,
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.next,
+                            cursorColor: ThemeService.primaryColor,
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                            validator: (e) {
+                              if (e!.isEmpty) {
+                                return "password is Required";
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ThemeService.primaryColor
+                                        .withOpacity(.5)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10)),
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ThemeService.primaryColor,
+                                    width: 1.5),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(10)),
+                              ),
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: ThemeService.primaryColor
+                                        .withOpacity(.5)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10)),
+                              ),
+                              errorBorder:const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.redAccent),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(10)),
+                              ),
+                              focusedErrorBorder:const OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Colors.redAccent),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(10)),
+                              ),
+                              labelText: "password name*",
+                              contentPadding:
+                              const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                              labelStyle: TextStyle(
+                                color: ThemeService.primaryColor.withOpacity(0.5),
+                                fontSize: AppSpacings.s18,
+
+                              ),
+                              errorStyle:TextStyle(
+                                  fontSize: AppSpacings.s16,
+                                  color: Colors.redAccent
+                              ),
+                              hintStyle:
+                              const TextStyle(color: ThemeService.white),
+                            ),
+                          ),
                           Text(
                             "Upload Aadhar",
                             style: Get.textTheme.bodyText1?.copyWith(
@@ -665,61 +806,61 @@ class VendorRegScreen extends GetView<VendorRegController> {
                             ),
                           ),
                           SizedBox(height: AppSpacings.s30),
-                          Bounce(
-                            duration: const Duration(milliseconds: 150),
-                            onPressed: () async{
-                              // controller.isLoading.value = true;
-                              if(controller.key.currentState!.validate()) {
-                                FocusScope.of(context).unfocus();
-                                controller.key.currentState!.save();
-
-                                if(controller.selectedFile.value == null){
-                                  Ui.ErrorSnackBar(title: "Upload Aadhar",message: "Please Upload Aadhar");
-                                } else {
-
-                                  FocusScope.of(context).unfocus();
-                                  // controller.addLead();
-
-                                }
-                              }else{
-                                log("Not validate");
-                              }
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: ThemeService.primaryColor,
-                                borderRadius:
-                                BorderRadius.circular(05),
-                                // boxShadow: [
-                                //   BoxShadow(
-                                //     color: ThemeService.primaryColor
-                                //         .withOpacity(0.5),
-                                //     spreadRadius: 1.5,
-                                //     blurRadius: 05,
-                                //     offset: const Offset(0, 2),
-                                //   ),
-                                // ]
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: EdgeInsets.all(
-                                    AppSpacings.s15,
-                                  ),
-                                  child: Text(
-                                    "Register",
-                                    style: Get.textTheme.headline1!
-                                        .copyWith(
-                                      color: ThemeService.white,
-                                      fontSize: AppSpacings.s22,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: AppSpacings.s30),
                         ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Bounce(
+                duration: const Duration(milliseconds: 150),
+                onPressed: () async{
+                  // controller.isLoading.value = true;
+                  if(controller.key.currentState!.validate()) {
+                    FocusScope.of(context).unfocus();
+                    controller.key.currentState!.save();
+
+                    if(controller.selectedFile.value == null){
+                      Ui.ErrorSnackBar(title: "Upload Aadhar",message: "Please Upload Aadhar");
+                    } else {
+
+                      FocusScope.of(context).unfocus();
+                      // controller.addLead();
+
+                    }
+                  }else{
+                    log("Not validate");
+                  }
+                },
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(AppSpacings.s20, 0,AppSpacings.s20, AppSpacings.s20),
+                  decoration: BoxDecoration(
+                    color: ThemeService.primaryColor,
+                    borderRadius:
+                    BorderRadius.circular(05),
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: ThemeService.primaryColor
+                    //         .withOpacity(0.5),
+                    //     spreadRadius: 1.5,
+                    //     blurRadius: 05,
+                    //     offset: const Offset(0, 2),
+                    //   ),
+                    // ]
+                  ),
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(
+                        AppSpacings.s15,
+                      ),
+                      child: Text(
+                        "Register",
+                        style: Get.textTheme.headline1!
+                            .copyWith(
+                          color: ThemeService.white,
+                          fontSize: AppSpacings.s22,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                   ),

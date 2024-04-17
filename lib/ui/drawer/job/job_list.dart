@@ -169,48 +169,61 @@ class JobListScreen extends GetView<JobListController> {
                                   SizedBox(
                                     height: AppSpacings.s5,
                                   ),
-                                  // headerRow(
-                                  //   title1: "15/04/24",
-                                  //   icon1: Icon(Icons.calendar_month, size: AppSpacings.s25),
-                                  // ),
-                                  Container(
-                                    height: AppSpacings.s50,
-                                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(Icons.calendar_month, size: AppSpacings.s25),
-                                            Text(
-                                              controller.jobList[index].createdOn != null
-                                                  ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].createdOn.toString()))
-                                                  : "-",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: Get.textTheme.displayMedium!.copyWith(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: AppSpacings.s20,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              controller.jobList[index].jobName ?? "-",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: Get.textTheme.displayMedium!.copyWith(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: AppSpacings.s20,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+                                  headerRow1(
+                                    title1: controller.jobList[index].createdOn != null
+                                        ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].createdOn.toString()))
+                                        : "-",
+                                    icon1: Icon(Icons.calendar_month, size: AppSpacings.s25),
+                                    title2: controller.jobList[index].jobName ?? "-",
+                                    icon2: null,
                                   ),
+                                  // Container(
+                                  //   height: AppSpacings.s50,
+                                  //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                                  //   child: Row(
+                                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  //     children: [
+                                  //       Expanded(
+                                  //         flex:4,
+                                  //         child: Row(
+                                  //           mainAxisAlignment: MainAxisAlignment.start,
+                                  //           children: [
+                                  //             Icon(Icons.calendar_month, size: AppSpacings.s25),
+                                  //             Text(
+                                  //               controller.jobList[index].createdOn != null
+                                  //                   ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].createdOn.toString()))
+                                  //                   : "-",
+                                  //               overflow: TextOverflow.ellipsis,
+                                  //               style: Get.textTheme.displayMedium!.copyWith(
+                                  //                 color: Colors.black,
+                                  //                 fontWeight: FontWeight.w700,
+                                  //                 fontSize: AppSpacings.s20,
+                                  //               ),
+                                  //             ),
+                                  //           ],
+                                  //         ),
+                                  //       ),
+                                  //       Expanded(
+                                  //         flex: 1,
+                                  //         child: Row(
+                                  //           mainAxisAlignment: MainAxisAlignment.end,
+                                  //           children: [
+                                  //             Expanded(
+                                  //               child: Text(
+                                  //                 controller.jobList[index].jobName ?? "-",
+                                  //                 style: Get.textTheme.displayMedium!.copyWith(
+                                  //                   color: Colors.black,
+                                  //                   fontWeight: FontWeight.w700,
+                                  //                   fontSize: AppSpacings.s20,
+                                  //                 ),
+                                  //               ),
+                                  //             ),
+                                  //           ],
+                                  //         ),
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
                                   const Divider(
                                       height: 5,
                                       endIndent: 10,
@@ -235,7 +248,7 @@ class JobListScreen extends GetView<JobListController> {
                                         ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].deliveryDate.toString()))
                                         : "-",
                                     title2: "Weight",
-                                    value2: controller.jobList[index].weight ?? "-",
+                                    value2: controller.jobList[index].weight.toString() ?? "-",
                                   ),
                                   Divider(
                                       height: 2,
@@ -288,49 +301,85 @@ class JobListScreen extends GetView<JobListController> {
                                         ),
                                         Row(
                                           children: [
-                                            Container(
-                                              padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
-                                              decoration: BoxDecoration(
-                                                  color: ThemeService.white,
-                                                  boxShadow:  [
-                                                    BoxShadow(
-                                                        color: ThemeService.primaryColor.withOpacity(0.5),
-                                                        blurRadius: 9.5,
-                                                        blurStyle: BlurStyle.inner,
-                                                        offset: const Offset(1.5,1.5),
-                                                        spreadRadius: 1.0
-                                                    )
-                                                  ],
-                                                  border: Border.all(
-                                                    color: ThemeService.primaryColor,
-                                                  ),
-                                                  borderRadius: BorderRadius.circular(12)),
-                                              child: const Center(
-                                                child: Icon(Icons.delete,color: ThemeService.primaryColor,)
-                                                // Text(
-                                                //   "Update",
-                                                //   style: Get.textTheme.headlineLarge!.copyWith(
-                                                //     color: ThemeService.primaryColor,
-                                                //     fontSize: AppSpacings.s20,
-                                                //     fontWeight: FontWeight.w600,
-                                                //   ),
-                                                // ),
+                                            Bounce(
+                                              duration: Duration(milliseconds: 100),
+                                              onPressed: () {
+                                                showGeneralDialog(
+                                                    transitionDuration:
+                                                    const Duration(milliseconds: 400),
+                                                    barrierDismissible: true,
+                                                    barrierLabel: '',
+                                                    pageBuilder: (ctx, a1, a2) {
+                                                      return Container();
+                                                    },
+                                                    context: context,
+                                                    transitionBuilder: (ctx, a1, a2, child) {
+                                                      // var curve = Curves.easeInOutCubic .transform(a1.value);
+                                                      return SlideTransition(
+                                                        position: Tween(
+                                                            begin: const Offset(0, 1),
+                                                            end: const Offset(0, 0))
+                                                            .animate(a1),
+                                                        child: Opacity(
+                                                          opacity: a1.value,
+                                                          child: Dialog(
+                                                            elevation: 5,
+                                                            surfaceTintColor: ThemeService.white,
+                                                            backgroundColor: ThemeService.white,
+                                                            // shadowColor:ThemeService.primaryColor.withOpacity(.5),
+                                                            insetPadding: EdgeInsets.only(
+                                                                left: AppSpacings.s15,
+                                                                top: 0,
+                                                                right: AppSpacings.s15,
+                                                                bottom: AppSpacings.s15),
+                                                            shape: const RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius.all(
+                                                                Radius.circular(25),
+                                                              ),
+                                                            ),
+                                                            child: deleteJob(context,controller.jobList.isNotEmpty ? controller.jobList[index].jobId:0 , controller.jobList.isNotEmpty ? controller.jobList[index].jobName:''),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    });
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
+                                                decoration: BoxDecoration(
+                                                    color: ThemeService.white,
+                                                    boxShadow:  [
+                                                      BoxShadow(
+                                                          color: ThemeService.primaryColor.withOpacity(0.5),
+                                                          blurRadius: 9.5,
+                                                          blurStyle: BlurStyle.inner,
+                                                          offset: const Offset(1.5,1.5),
+                                                          spreadRadius: 1.0
+                                                      )
+                                                    ],
+                                                    border: Border.all(
+                                                      color: ThemeService.primaryColor,
+                                                    ),
+                                                    borderRadius: BorderRadius.circular(12)),
+                                                child: const Center(
+                                                  child: Icon(Icons.delete,color: ThemeService.primaryColor,)
+                                                ),
                                               ),
                                             ),
                                             SizedBox(
                                               width: AppSpacings.s15,
                                             ),
-                                            GestureDetector(
-                                              onTap: (){
-                                                Get.toNamed(Routes.createJob,arguments: {
-                                                  "jobName" : controller.jobList[index].jobName,
-                                                  "fromLocation":controller.jobList[index].fromLocation,
-                                                  "toLocation" :controller.jobList[index].toLocation,
-                                                  "deliveryDate":controller.jobList[index].deliveryDate != null
-                                                      ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].deliveryDate.toString()))
-                                                      : "-",
-                                                  "weight":controller.jobList[index].weight ?? ""
-                                                });
+                                            Bounce(
+                                              duration: Duration(milliseconds: 100),
+                                              onPressed: (){
+                                                // Get.toNamed(Routes.createJob,arguments: {
+                                                //   "jobName" : controller.jobList[index].jobName,
+                                                //   "fromLocation":controller.jobList[index].fromLocation,
+                                                //   "toLocation" :controller.jobList[index].toLocation,
+                                                //   "deliveryDate":controller.jobList[index].deliveryDate != null
+                                                //       ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].deliveryDate.toString()))
+                                                //       : "-",
+                                                //   "weight":controller.jobList[index].weight ?? ""
+                                                // });
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
@@ -434,6 +483,16 @@ class JobListScreen extends GetView<JobListController> {
 
   Filter(context) {
 
+
+    controller.tampSelectedJobName.value = controller.selectedJobName.value;
+    controller.tampSelectedJobNameId.value = controller.selectedJobNameId.value;
+
+    controller.tampSelectedJobStatus.value = controller.selectedJobStatus.value;
+    controller.tampSelectedJobStatusId.value = controller.selectedJobStatusId.value;
+
+    controller.tampSelectedJobType.value = controller.selectedJobType.value;
+    controller.tampSelectedJobTypeId.value = controller.selectedJobTypeId.value;
+
     controller.tempFromDate.text = controller.fromDate.value;
     controller.tempToDate.text = controller.toDate.value;
 
@@ -483,12 +542,34 @@ class JobListScreen extends GetView<JobListController> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      controller.tampSelectedJobName.value = "";
+                      controller.tampSelectedJobNameId.value = "";
+                      controller.selectedJobName.value = "";
+                      controller.selectedJobNameId.value = "";
+
+                      controller.tampSelectedJobStatus.value = "";
+                      controller.tampSelectedJobStatusId.value = "";
+                      controller.selectedJobStatus.value = "";
+                      controller.selectedJobStatusId.value = "";
+
+                      controller.tampSelectedJobType.value = "";
+                      controller.tampSelectedJobTypeId.value = "";
+                      controller.selectedJobType.value = "";
+                      controller.selectedJobTypeId.value = "";
+
+
                       controller.tempFromDate.text = "";
                       controller.tempToDate.text = "";
 
                       controller.fromDate.value = "";
                       controller.toDate.value = "";
 
+                      controller.textJobName.value.clear();
+                      controller.textJobStatus.value.clear();
+                      controller.textJobType.value.clear();
+                      controller.jobPage = 0;
+                      controller.jobList.clear();
+                      controller.getJob();
                       // Get.back();
                     },
                     child: Text(
@@ -539,7 +620,7 @@ class JobListScreen extends GetView<JobListController> {
                       ),
                       children: [
                         TextFormField(
-                          controller: controller.tempToDate,
+                          controller: controller.tempFromDate,
                           enabled: true,
                           maxLines: 1,
                           keyboardType: TextInputType.text,
@@ -553,15 +634,15 @@ class JobListScreen extends GetView<JobListController> {
                             DateTime? followUpPickedDate =
                             await showDatePicker(
                               context: context,
-                              initialDate: controller.tempToDate.text != "" ? DateTime.parse(controller.tempToDate.text.toString()) : DateTime.now(),
+                              initialDate: controller.tempFromDate.text != "" ? DateTime.parse(controller.tempFromDate.text.toString()) : DateTime.now(),
                               // initialDate: DateTime.parse(DateFormat('yyyy-MM-dd').format(DateTime.now())),
                               firstDate: DateTime(DateTime.now().year - 10),
                               lastDate: DateTime(DateTime.now().year + 10),
                             );
                             if (followUpPickedDate != null) {
                               String formattedDate = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
-                              controller.tempToDate.text = formattedDate;
-                              log(controller.tempToDate.text);
+                              controller.tempFromDate.text = formattedDate;
+                              log(controller.tempFromDate.text);
                               // controller.nextFollowUp.value = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
                             }
                           },
@@ -606,7 +687,7 @@ class JobListScreen extends GetView<JobListController> {
                           height: AppSpacings.s15,
                         ),
                         TextFormField(
-                          controller: controller.tempFromDate,
+                          controller: controller.tempToDate,
                           enabled: true,
                           maxLines: 1,
                           keyboardType: TextInputType.text,
@@ -620,15 +701,15 @@ class JobListScreen extends GetView<JobListController> {
                             DateTime? followUpPickedDate =
                             await showDatePicker(
                               context: context,
-                              initialDate: controller.tempFromDate.text != "" ? DateTime.parse(controller.tempFromDate.text.toString()) : DateTime.now(),
+                              initialDate: controller.tempToDate.text != "" ? DateTime.parse(controller.tempToDate.text.toString()) : DateTime.now(),
                               // initialDate: DateTime.parse(DateFormat('yyyy-MM-dd').format(DateTime.now())),
                               firstDate: DateTime(DateTime.now().year - 10),
                               lastDate: DateTime(DateTime.now().year + 10),
                             );
                             if (followUpPickedDate != null) {
                               String formattedDate = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
-                              controller.tempFromDate.text = formattedDate;
-                              log(controller.tempFromDate.text);
+                              controller.tempToDate.text = formattedDate;
+                              log(controller.tempToDate.text);
                               // controller.nextFollowUp.value = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
                             }
                           },
@@ -717,11 +798,31 @@ class JobListScreen extends GetView<JobListController> {
             Bounce(
               duration: const Duration(milliseconds: 100),
               onPressed: (){
+
+                controller.selectedJobName.value = controller.tampSelectedJobName.value;
+                controller.selectedJobNameId.value = controller.tampSelectedJobNameId.value;
+                controller.tampSelectedJobName.value = "";
+                controller.tampSelectedJobNameId.value = "";
+
+                controller.selectedJobStatus.value = controller.tampSelectedJobStatus.value;
+                controller.selectedJobStatusId.value = controller.tampSelectedJobStatusId.value;
+                controller.tampSelectedJobStatus.value = "";
+                controller.tampSelectedJobStatusId.value = "";
+
+                controller.selectedJobType.value = controller.tampSelectedJobType.value;
+                controller.selectedJobTypeId.value = controller.tampSelectedJobTypeId.value;
+                controller.tampSelectedJobType.value = "";
+                controller.tampSelectedJobTypeId.value = "";
+
                 controller.toDate.value = controller.tempToDate.text;
                 controller.fromDate.value = controller.tempFromDate.text;
 
                 controller.tempFromDate.text = "";
                 controller.tempToDate.text = "";
+
+                controller.jobPage = 0;
+                controller.jobList.clear();
+                controller.getJob();
                 Get.back();
               },
               child: Container(
@@ -783,6 +884,89 @@ class JobListScreen extends GetView<JobListController> {
         ),
       ),
     );
+  }
+
+  deleteJob(context,jobId,jobName) {
+    return Obx(() => SizedBox(
+      height: Get.height *.30,
+      child: ListView(
+        shrinkWrap: true,
+        padding: EdgeInsets.only(
+            left: AppSpacings.s20,
+            top: AppSpacings.s30,
+            right: AppSpacings.s20,
+            bottom: AppSpacings.s15),
+        children: [
+          Center(
+            child: Text(
+              'Are you sure?',
+              style: Get.textTheme.titleSmall!.copyWith(
+                color: ThemeService.primaryColor,
+                fontSize: AppSpacings.s25,
+                fontFamily: 'OpenSans-Semibold',
+              ),
+            ),
+          ),
+          SizedBox(
+            height: AppSpacings.s20,
+          ),
+          Center(
+            child: Text(
+              'You want to delete this job $jobName',
+              style: Get.textTheme.titleSmall!.copyWith(
+                color: ThemeService.primaryColor,
+                fontSize: AppSpacings.s18,
+                fontFamily: 'OpenSans-Semibold',
+              ),
+            ),
+          ),
+          SizedBox(
+            height: AppSpacings.s40,
+          ),
+          controller.isDeleteJob.value
+              ? CupertinoActivityIndicator(radius: AppSpacings.s20)
+              : Bounce(
+            duration: const Duration(milliseconds: 150),
+            onPressed: () async {
+              FocusScope.of(context).unfocus();
+              controller.deleteJob(context,jobId: jobId);
+
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: ThemeService.primaryColor,
+                borderRadius: BorderRadius.circular(25),
+                // boxShadow: [
+                //   BoxShadow(
+                //     color: ThemeService.primaryColor
+                //         .withOpacity(0.5),
+                //     spreadRadius: 1.5,
+                //     blurRadius: 10,
+                //     offset: const Offset(0, 2),
+                //   ),
+                // ]
+              ),
+              child: Center(
+                child: Padding(
+                  padding: EdgeInsets.all(
+                    AppSpacings.s12,
+                  ),
+                  child: Text(
+                    "Delete",
+                    style: Get.textTheme.headline1!.copyWith(
+                      color: ThemeService.white,
+                      fontSize: AppSpacings.s25,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: AppSpacings.s10),
+        ],
+      ),
+    ));
   }
 
 }

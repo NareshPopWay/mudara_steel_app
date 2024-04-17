@@ -48,6 +48,73 @@ headerRow({String? title1, Icon? icon1,}) {
     ),
   );
 }
+headerRow1({String? title1, Icon? icon1, String? title2, Icon? icon2, bool? isSingle,VoidCallback? onTap}) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 3),
+    // decoration: BoxDecoration(
+    //   borderRadius: const BorderRadius.only(
+    //     topRight: Radius.circular(20),
+    //     topLeft: Radius.circular(20),
+    //   ),
+    //   color: ThemeService.primaryColor.withOpacity(0.2),
+    // ),
+    height: AppSpacings.s50,
+    child: Row(
+      mainAxisAlignment: isSingle == true ? MainAxisAlignment.start : MainAxisAlignment.spaceAround,
+      children: [
+        if (isSingle == true) SizedBox(width: AppSpacings.s14),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            icon1 ?? const SizedBox(),
+            if (icon1 != null) const SizedBox(width: 5),
+            SizedBox(
+              width: isSingle == true ? Get.width * .8 : Get.width / 3,
+              child: Text(
+                title1 ?? "",
+                overflow: TextOverflow.ellipsis,
+                style: Get.textTheme.displayMedium!.copyWith(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                  fontSize: AppSpacings.s20,
+                ),
+              ),
+            ),
+          ],
+        ),
+        if (isSingle != true)
+          Container(
+            color: ThemeService.primaryColor.withOpacity(0.2),
+            width: 1,
+            height: AppSpacings.s30,
+          ),
+        if (isSingle != true)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              // icon2 ?? const SizedBox(),
+              if (icon2 != null) const SizedBox(width: 5),
+              GestureDetector(
+                onTap:onTap,
+                child: SizedBox(
+                  width: Get.width / 3,
+                  child: Text(
+                    title2 ?? "",
+                    overflow: TextOverflow.ellipsis,
+                    style: Get.textTheme.displayMedium!.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: AppSpacings.s20,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+      ],
+    ),
+  );
+}
 
 header({String? title, String? value, Color? color = Colors.black}) {
   return Container(

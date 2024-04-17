@@ -6,6 +6,7 @@ class Routes {
   static const registerVendor = '/registerVendor';
   static const vendorList = '/vendorList';
   static const createJob = '/createJob';
+  static const createJobAllocation = '/createJobAllocation';
   static const jobList = '/jobList';
   static const bidList = '/bidList';
   static const jobAllocationList = '/jobAllocationList';

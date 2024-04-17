@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 
 
@@ -14,8 +15,15 @@ class VendorListController extends GetxController {
   ScrollController leadScrollController = ScrollController();
   TextEditingController searchTextEditController = TextEditingController();
 
+  int vendorPage = 0;
   RxBool isSearching = RxBool(false);
-  int leadPage = 0;
+  RxInt showCountVal = 10.obs;
+  RxString shortByVal = "LeadDate".obs;
+  RxString selectedShortByVal = "CreatedOn".obs;
+  RxString descending = "desc".obs;
+  RxString ascending = "asc".obs;
+
+  RxBool isDescending = RxBool(false);
 
   RxBool isLoading = false.obs;
   RxBool isVendorListLoading = false.obs;
@@ -53,33 +61,29 @@ class VendorListController extends GetxController {
     double currentScroll = leadScrollController.position.pixels;
     double delta = Get.height / 3;
     if (maxScroll - currentScroll <= delta && !isVendorListLoading.value) {
-      // await getVendor(pagination: true);
+      await getVendor(pagination: true);
     }
   }
 
-  // Future<void> getVendor({bool pagination = false}) async {
-  //   isLoading.value = true;
-  //
-  //   var leadResponse = await APIProvider().getLeadList(
-  //       pageNumber: leadPage,
-  //       rowsOfPage: showCountVal,
-  //       orderByName: selectedShortByVal,
-  //       searchVal: searchTextEditController.text,
-  //       fromDate: startDate.value,
-  //       toDate: endDate.value,
-  //       followupDate: followUPDate.value,
-  //       leadStatusID: selectedLeadStatusId.value,
-  //       empIdList: selectedSalesPersonList.map((e) => e.value).toList(),
-  //       sortDirection: isDescending.value == true ? ascending.value: descending.value,
-  //       followUpStatus: selectedFollowUpStatusId.value.isNotEmpty ? selectedFollowUpStatusId.value : 0,
-  //       sellOrderNo:""
-  //   );
-  //   if (leadResponse.isNotEmpty) {
-  //     leadPage++;
-  //     leads.addAll(leadResponse);
-  //   }
-  //   isLoading.value = false;
-  //   return;
-  // }
+  Future<void> getVendor({bool pagination = false}) async {
+    isVendorListLoading.value = true;
+
+    var leadResponse = await APIProvider().getVendorList(
+      pageNumber: vendorPage,
+      rowsOfPage: showCountVal,
+      orderByName: selectedShortByVal,
+      searchVal: searchTextEditController.text,
+      fromDate: fromDate.value,
+      toDate: toDate.value,
+      sortDirection: isDescending.value == true ? ascending.value: descending.value,
+      vendorId: selectedVendorNameId.value
+    );
+    if (leadResponse.isNotEmpty) {
+      vendorPage++;
+      vendorList.addAll(leadResponse);
+    }
+    isVendorListLoading.value = false;
+    return;
+  }
 
 }

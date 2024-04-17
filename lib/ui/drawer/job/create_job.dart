@@ -10,6 +10,8 @@ import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
+import 'package:mudara_steel_app/common/ui.dart';
+import 'package:mudara_steel_app/common/widget/animated_toggle.dart';
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
 import 'package:mudara_steel_app/controllers/job_controller/create_job_controller.dart';
 
@@ -239,7 +241,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                   controller: controller.fromLocation,
                                   enabled: true,
                                   maxLines: 1,
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.text,
                                   textInputAction: TextInputAction.next,
                                   cursorColor: ThemeService.primaryColor,
                                   style: const TextStyle(
@@ -514,9 +516,151 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                 SizedBox(
                                   height: AppSpacings.s15,
                                 ),
+                                TextFormField(
+                                  controller: controller.weightUnit,
+                                  enabled: true,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.next,
+                                  cursorColor: ThemeService.primaryColor,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Weight is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor,
+                                          width: 1.5),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    errorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedErrorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    labelText: "Weight Unit",
+                                    contentPadding:
+                                    const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                    labelStyle: TextStyle(
+                                      color: ThemeService.primaryColor.withOpacity(0.5),
+                                      fontSize: AppSpacings.s18,
+
+                                    ),
+                                    errorStyle:TextStyle(
+                                        fontSize: AppSpacings.s16,
+                                        color: Colors.redAccent
+                                    ),
+                                    hintStyle:
+                                    const TextStyle(color: ThemeService.white),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: AppSpacings.s15,
+                                ),
+                                TextFormField(
+                                  controller: controller.remark,
+                                  enabled: true,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.next,
+                                  cursorColor: ThemeService.primaryColor,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Weight is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor,
+                                          width: 1.5),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    errorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedErrorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    labelText: "Remark",
+                                    contentPadding:
+                                    const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                    labelStyle: TextStyle(
+                                      color: ThemeService.primaryColor.withOpacity(0.5),
+                                      fontSize: AppSpacings.s18,
+
+                                    ),
+                                    errorStyle:TextStyle(
+                                        fontSize: AppSpacings.s16,
+                                        color: Colors.redAccent
+                                    ),
+                                    hintStyle:
+                                    const TextStyle(color: ThemeService.white),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: AppSpacings.s15,
+                                ),
                                 searchDropDwonWidget(
-                                  selectedValue: controller.tampSelectedJobType,
-                                  selectedId: controller.tampSelectedJobTypeId,
+                                  selectedValue: controller.selectedJobType,
+                                  selectedId: controller.selectedJobTypeId,
                                   emptyTitle: "Job Type",
                                   list: controller.jobTypeList,
                                   isExpanded: controller.isJobTypeExpanded,
@@ -527,14 +671,39 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                   height: AppSpacings.s15,
                                 ),
                                 searchDropDwonWidget(
-                                  selectedValue: controller.tampSelectedJobStatus,
-                                  selectedId: controller.tampSelectedJobStatusId,
+                                  selectedValue: controller.selectedJobStatus,
+                                  selectedId: controller.selectedJobStatusId,
                                   emptyTitle: "Job Status",
                                   list: controller.jobStatusList,
                                   isExpanded: controller.isJobStatusExpanded,
                                   isSearching: controller.isJobStatusSearching,
                                   textfield: controller.textJobStatus,
                                 ),
+                                SizedBox(
+                                  height: AppSpacings.s20,
+                                ),
+                                Text(
+                                  "Select Trailer/Truck",
+                                  style: Get.textTheme.bodyText1?.copyWith(
+                                    fontSize: AppSpacings.s20,
+                                    fontWeight: FontWeight.w600,
+                                    color: ThemeService.primaryColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: AppSpacings.s8,
+                                ),
+                                AnimatedToggle(
+                                  values: ['Trailer', 'Truck'],
+                                  onToggleCallback: (value) {
+                                      controller.toggleValue.value = value;
+                                      log('${controller.toggleValue.value}');
+                                  },
+                                  buttonColor: ThemeService.primaryColor,
+                                  backgroundColor:ThemeService.primaryColor.withOpacity(0.1),
+                                  textColor:ThemeService.white,
+                                ),
+                                // Text('Toggle Value : ${controller.toggleValue}'),
                               ],
                             ),
                           ),
@@ -547,10 +716,15 @@ class CreateJobScreen extends GetView<CreateJobController> {
                         if(controller.key.currentState!.validate()) {
                           FocusScope.of(context).unfocus();
                           controller.key.currentState!.save();
+                            if(controller.selectedJobTypeId.value == ""){
+                            Ui.ErrorSnackBar(title: "Select Job Type",message: "Please Select Job Type");
+                            }else if(controller.selectedJobStatusId.value == ""){
+                            Ui.ErrorSnackBar(title: "Select Job Status",message: "Please Select Job Status");
+                            }else{
                             FocusScope.of(context).unfocus();
-
-                            // controller.addLead();
+                            controller.createJob();
                           }
+                        }
                       },
                       child: Container(
                         margin: EdgeInsets.fromLTRB(AppSpacings.s10, AppSpacings.s10, AppSpacings.s10, AppSpacings.s10),

@@ -3,7 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/api_provider.dart';
+import 'package:mudara_steel_app/common/constant.dart';
+import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
+import 'package:mudara_steel_app/model/success_model.dart';
+import 'package:mudara_steel_app/routes/app_routes.dart';
 
 
 class CreateJobController extends GetxController {
@@ -14,6 +19,8 @@ class CreateJobController extends GetxController {
   TextEditingController jobName = TextEditingController();
   TextEditingController fromLocation = TextEditingController();
   TextEditingController weight = TextEditingController();
+  TextEditingController weightUnit = TextEditingController();
+  TextEditingController remark = TextEditingController();
   TextEditingController toLocation = TextEditingController();
   TextEditingController deliveryDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
   RxString nextFollowUp = "".obs;
@@ -23,6 +30,8 @@ class CreateJobController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSaveArchitech = false.obs;
 
+  RxBool isSelected = false.obs;
+  RxInt toggleValue = 0.obs;
 
   RxList<FieldItemValueModel> jobTypeList = <FieldItemValueModel>[].obs;
   RxBool isJobTypeExpanded = false.obs;
@@ -46,6 +55,9 @@ class CreateJobController extends GetxController {
   @override
   void onInit() async {
 
+    jobStatusList.value = await APIProvider().getJobStatusList();
+    jobTypeList.value = await APIProvider().getJobTypeList();
+
     if (Get.arguments != null && Get.arguments is Map) {
       data = Get.arguments;
 
@@ -60,49 +72,50 @@ class CreateJobController extends GetxController {
 
 
 
-// Future<void> addLead()async{
-//   bool isInternet = await Constants.isInternetAvail();
-//   if (!isInternet) {
-//     isLoading.value = false;
-//     Constants.ErrorSnackBar(title:"No Internet connection",message: "Please turn on internet connection");
-//     return;
-//   }
-//   try{
-//     isLoading.value = true;
-//     SuccessModel successModel =  await  APIProvider().addLead(
-//       data: {
-//         "Phone": phone.text,
-//         "ClientId": selectedClientId.value,
-//         "ClientName": name.text,
-//         "Address": address.text,
-//         "StateID": selectedStateId.value,
-//         "CityID": selectedCityId.value,
-//         "LeadSourceID": selectedLeadSourceId.value,
-//         "RefBy": referenceBy.text,
-//         "RefPhone": referencePhone.text,
-//         "ArchitechEmpID": selectedArchitectNameId.value,
-//         "EmployeeID": selectedSalesPersonId.value,
-//         "Remark": remark.text,
-//         "LeadStatusID": selectedStatusId.value,
-//         "NextFollowupDate": tempNextFollowUp.text,
-//         "objLeadDetail": List.from(selectedProductList.map((e) => e.toJson()).toList()),
-//       },
-//     );
-//     if(successModel.msgType == 0){
-//       isLoading.value = false;
-//       Get.offAndToNamed(Routes.leadList);
-//       // Constants.successSnackBar(title: "Lead Added Successfully");
-//       Ui.SuccessSnackBar(title:'Successful',message:'Lead Added Successfully');
-//     }else if(successModel.msgType == 1){
-//       isLoading.value = false;
-//       Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
-//     }
-//
-//   }catch(e){
-//     isLoading.value = false;
-//     Ui.ErrorSnackBar(title: "Something went wrong ",message: "Lead not added");
-//   }
-// }
+  Future<void> createJob()async{
+    bool isInternet = await Constants.isInternetAvail();
+    if (!isInternet) {
+      isLoading.value = false;
+      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      return;
+    }
+    try{
+      isLoading.value = true;
+      SuccessModel successModel =  await  APIProvider().createJob(
+        data:
+          {
+            "CompanyID": "0",
+            "JobName": jobName.text,
+            "JobStatusID": selectedJobStatusId.value,
+            "FromLocationID": "0",
+            "FromLocation": fromLocation.text,
+            "ToLocation": toLocation.text,
+            "ToLocationID": "0",
+            "DeliveryDate": deliveryDate.text,
+            "JobTypeID": selectedJobTypeId.value,
+            "IsTruck": toggleValue.value == 0 ? false : true ,
+            "Weight": weight.text,
+            "WeightUnit": weightUnit.text,
+            "Column1": "Trailer",
+            "Column2": "",
+            "Remark": remark.text
+        },
+      );
+      if(successModel.msgType == 0){
+        isLoading.value = false;
+        Get.offAndToNamed(Routes.jobList,arguments: "Job List");
+        // Constants.successSnackBar(title: "Lead Added Successfully");
+        Ui.SuccessSnackBar(title:'Successful',message:'Lead Added Successfully');
+      }else if(successModel.msgType == 1){
+        isLoading.value = false;
+        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+      }
+
+    }catch(e){
+      isLoading.value = false;
+      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Lead not added");
+    }
+  }
 
 
 }

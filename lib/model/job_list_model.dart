@@ -22,7 +22,7 @@ class JobListModel {
   DateTime? deliveryDate;
   int? jobTypeId;
   bool? isTruck;
-  dynamic weight;
+  double? weight;
   dynamic weightUnit;
   String? column1;
   dynamic column2;
@@ -152,7 +152,7 @@ class JobListModel {
     deliveryDate: json["DeliveryDate"] == null ? null : DateTime.parse(json["DeliveryDate"]),
     jobTypeId: json["JobTypeID"],
     isTruck: json["IsTruck"],
-    weight: json["Weight"],
+    weight: json["Weight"]??0.0,
     weightUnit: json["WeightUnit"],
     column1: json["Column1"],
     column2: json["Column2"],

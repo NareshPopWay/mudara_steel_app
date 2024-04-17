@@ -467,6 +467,9 @@ class VendorListScreen extends GetView<VendorListController> {
 
                        controller.selectedVendorName.value = "";
                        controller.selectedVendorNameId.value = "";
+                       controller.vendorPage = 0;
+                       controller.vendorList.clear();
+                       controller.getVendor();
                        // Get.back();
                      },
                      child: Text(
@@ -686,6 +689,9 @@ class VendorListScreen extends GetView<VendorListController> {
                  controller.tampSelectedVendorName.value = "";
                  controller.tampSelectedVendorNameId.value = "";
 
+                 controller.vendorPage = 0;
+                 controller.vendorList.clear();
+                 controller.getVendor();
                  Get.back();
                },
                child: Container(
