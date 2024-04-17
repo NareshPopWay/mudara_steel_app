@@ -32,6 +32,7 @@ class VendorListController extends GetxController {
   @override
   void onInit() async {
     leadScrollController.addListener(vendorScrollListener);
+    getVendor();
     super.onInit();
   }
 

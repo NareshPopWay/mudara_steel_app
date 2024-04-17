@@ -1,22 +1,13 @@
-// To parse this JSON data, do
-//
-//     final jobAllocationByIdModel = jobAllocationByIdModelFromJson(jsonString);
-
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
-JobAllocationByIdModel jobAllocationByIdModelFromJson(String str) => JobAllocationByIdModel.fromJson(json.decode(str));
-
-String jobAllocationByIdModelToJson(JobAllocationByIdModel data) => json.encode(data.toJson());
-
-class JobAllocationByIdModel {
-  int jobAllocationId;
-  int jobId;
-  int jobAllocationTypeId;
-  int jobBidId;
-  int vendorId;
-  double cost;
-  String remark;
+class JobAllocationModel {
+  int? jobAllocationId;
+  int? jobId;
+  int? jobAllocationTypeId;
+  int? jobBidId;
+  int? vendorId;
+  double? cost;
+  String? remark;
   dynamic isActive;
   dynamic createdOn;
   dynamic createdBy;
@@ -31,30 +22,30 @@ class JobAllocationByIdModel {
   dynamic jobName;
   dynamic vendorName;
 
-  JobAllocationByIdModel({
-    required this.jobAllocationId,
-    required this.jobId,
-    required this.jobAllocationTypeId,
-    required this.jobBidId,
-    required this.vendorId,
-    required this.cost,
-    required this.remark,
-    required this.isActive,
-    required this.createdOn,
-    required this.createdBy,
-    required this.createdUserTypeId,
-    required this.modifiedOn,
-    required this.modifiedBy,
-    required this.modifiedUserTypeId,
-    required this.isDelete,
-    required this.deletedOn,
-    required this.deletedBy,
-    required this.deletedUserTypeId,
-    required this.jobName,
-    required this.vendorName,
+  JobAllocationModel({
+    this.jobAllocationId,
+    this.jobId,
+    this.jobAllocationTypeId,
+    this.jobBidId,
+    this.vendorId,
+    this.cost,
+    this.remark,
+    this.isActive,
+    this.createdOn,
+    this.createdBy,
+    this.createdUserTypeId,
+    this.modifiedOn,
+    this.modifiedBy,
+    this.modifiedUserTypeId,
+    this.isDelete,
+    this.deletedOn,
+    this.deletedBy,
+    this.deletedUserTypeId,
+    this.jobName,
+    this.vendorName,
   });
 
-  factory JobAllocationByIdModel.fromJson(Map<String, dynamic> json) => JobAllocationByIdModel(
+  factory JobAllocationModel.fromJson(Map<String, dynamic> json) => JobAllocationModel(
     jobAllocationId: json["JobAllocationID"],
     jobId: json["JobID"],
     jobAllocationTypeId: json["JobAllocationTypeID"],

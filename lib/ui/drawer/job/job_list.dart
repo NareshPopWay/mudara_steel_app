@@ -371,6 +371,10 @@ class JobListScreen extends GetView<JobListController> {
                                             Bounce(
                                               duration: Duration(milliseconds: 100),
                                               onPressed: (){
+                                                Get.toNamed(
+                                                  Routes.createJob,
+                                                  arguments: controller.jobList[index].jobId,
+                                                );
                                                 // Get.toNamed(Routes.createJob,arguments: {
                                                 //   "jobName" : controller.jobList[index].jobName,
                                                 //   "fromLocation":controller.jobList[index].fromLocation,

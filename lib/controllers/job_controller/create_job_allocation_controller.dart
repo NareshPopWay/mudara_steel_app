@@ -7,6 +7,7 @@ import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
+import 'package:mudara_steel_app/model/job_allocation_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
@@ -19,7 +20,7 @@ class CreateJobAllocationController extends GetxController {
   TextEditingController cost = TextEditingController();
   TextEditingController remark = TextEditingController();
   Map data ={};
-
+  RxInt jobAllocationId = 0.obs;
   RxBool isLoading = false.obs;
 
   RxBool isSelected = false.obs;
@@ -49,6 +50,15 @@ class CreateJobAllocationController extends GetxController {
 
     jobNameList.value = await APIProvider().getJobName();
     vendorJobBidList.value = await APIProvider().getVendorJobBide(jobId: 0);
+
+    if(Get.arguments != null && Get.arguments is int){
+      jobAllocationId.value = Get.arguments;
+      isLoading.value= true;
+      getJobAllocationById(jobAllocationId: jobAllocationId.value);
+    }
+
+
+
     super.onInit();
   }
 
@@ -90,5 +100,32 @@ class CreateJobAllocationController extends GetxController {
     }
   }
 
+  Future<void> getJobAllocationById({jobAllocationId}) async {
+    isLoading.value = true;
 
+    JobAllocationModel jobAllocation = await APIProvider().getJobAllocationById(
+        jobAllocationId:  jobAllocationId
+    );
+    if(jobAllocation != null){
+      cost.text = jobAllocation.cost.toString();
+      remark.text = jobAllocation.remark.toString();
+      for (int i = 0; i < jobNameList.length; i++) {
+        if (jobNameList[i].value == jobAllocation.jobId.toString()) {
+          selectedJobNameId.value = jobNameList[i].value.toString();
+          selectedJobName.value = jobNameList[i].text.toString();
+          break;
+        }
+      }
+      for (int i = 0; i < vendorJobBidList.length; i++) {
+        if (vendorJobBidList[i].value == jobAllocation.jobBidId.toString()) {
+          selectedVendorJobBidId.value = vendorJobBidList[i].value.toString();
+          selectedVendorJobBid.value = vendorJobBidList[i].text.toString();
+          break;
+        }
+      }
+      isLoading.value = false;
+    }
+    isLoading.value = false;
+    return;
+  }
 }

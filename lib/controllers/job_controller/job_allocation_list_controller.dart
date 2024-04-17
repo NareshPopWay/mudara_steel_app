@@ -9,7 +9,6 @@ import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_allocation_list_model.dart';
-import 'package:mudara_steel_app/model/jov_allocation_by_id_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
 
 
@@ -147,19 +146,4 @@ class JobAllocationListController extends GetxController {
       Ui.ErrorSnackBar(title: "Something went wrong ",message: "Lead not added");
     }
   }
-
-
-  Future<void> getJobAllocationById({jobAllocationId}) async {
-    isLoading.value = true;
-
-    JobAllocationByIdModel jobAllocationByIdResponse = await APIProvider().getJobAllocationById(
-     jobAllocationId:  jobAllocationId
-    );
-    if(jobAllocationByIdResponse != null){
-      isLoading.value = false;
-    }
-    isLoading.value = false;
-    return;
-  }
-
 }

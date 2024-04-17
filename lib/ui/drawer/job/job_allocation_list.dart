@@ -129,7 +129,7 @@ class JobAllocationListScreen extends GetView<JobAllocationListController> {
                 height: AppSpacings.s5,
               ),
               Expanded(
-                  child:  ListView(
+                  child: ListView(
                     controller: controller.jobAllocationScrollController,
                     shrinkWrap: true,
                     padding: EdgeInsets.fromLTRB(0,0, 0, AppSpacings.s55),
@@ -371,8 +371,12 @@ class JobAllocationListScreen extends GetView<JobAllocationListController> {
                                           duration: const Duration(milliseconds: 100),
                                           onPressed: ()async{
 
-                                            controller.vendorJobBidList.value = await APIProvider().getVendorJobBide(jobId:controller.jobAllocationList[index].jobId);
-                                            controller.getJobAllocationById(jobAllocationId:controller.jobAllocationList[index].jobAllocationId);
+                                            Get.toNamed(
+                                              Routes.createJobAllocation,
+                                              arguments: controller.jobAllocationList[index].jobAllocationId,
+                                            );
+                                            // // controller.vendorJobBidList.value = await APIProvider().getVendorJobBide(jobId:controller.jobAllocationList[index].jobId);
+                                            // controller.getJobAllocationById(jobAllocationId:controller.jobAllocationList[index].jobAllocationId);
 
                                             // await showModalBottomSheet(
                                             // context: context,

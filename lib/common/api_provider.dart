@@ -15,8 +15,9 @@ import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/controllers/root_controller.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_allocation_list_model.dart';
+import 'package:mudara_steel_app/model/job_allocation_model.dart';
 import 'package:mudara_steel_app/model/job_list_model.dart';
-import 'package:mudara_steel_app/model/jov_allocation_by_id_model.dart';
+import 'package:mudara_steel_app/model/job_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
@@ -392,6 +393,54 @@ class APIProvider {
     return SuccessModel.fromJson(jsonDecode(responseJson));
   }
 
+  Future<JobModel> getJobById({
+    jobId
+  }) async {
+    bool isInternet = await Constants.isInternetAvail();
+    if (!isInternet) {
+      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+    }
+    var responseJson;
+
+
+    if (jobId == null || jobId == "") {
+      jobId = "0";
+    }
+
+    apiToken.value = GetStorage().read(Constants.token);
+    log("apiToken => ${apiToken.value}");
+    try {
+      log("$baseUrl/AdminAPI/JobAPI/GetDataByJobID?ID=$jobId");
+
+      final response = await http.get(
+          Uri.parse(
+            "$baseUrl/AdminAPI/JobAPI/GetDataByJobID?ID=$jobId",
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${apiToken.value}',
+          });
+      responseJson = response.body.toString();
+      log(responseJson.toString());
+      if(response.statusCode == 200){
+        if (responseJson != null) {
+          return JobModel.fromJson(jsonDecode(responseJson));
+        } else {
+          return JobModel.fromJson(jsonDecode(responseJson));
+        }
+      }else{
+        Get.offNamed(Routes.login);
+      }
+    } on SocketException {
+      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      return JobModel.fromJson(Map());
+    } catch (e) {
+      print("error ...getJobById ...... $e");
+    }
+    return JobModel.fromJson(jsonDecode(responseJson));
+  }
+
 ///-----------------------------Create Job Allocation----------------------////
 
 
@@ -645,7 +694,7 @@ class APIProvider {
     return SuccessModel.fromJson(jsonDecode(responseJson));
   }
 
-  Future<JobAllocationByIdModel> getJobAllocationById({
+  Future<JobAllocationModel> getJobAllocationById({
     jobAllocationId
   }) async {
     bool isInternet = await Constants.isInternetAvail();
@@ -677,20 +726,20 @@ class APIProvider {
       log(responseJson.toString());
       if(response.statusCode == 200){
         if (responseJson != null) {
-          return JobAllocationByIdModel.fromJson(jsonDecode(responseJson));
+          return JobAllocationModel.fromJson(jsonDecode(responseJson));
         } else {
-          return JobAllocationByIdModel.fromJson(jsonDecode(responseJson));
+          return JobAllocationModel.fromJson(jsonDecode(responseJson));
         }
       }else{
         Get.offNamed(Routes.login);
       }
     } on SocketException {
       Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
-      return JobAllocationByIdModel.fromJson(Map());
+      return JobAllocationModel.fromJson(Map());
     } catch (e) {
       print("error ...getJobAllocationById ...... $e");
     }
-    return JobAllocationByIdModel.fromJson(jsonDecode(responseJson));
+    return JobAllocationModel.fromJson(jsonDecode(responseJson));
   }
 
 ///-----------------------------Vendor ------------------------------------------------////

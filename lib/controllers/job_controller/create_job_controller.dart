@@ -7,6 +7,8 @@ import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
+import 'package:mudara_steel_app/model/job_allocation_model.dart';
+import 'package:mudara_steel_app/model/job_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
@@ -24,7 +26,7 @@ class CreateJobController extends GetxController {
   TextEditingController toLocation = TextEditingController();
   TextEditingController deliveryDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
   RxString nextFollowUp = "".obs;
-
+  RxInt jobId = 0.obs;
   Map data ={};
 
   RxBool isLoading = false.obs;
@@ -58,14 +60,10 @@ class CreateJobController extends GetxController {
     jobStatusList.value = await APIProvider().getJobStatusList();
     jobTypeList.value = await APIProvider().getJobTypeList();
 
-    if (Get.arguments != null && Get.arguments is Map) {
-      data = Get.arguments;
-
-      jobName.text = data["jobName"].toString();
-      fromLocation.text = data["fromLocation"].toString();
-      toLocation.text = data["toLocation"].toString();
-      deliveryDate.text = data["deliveryDate"].toString();
-      weight.text = data["weight"].toString();
+    if (Get.arguments != null && Get.arguments is int) {
+      jobId.value = Get.arguments;
+      isLoading.value= true;
+      getJobById(jobId: jobId.value);
     }
     super.onInit();
   }
@@ -117,5 +115,42 @@ class CreateJobController extends GetxController {
     }
   }
 
+  Future<void> getJobById({jobId}) async {
+    isLoading.value = true;
+
+    JobModel jobModel = await APIProvider().getJobById(
+        jobId:  jobId
+    );
+    if(jobModel != null){
+
+      jobName.text = jobModel.jobName!;
+      fromLocation.text =jobModel.fromLocation!;
+      toLocation.text = jobModel.toLocation!;
+      deliveryDate.text = DateFormat('yyyy-MM-dd').format(jobModel.deliveryDate!);
+      weight.text = jobModel.weight.toString();
+      weightUnit.text = jobModel.weightUnit!;
+      remark.text = jobModel.remark!;
+      toggleValue.value = jobModel.isTruck == true ?  1 : 0;
+
+      for (int i = 0; i < jobTypeList.length; i++) {
+        if (jobTypeList[i].value == jobModel.jobTypeId.toString()) {
+          selectedJobTypeId.value = jobTypeList[i].value.toString();
+          selectedJobType.value = jobTypeList[i].text.toString();
+          break;
+        }
+      }
+      for (int i = 0; i < jobStatusList.length; i++) {
+        if (jobTypeList[i].value == jobModel.jobStatusId.toString()) {
+          selectedJobStatusId.value = jobStatusList[i].value.toString();
+          selectedJobStatus.value = jobStatusList[i].text.toString();
+          break;
+        }
+      }
+
+      isLoading.value = false;
+    }
+    isLoading.value = false;
+    return;
+  }
 
 }
