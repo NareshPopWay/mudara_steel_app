@@ -69,6 +69,24 @@ class RegisterVendorController extends GetxController {
     }
   }
 
+  Future<void> checkVendorPhone()async{
+    try{
+      isLoading.value = true;
+      SuccessModel successModel =  await  APIProvider().checkVendorPhone(phone: phone.text);
+      if(successModel.msgType == 0){
+        isLoading.value = false;
+        /// Api Call
+         vendorRegistration();
+      }else if(successModel.msgType == 1){
+        isLoading.value = false;
+        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+      }
+    }catch(e){
+      isLoading.value = false;
+      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Vendor not deleted");
+    }
+  }
+
   Future<void> vendorRegistration()async{
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {

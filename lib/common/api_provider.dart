@@ -16,6 +16,7 @@ import 'package:mudara_steel_app/controllers/root_controller.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_allocation_list_model.dart';
 import 'package:mudara_steel_app/model/job_allocation_model.dart';
+import 'package:mudara_steel_app/model/job_bid_model.dart';
 import 'package:mudara_steel_app/model/job_list_model.dart';
 import 'package:mudara_steel_app/model/job_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
@@ -492,6 +493,110 @@ class APIProvider {
     }
     return JobModel.fromJson(jsonDecode(responseJson));
   }
+
+
+  Future<SuccessModel> saveBide({int? jobId,double? cost}) async {
+    bool isInternet = await Constants.isInternetAvail();
+    if (!isInternet) {
+      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+    }
+    var responseJson;
+
+    try {
+      log("$baseUrl/VendorApi/VendorAPI/JobBidSave");
+
+      final response = await http.post(
+          Uri.parse(
+            "$baseUrl/VendorApi/VendorAPI/JobBidSave",
+          ),
+          headers: {"Content-Type": "application/x-www-form-urlencoded",},
+          body: {
+            "JobID" :jobId,
+            "Cost" : cost
+          }
+      );
+      responseJson = response.body.toString();
+      log(responseJson.toString());
+      if(response.statusCode == 200){
+        if (responseJson != null) {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        } else {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        }
+      }else{
+        Get.offNamed(Routes.login);
+      }
+    } on SocketException {
+      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      return SuccessModel.fromJson(Map());
+    } catch (e) {
+      print("error ...deleteJobAllocation ...... $e");
+    }
+    return SuccessModel.fromJson(jsonDecode(responseJson));
+  }
+
+  ///------------------------------ Get JobBid -----------------------------------///
+  Future<List<JobBidModel>> getJobBidList({
+    pageNumber,
+    rowsOfPage,
+    orderByName,
+    searchVal,
+    fromDate,
+    toDate,
+    sortDirection,
+    jobType,
+    jobStatusId,
+    jobId,
+    vendorID
+  }) async {
+    bool isInternet = await Constants.isInternetAvail();
+    if (!isInternet) {
+      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+    }
+    var responseJson;
+    List<JobBidModel> list = [];
+
+    if (jobType == null || jobType == "") {
+      jobType = "0";
+    }
+    if (jobStatusId == null || jobStatusId == "") {
+      jobStatusId = "0";
+    }
+    if (jobId == null || jobId == "") {
+      jobId = "0";
+    }
+    if (vendorID == null || vendorID == "") {
+      vendorID = "0";
+    }
+
+    apiToken.value = GetStorage().read(Constants.token);
+    log("apiToken => ${apiToken.value}");
+    try {
+      log("$baseUrl/AdminApi/JobAllocationAPI/GetJobBidList2?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobType=$jobType&VendorID=$vendorID");
+
+      final response = await http.get(
+          Uri.parse(
+            "$baseUrl/AdminApi/JobAllocationAPI/GetJobBidList2?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobType=$jobType&VendorID=$vendorID",
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${apiToken.value}',
+          });
+      responseJson = _response(response);
+      log(responseJson["data"].toString());
+
+      for (int i = 0; i < responseJson['data'].length; i++) {
+        list.add(JobBidModel.fromJson(responseJson['data'][i]));
+      }
+    } on SocketException {
+      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+    } catch (e) {
+      print("error ...getLeadList ...... $e");
+    }
+    return list;
+  }
+
 
 ///-----------------------------Create Job Allocation----------------------////
 
@@ -1024,6 +1129,45 @@ class APIProvider {
     return SuccessModel.fromJson(jsonDecode(responseJson));
   }
 
+  Future<SuccessModel> approveVendor({int? vendorId,bool? isApprove}) async {
+    bool isInternet = await Constants.isInternetAvail();
+    if (!isInternet) {
+      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+    }
+    var responseJson;
+    apiToken.value = GetStorage().read(Constants.token);
+    log("apiToken => ${apiToken.value}");
+    try {
+      log("$baseUrl/AdminApi/VendorAPI/Approve?ID=$vendorId&IsApprove=$isApprove");
+
+      final response = await http.get(
+          Uri.parse(
+            "$baseUrl/AdminApi/VendorAPI/Approve?ID=$vendorId&IsApprove=$isApprove",
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${apiToken.value}',
+          });
+      responseJson = response.body.toString();
+      log(responseJson.toString());
+      if(response.statusCode == 200){
+        if (responseJson != null) {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        } else {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        }
+      }else{
+        Get.offNamed(Routes.login);
+      }
+    } on SocketException {
+      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      return SuccessModel.fromJson(Map());
+    } catch (e) {
+      print("error ...deleteJobAllocation ...... $e");
+    }
+    return SuccessModel.fromJson(jsonDecode(responseJson));
+  }
 
   static dynamic _response(http.Response response) {
     switch (response.statusCode) {
@@ -1058,9 +1202,9 @@ class APIProvider {
   //
   // api/CommanAPI/IsVendorPhoneNoExist - check number exist or not in vendor register ,(int VendorID,string Phone)
   //
-  //VendorApi/VendorAPI/JobBidSave - in vendor login for job bide save (create job bide screen in vendor login (JobID Required Cost Required numberRemark) with this flied)
+  //VendorApi/VendorAPI/JobBidSave - in vendor login for job bide save (in vendor login (JobID Required Cost Required numberRemark) )
   //
-  //AdminApi/JobAllocationAPI/GetJobBidList  - in admin login get job bid
+  //AdminApi/JobAllocationAPI/GetJobBidList  - in admin login get job bid -Done
   //
- //AdminApi/VendorAPI/Approve - in admin login approve vendor (if vendor true the show disapprove other wise approve and call api )
+  //AdminApi/VendorAPI/Approve - in admin login approve vendor (if vendor true the show disapprove other wise approve and call api )
 }

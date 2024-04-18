@@ -529,10 +529,10 @@ class VendorListScreen extends GetView<VendorListController> {
                                                 ),
                                               ],
                                             ),
-                                            Bounce(
+                                               Bounce(
                                               duration: const Duration(milliseconds: 100),
                                               onPressed: (){
-
+                                                controller.approveVendor(context,vendorId:controller.vendorList[index].vendorId ,isApprove:controller.vendorList[index].isApproved == true ? false : true );
                                               },
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
@@ -553,7 +553,7 @@ class VendorListScreen extends GetView<VendorListController> {
                                                     borderRadius: BorderRadius.circular(12)),
                                                 child: Center(
                                                   child: Text(
-                                                    "Approve",
+                                                     controller.vendorList[index].isApproved == true ? "DisApprove" : "Approve",
                                                     style: Get.textTheme.headlineLarge!.copyWith(
                                                       color: ThemeService.primaryColor,
                                                       fontSize: AppSpacings.s20,

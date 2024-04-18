@@ -90,7 +90,6 @@ class VendorListController extends GetxController {
   // Rx<TextEditingController> textVendorName = TextEditingController().obs;
 
 
-
   void vendorScrollListener() async {
     double maxScroll = leadScrollController.position.maxScrollExtent;
     double currentScroll = leadScrollController.position.pixels;
@@ -120,6 +119,29 @@ class VendorListController extends GetxController {
     return;
   }
 
+
+  Future<void> approveVendor(context,{int? vendorId,bool? isApprove})async{
+    try{
+      FocusScope.of(context).unfocus();
+      isLoading.value = true;
+      SuccessModel successModel =  await  APIProvider().approveVendor(vendorId: vendorId,isApprove: isApprove );
+      if(successModel.msgType == 0){
+        isLoading.value = false;
+        vendorPage = 0;
+        vendorList.clear();
+        getVendor();
+        Ui.SuccessSnackBar(title:'Successful',message:'Vendor Approved successfully done');
+      }else if(successModel.msgType == 1){
+        isLoading.value = false;
+        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+      }
+
+    }catch(e){
+      isLoading.value = false;
+      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Vendor not deleted");
+    }
+  }
+
   RxBool isDeleteVendor = false.obs;
 
   Future<void> deleteVendor(context,{int? vendorId})async{
@@ -145,5 +167,22 @@ class VendorListController extends GetxController {
     }
   }
 
+  Future<void> checkVendorPhone(context,{String? phone})async{
+    try{
+      FocusScope.of(context).unfocus();
+      isLoading.value = true;
+      SuccessModel successModel =  await  APIProvider().checkVendorPhone(phone: phone);
+      if(successModel.msgType == 0){
+        isLoading.value = false;
+         /// Api Call
 
+      }else if(successModel.msgType == 1){
+        isLoading.value = false;
+        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+      }
+    }catch(e){
+      isLoading.value = false;
+      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Vendor not deleted");
+    }
+  }
 }

@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 import 'dart:developer';
 
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +12,9 @@ import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
+import 'package:mudara_steel_app/common/widget/dropdown_widget/dropdown_below.dart';
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
+import 'package:mudara_steel_app/common/widget/empty_widget.dart';
 import 'package:mudara_steel_app/common/widget/lead_card_widget.dart';
 import 'package:mudara_steel_app/controllers/bid_controller/bid_list_controller.dart';
 import 'package:mudara_steel_app/controllers/job_controller/job_list_controller.dart';
@@ -76,39 +79,74 @@ class BidListScreen extends GetView<BidListController> {
                           ),
                         ],
                       ),
-                      GestureDetector(
-                        onTap: ()async{
-                          await showModalBottomSheet(
-                              context: context,
-                              backgroundColor: ThemeService.white,
-                              elevation: 5.5,
-                              useSafeArea: true,
-                              constraints: const BoxConstraints(maxHeight:600),
-                              isScrollControlled:true,
-                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(25), topRight: Radius.circular(25))),
-                              builder: (context){
-                                return Filter(context);
-                              }
-                          );
-                        },
-                        child: Center(
-                          child: Container(
-                            decoration:  BoxDecoration(
-                                color: ThemeService.primaryColor,
-                                borderRadius: BorderRadius.circular(10)
+                      Row(
+                        children: [
+                          SizedBox(
+                            height: 35,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Show",
+                                  style: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s18),
+                                ),
+                                SizedBox(
+                                  width: AppSpacings.s5,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(AppSpacings.s10, 0, AppSpacings.s10, 0),
+                                  decoration: BoxDecoration(color: ThemeService.primaryColor, borderRadius: BorderRadius.circular(10)),
+                                  child:DropdownBelow(
+                                      itemWidth: 80,
+                                      itemTextstyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black,fontFamily:'Poppins-Medium'),
+                                      boxTextstyle: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s16,color: Colors.white),
+                                      boxHeight: 50,
+                                      icon: const Icon(Icons.keyboard_arrow_down,color: ThemeService.white),
+                                      boxWidth: 50,
+                                      hint: Text('${controller.showCountVal.value}'),
+                                      value: controller.showCountVal.value,
+                                      items: controller.buildsShowCountItems(controller.showCount),
+                                      onChanged: controller.onChangeShowCount
+                                  ),
+                                ),
+                              ],
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Image.asset(
-                                "assets/filter.png",
-                                height: AppSpacings.s30,
-                                color: ThemeService.white,
-                                alignment: Alignment.center,
+                          ),
+                          SizedBox(width: AppSpacings.s5),
+                          GestureDetector(
+                            onTap: ()async{
+                              await showModalBottomSheet(
+                                  context: context,
+                                  backgroundColor: ThemeService.white,
+                                  elevation: 5.5,
+                                  useSafeArea: true,
+                                  constraints: const BoxConstraints(maxHeight:600),
+                                  isScrollControlled:true,
+                                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+                                  builder: (context){
+                                    return Filter(context);
+                                  }
+                              );
+                            },
+                            child: Center(
+                              child: Container(
+                                decoration:  BoxDecoration(
+                                    color: ThemeService.primaryColor,
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(6.0),
+                                  child: Image.asset(
+                                    "assets/filter.png",
+                                    height: AppSpacings.s30,
+                                    color: ThemeService.white,
+                                    alignment: Alignment.center,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
@@ -123,12 +161,132 @@ class BidListScreen extends GetView<BidListController> {
               SizedBox(
                 height: AppSpacings.s5,
               ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(AppSpacings.s30, AppSpacings.s20,
+                          AppSpacings.s10, AppSpacings.s20),
+                      child: Center(
+                        child: CupertinoSearchTextField(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: ThemeService.white,
+                              boxShadow:  [
+                                BoxShadow(
+                                  color: ThemeService.disable.withOpacity(0.8),
+                                  blurRadius: 08.0,
+                                )
+                              ]
+                            // border: Border.all(color: ThemeService.primaryColor),
+                          ),
+                          // backgroundColor: ThemeService.grayScale.withOpacity(.7),
+                          itemColor: ThemeService.black,
+                          placeholder: 'Search Job',
+                          controller: controller.searchTextEditController,
+                          placeholderStyle: TextStyle(
+                              fontSize: AppSpacings.s18,
+                              color: Get.theme.disabledColor),
+                          onSuffixTap: () {
+                            // controller.isMemberSearching.value = false;
+                            // controller.memberSearchResult.clear();
+                            controller.searchTextEditController.clear();
+                            controller.jobBidPage = 0;
+                            controller.jobBidList.clear();
+                            controller.getJobBidList();
+                            controller.searchTextEditController.clear();
+                            FocusScope.of(context).unfocus();
+                          },
+                          suffixIcon: Icon(
+                            Icons.cancel,
+                            size: AppSpacings.s30,
+                            color: ThemeService.primaryColor,
+                          ),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.search,
+                              size: AppSpacings.s30,
+                              color: ThemeService.primaryColor,
+                            ),
+                          ),
+                          onChanged: (value) {
+                            if(value.length >= 3){
+                              EasyDebounce.debounce('lead', const Duration(milliseconds: 700), () {
+                                controller.jobBidPage = 0;
+                                controller.jobBidList.clear();
+                                controller.getJobBidList();
+                              });
+                            }else if(value.isEmpty){
+                              EasyDebounce.debounce('lead', const Duration(milliseconds: 700), () {
+                                controller.jobBidPage = 0;
+                                controller.jobBidList.clear();
+                                controller.getJobBidList();
+                              });
+                            }
+
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      controller.isDescending.value = !controller.isDescending.value;
+                      // controller.isDescending.value == true ? controller.descending.value : controller.ascending.value;
+                      controller.jobBidPage = 0;
+                      controller.jobBidList.clear();
+                      controller.getJobBidList();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: AppSpacings.s8, vertical: AppSpacings.s12),
+                      margin: EdgeInsets.fromLTRB(0, 0,
+                          AppSpacings.s25, 0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        color: ThemeService.white,
+                        boxShadow:  [
+                          BoxShadow(
+                            color: ThemeService.disable.withOpacity(0.8),
+                            blurRadius: 08.0,
+                          ),],
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(1),
+                          child: Row(
+                            children: [
+                              const RotatedBox(
+                                quarterTurns: 1,
+                                child: Icon(Icons.compare_arrows,
+                                  color: ThemeService.primaryColor,
+                                ),
+                              ),
+                              Text(controller.isDescending.value ? 'Asc': 'Desc',
+                                style: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s20),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               Expanded(
                   child:  ListView(
+                    controller: controller.leadScrollController,
                     shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    padding: EdgeInsets.zero,
+                    padding: EdgeInsets.fromLTRB(0,0, 0, AppSpacings.s55),
+                    primary: false,
+                    physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
                     children: [
+                      if (controller.jobBidList.isEmpty && !controller.isJobBidListLoading.value)
+                        Padding(
+                          padding:  EdgeInsets.only(top: AppSpacings.s50),
+                          child: const EmptyDataWidget(),
+                        )
+                      else
                       ListView.builder(
                           padding: EdgeInsets.only(
                             left: AppSpacings.s20,
@@ -137,8 +295,7 @@ class BidListScreen extends GetView<BidListController> {
                           ),
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          // itemCount: controller.jobList.length,
-                          itemCount: 10,
+                          itemCount: controller.jobBidList.length,
                           itemBuilder:(context,index){
 
                             return  Container(
@@ -163,7 +320,9 @@ class BidListScreen extends GetView<BidListController> {
                                     height: AppSpacings.s5,
                                   ),
                                   headerRow(
-                                    title1: "15/04/24",
+                                    title1:controller.jobBidList[index].createdOn != null
+                                        ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobBidList[index].createdOn.toString()))
+                                        : "-",
                                     icon1: Icon(Icons.calendar_month, size: AppSpacings.s25),
                                   ),
                                   // Container(
@@ -210,9 +369,9 @@ class BidListScreen extends GetView<BidListController> {
                                       thickness: 2),
                                   dataRow(
                                     title1: "Job Name",
-                                    value1: "Job-1",
+                                    value1: controller.jobBidList[index].jobName??"-",
                                     title2: "Vendor Name",
-                                    value2:  "Suresh",
+                                    value2:  controller.jobBidList[index].vendorName ??  "-",
                                   ),
                                   Divider(
                                       height: 2,
@@ -222,9 +381,21 @@ class BidListScreen extends GetView<BidListController> {
                                       thickness: 1),
                                   dataRow(
                                     title1: "Cost",
-                                    value1: "5200",
+                                    value1: controller.jobBidList[index].cost.toString() ?? "-",
                                     title2: "Remark",
-                                    value2: "GFS",
+                                    value2: controller.jobBidList[index].remark??"-",
+                                  ),
+                                  Divider(
+                                      height: 2,
+                                      endIndent: 10,
+                                      indent: 10,
+                                      color: ThemeService.primaryColor.withOpacity(0.2),
+                                      thickness: 1),
+                                  dataRow(
+                                    title1: "Job Status",
+                                    value1: controller.jobBidList[index].jobStatus ?? "-",
+                                    title2: "Job Type",
+                                    value2: controller.jobBidList[index].jobType ??"-",
                                   ),
                                   // Divider(
                                   //     height: 10,
@@ -317,7 +488,7 @@ class BidListScreen extends GetView<BidListController> {
                             );
                           }
                       ),
-                      if (controller.isVendorListLoading.value == true)  Padding(
+                      if (controller.isJobBidListLoading.value == true)  Padding(
                         padding: EdgeInsets.fromLTRB(0, AppSpacings.s150, 0,0),
                         child: CupertinoActivityIndicator(radius: AppSpacings.s20,),
                       )
@@ -332,6 +503,20 @@ class BidListScreen extends GetView<BidListController> {
   }
 
   Filter(context) {
+    controller.tampSelectedJobName.value = controller.selectedJobName.value;
+    controller.tampSelectedJobNameId.value = controller.selectedJobNameId.value;
+
+    controller.tampSelectedVendorName.value = controller.selectedVendorName.value;
+    controller.tampSelectedVendorNameId.value = controller.selectedVendorNameId.value;
+
+    controller.tampSelectedJobStatus.value = controller.selectedJobStatus.value;
+    controller.tampSelectedJobStatusId.value = controller.selectedJobStatusId.value;
+
+    controller.tampSelectedJobType.value = controller.selectedJobType.value;
+    controller.tampSelectedJobTypeId.value = controller.selectedJobTypeId.value;
+
+    controller.tempFromDate.text = controller.fromDate.value;
+    controller.tempToDate.text = controller.toDate.value;
     return Padding(
       padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -378,6 +563,40 @@ class BidListScreen extends GetView<BidListController> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      controller.tampSelectedJobName.value = "";
+                      controller.tampSelectedJobNameId.value = "";
+                      controller.selectedJobName.value = "";
+                      controller.selectedJobNameId.value = "";
+
+                      controller.tampSelectedVendorName.value = "";
+                      controller.tampSelectedVendorNameId.value = "";
+                      controller.selectedVendorName.value = "";
+                      controller.selectedVendorNameId.value = "";
+
+                      controller.tampSelectedJobStatus.value = "";
+                      controller.tampSelectedJobStatusId.value = "";
+                      controller.selectedJobStatus.value = "";
+                      controller.selectedJobStatusId.value = "";
+
+                      controller.tampSelectedJobType.value = "";
+                      controller.tampSelectedJobTypeId.value = "";
+                      controller.selectedJobType.value = "";
+                      controller.selectedJobTypeId.value = "";
+
+
+                      controller.tempFromDate.text = "";
+                      controller.tempToDate.text = "";
+
+                      controller.fromDate.value = "";
+                      controller.toDate.value = "";
+
+                      controller.textJobName.value.clear();
+                      controller.textJobStatus.value.clear();
+                      controller.textJobType.value.clear();
+                      controller.textVendorName.value.clear();
+                      controller.jobBidPage = 0;
+                      controller.jobBidList.clear();
+                      controller.getJobBidList();
                       // Get.back();
                     },
                     child: Text(
@@ -428,7 +647,7 @@ class BidListScreen extends GetView<BidListController> {
                       ),
                       children: [
                         TextFormField(
-                          controller: controller.toDate,
+                          controller: controller.tempFromDate,
                           enabled: true,
                           maxLines: 1,
                           keyboardType: TextInputType.text,
@@ -442,15 +661,15 @@ class BidListScreen extends GetView<BidListController> {
                             DateTime? followUpPickedDate =
                             await showDatePicker(
                               context: context,
-                              initialDate: controller.toDate.text != "" ? DateTime.parse(controller.toDate.text.toString()) : DateTime.now(),
+                              initialDate: controller.tempFromDate.text != "" ? DateTime.parse(controller.tempFromDate.text.toString()) : DateTime.now(),
                               // initialDate: DateTime.parse(DateFormat('yyyy-MM-dd').format(DateTime.now())),
                               firstDate: DateTime(DateTime.now().year - 10),
                               lastDate: DateTime(DateTime.now().year + 10),
                             );
                             if (followUpPickedDate != null) {
                               String formattedDate = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
-                              controller.toDate.text = formattedDate;
-                              log(controller.toDate.text);
+                              controller.tempFromDate.text = formattedDate;
+                              log(controller.tempFromDate.text);
                               // controller.nextFollowUp.value = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
                             }
                           },
@@ -495,7 +714,7 @@ class BidListScreen extends GetView<BidListController> {
                           height: AppSpacings.s15,
                         ),
                         TextFormField(
-                          controller: controller.fromDate,
+                          controller: controller.tempToDate,
                           enabled: true,
                           maxLines: 1,
                           keyboardType: TextInputType.text,
@@ -509,15 +728,15 @@ class BidListScreen extends GetView<BidListController> {
                             DateTime? followUpPickedDate =
                             await showDatePicker(
                               context: context,
-                              initialDate: controller.fromDate.text != "" ? DateTime.parse(controller.fromDate.text.toString()) : DateTime.now(),
+                              initialDate: controller.tempToDate.text != "" ? DateTime.parse(controller.tempToDate.text.toString()) : DateTime.now(),
                               // initialDate: DateTime.parse(DateFormat('yyyy-MM-dd').format(DateTime.now())),
                               firstDate: DateTime(DateTime.now().year - 10),
                               lastDate: DateTime(DateTime.now().year + 10),
                             );
                             if (followUpPickedDate != null) {
                               String formattedDate = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
-                              controller.fromDate.text = formattedDate;
-                              log(controller.fromDate.text);
+                              controller.tempToDate.text = formattedDate;
+                              log(controller.tempToDate.text);
                               // controller.nextFollowUp.value = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
                             }
                           },
@@ -585,6 +804,31 @@ class BidListScreen extends GetView<BidListController> {
                         SizedBox(
                           height: AppSpacings.s20,
                         ),
+                        searchDropDwonWidget(
+                          selectedValue: controller.tampSelectedJobStatus,
+                          selectedId: controller.tampSelectedJobStatusId,
+                          emptyTitle: "Job Status",
+                          list: controller.jobStatusList,
+                          isExpanded: controller.isJobStatusExpanded,
+                          isSearching: controller.isJobStatusSearching,
+                          textfield: controller.textJobStatus,
+                        ),
+                        SizedBox(
+                          height: AppSpacings.s20,
+                        ),
+                        searchDropDwonWidget(
+                          selectedValue: controller.tampSelectedJobType,
+                          selectedId: controller.tampSelectedJobTypeId,
+                          emptyTitle: "Job Type",
+                          list: controller.jobTypeList,
+                          isExpanded: controller.isJobTypeExpanded,
+                          isSearching: controller.isJobTypeSearching,
+                          textfield: controller.textJobType,
+                        ),
+                        SizedBox(
+                          height: AppSpacings.s20,
+                        ),
+
                       ],
                     ),
                   ),)
@@ -595,6 +839,34 @@ class BidListScreen extends GetView<BidListController> {
               duration: const Duration(milliseconds: 100),
               onPressed: (){
 
+                controller.selectedJobName.value = controller.tampSelectedJobName.value;
+                controller.selectedJobNameId.value = controller.tampSelectedJobNameId.value;
+                controller.tampSelectedJobName.value = "";
+                controller.tampSelectedJobNameId.value = "";
+
+                controller.selectedVendorName.value = controller.tampSelectedVendorName.value;
+                controller.selectedVendorNameId.value = controller.tampSelectedVendorNameId.value;
+                controller.tampSelectedVendorName.value = "";
+                controller.tampSelectedVendorNameId.value = "";
+
+                controller.selectedJobStatus.value = controller.tampSelectedJobStatus.value;
+                controller.selectedJobStatusId.value = controller.tampSelectedJobStatusId.value;
+                controller.tampSelectedJobStatus.value = "";
+                controller.tampSelectedJobStatusId.value = "";
+
+                controller.selectedJobType.value = controller.tampSelectedJobType.value;
+                controller.selectedJobTypeId.value = controller.tampSelectedJobTypeId.value;
+                controller.tampSelectedJobType.value = "";
+                controller.tampSelectedJobTypeId.value = "";
+
+                controller.toDate.value = controller.tempToDate.text;
+                controller.fromDate.value = controller.tempFromDate.text;
+
+                controller.tempFromDate.text = "";
+                controller.tempToDate.text = "";
+                controller.jobBidPage = 0;
+                controller.jobBidList.clear();
+                controller.getJobBidList();
                 Get.back();
               },
               child: Container(

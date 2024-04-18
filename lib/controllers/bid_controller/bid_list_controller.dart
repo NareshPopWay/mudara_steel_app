@@ -5,21 +5,77 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
+import 'package:mudara_steel_app/model/job_bid_model.dart';
 
 
 class BidListController extends GetxController {
 
-  RxList jobList = RxList();
+  RxList<JobBidModel> jobBidList = RxList();
   RxString appTitle = "".obs;
+  RxBool isSearching = RxBool(false);
+  int jobBidPage = 0;
   RxBool isLoading = false.obs;
-  RxBool isVendorListLoading = false.obs;
-  TextEditingController toDate = TextEditingController();
-  TextEditingController fromDate = TextEditingController();
+  RxBool isJobBidListLoading = false.obs;
+  ScrollController leadScrollController = ScrollController();
+  TextEditingController searchTextEditController = TextEditingController();
+  TextEditingController tempToDate = TextEditingController();
+  TextEditingController tempFromDate = TextEditingController();
+
+  RxString fromDate = "".obs;
+  RxString toDate = "".obs;
+
+  var showCount = [10, 15, 20, 25, 50, 100];
+  RxInt showCountVal = 10.obs;
+
+  RxString shortByVal = "LeadDate".obs;
+  RxString selectedShortByVal = "CreatedOn".obs;
+  RxString descending = "desc".obs;
+  RxString ascending = "asc".obs;
+
+  RxBool isDescending = RxBool(false);
+
+  List<DropdownMenuItem<Object?>> buildsShowCountItems(List _testList) {
+    List<DropdownMenuItem<Object?>> items = [];
+    for (var i in _testList) {
+      items.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i.toString()),
+        ),
+      );
+    }
+    return items;
+  }
+
+  onChangeShowCount(newValue) {
+    print(newValue);
+    showCountVal.value = newValue!;
+    jobBidPage = 0;
+    jobBidList.clear();
+    getJobBidList();
+  }
+
   @override
   void onInit() async {
     super.onInit();
+    leadScrollController.addListener(jobScrollListener);
     appTitle.value = Get.arguments;
+    getJobBidList();
+    jobNameList.value = await APIProvider().getJobNameList();
+    jobStatusList.value = await APIProvider().getJobStatusList();
+    jobTypeList.value = await APIProvider().getJobTypeList();
+    vendorNameList.value = await APIProvider().getVendorName();
+  }
+
+  void jobScrollListener() async {
+    double maxScroll = leadScrollController.position.maxScrollExtent;
+    double currentScroll = leadScrollController.position.pixels;
+    double delta = Get.height / 3;
+    if (maxScroll - currentScroll <= delta && !isJobBidListLoading.value) {
+      await getJobBidList(pagination: true);
+    }
   }
 
   RxList<FieldItemValueModel> jobNameList = <FieldItemValueModel>[].obs;
@@ -41,6 +97,45 @@ class BidListController extends GetxController {
   RxBool isVendorNameSearching = RxBool(false);
   Rx<TextEditingController> textVendorName = TextEditingController().obs;
 
+  RxList<FieldItemValueModel> jobStatusList = <FieldItemValueModel>[].obs;
+  RxBool isJobStatusExpanded = false.obs;
+  RxString selectedJobStatus = "".obs;
+  RxString selectedJobStatusId = "".obs;
+  RxString tampSelectedJobStatus = "".obs;
+  RxString tampSelectedJobStatusId = "".obs;
+  RxBool isJobStatusSearching = RxBool(false);
+  Rx<TextEditingController> textJobStatus = TextEditingController().obs;
 
+  RxList<FieldItemValueModel> jobTypeList = <FieldItemValueModel>[].obs;
+  RxBool isJobTypeExpanded = false.obs;
+  RxString selectedJobType = "".obs;
+  RxString selectedJobTypeId = "".obs;
+  RxString tampSelectedJobType = "".obs;
+  RxString tampSelectedJobTypeId = "".obs;
+  RxBool isJobTypeSearching = RxBool(false);
+  Rx<TextEditingController> textJobType = TextEditingController().obs;
 
+  Future<void> getJobBidList({bool pagination = false}) async {
+    isJobBidListLoading.value = true;
+
+    var leadResponse = await APIProvider().getJobBidList(
+      pageNumber: jobBidPage,
+      rowsOfPage: showCountVal,
+      orderByName: selectedShortByVal,
+      searchVal: searchTextEditController.text,
+      fromDate: fromDate.value,
+      toDate: toDate.value,
+      sortDirection: isDescending.value == true ? ascending.value: descending.value,
+      jobId: selectedJobNameId.value,
+      jobStatusId:selectedJobStatusId.value,
+      jobType:selectedJobTypeId.value,
+      vendorID: selectedVendorNameId.value
+    );
+    if (leadResponse.isNotEmpty) {
+      jobBidPage++;
+      jobBidList.addAll(leadResponse);
+    }
+    isJobBidListLoading.value = false;
+    return;
+  }
 }

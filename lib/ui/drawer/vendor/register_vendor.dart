@@ -981,6 +981,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
 
                             FocusScope.of(context).unfocus();
                             controller.vendorRegistration();
+                            // controller.checkVendorPhone();
 
                           // }
                         }else{

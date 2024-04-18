@@ -136,27 +136,49 @@ class JobListController extends GetxController {
     return;
   }
 
-  RxBool isDeleteJob = false.obs;
 
   Future<void> deleteJob(context,{int? jobId})async{
     try{
       FocusScope.of(context).unfocus();
-      isDeleteJob.value = true;
+      isLoading.value = true;
       SuccessModel successModel =  await  APIProvider().deleteJob(jobId: jobId);
       if(successModel.msgType == 0){
-        isDeleteJob.value = false;
+        isLoading.value = false;
         Get.back();
         jobPage = 0;
         jobList.clear();
         getJob();
         Ui.SuccessSnackBar(title:'Successful',message:'Job deleted successful');
       }else if(successModel.msgType == 1){
-        isDeleteJob.value = false;
+        isLoading.value = false;
         Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
       }
 
     }catch(e){
-      isDeleteJob.value = false;
+      isLoading.value = false;
+      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Lead not added");
+    }
+  }
+
+
+  Future<void> saveBide(context,{int? jobId,double? cost})async{
+    try{
+      FocusScope.of(context).unfocus();
+      isLoading.value = true;
+      SuccessModel successModel =  await  APIProvider().saveBide(jobId: jobId,cost: cost);
+      if(successModel.msgType == 0){
+        isLoading.value = false;
+        jobPage = 0;
+        jobList.clear();
+        getJob();
+        Ui.SuccessSnackBar(title:'Successful',message:'Job successfully applied');
+      }else if(successModel.msgType == 1){
+        isLoading.value = false;
+        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+      }
+
+    }catch(e){
+      isLoading.value = false;
       Ui.ErrorSnackBar(title: "Something went wrong ",message: "Lead not added");
     }
   }

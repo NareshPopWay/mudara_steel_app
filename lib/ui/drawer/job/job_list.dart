@@ -576,10 +576,33 @@ class JobListScreen extends GetView<JobListController> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Truck/Trailer",
+                                            style: Get.textTheme.bodyText2!.copyWith(
+                                              color: ThemeService.disable,
+                                              fontSize: AppSpacings.s15,
+                                            ),
+                                          ),
+                                          Text(
+                                            controller.jobList[index].isTruck == true ? "Truck" : "Trailer",
+                                            style: Get.textTheme.headline4!.copyWith(
+                                              fontSize: AppSpacings.s18,
+                                              color: ThemeService.black,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                     Bounce(
                                       duration: const Duration(milliseconds: 100),
                                       onPressed: (){
-
+                                                // controller.saveBide(context,jobId:controller.jobList[index].jobId,cost: )
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
@@ -1103,11 +1126,7 @@ class JobListScreen extends GetView<JobListController> {
               SizedBox(
                 width: AppSpacings.s20,
               ),
-              controller.isDeleteJob.value
-                  ? SizedBox(
-                  width: AppSpacings.s90,
-                  child: CupertinoActivityIndicator(radius: AppSpacings.s15))
-                  :  Bounce(
+              Bounce(
                 duration: const Duration(milliseconds: 100),
                 onPressed: () async {
                   FocusScope.of(context).unfocus();
