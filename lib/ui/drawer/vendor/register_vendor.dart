@@ -163,6 +163,9 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children:[
+                                SizedBox(
+                                  height: AppSpacings.s5,
+                                ),
                                 TextFormField(
                                   controller: controller.vendorName,
                                   enabled: true,
@@ -315,12 +318,12 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
-                                  validator: (e) {
-                                    if (e!.isEmpty) {
-                                      return "Driver name is Required";
-                                    }
-                                    return null;
-                                  },
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Driver name is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ThemeService.primaryColor.withOpacity(0.1),
@@ -357,7 +360,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Driver name*",
+                                    labelText: "Driver name",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -386,12 +389,12 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
-                                  validator: (e) {
-                                    if (e!.isEmpty) {
-                                      return "Driver Age is Required";
-                                    }
-                                    return null;
-                                  },
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Driver Age is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ThemeService.primaryColor.withOpacity(0.1),
@@ -428,7 +431,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Driver Age*",
+                                    labelText: "Driver Age",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -457,12 +460,12 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
-                                  validator: (e) {
-                                    if (e!.isEmpty) {
-                                      return "Address is Required";
-                                    }
-                                    return null;
-                                  },
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Address is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ThemeService.primaryColor.withOpacity(0.1),
@@ -499,12 +502,85 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Address(as per Aadhar)*",
+                                    labelText: "Address(as per Aadhar)",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
                                       color: ThemeService.primaryColor.withOpacity(0.5),
                                       fontSize: AppSpacings.s18,
+                                    ),
+                                    errorStyle:TextStyle(
+                                        fontSize: AppSpacings.s16,
+                                        color: Colors.redAccent
+                                    ),
+                                    hintStyle:
+                                    const TextStyle(color: ThemeService.white),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: AppSpacings.s15,
+                                ),
+                                TextFormField(
+                                  controller: controller.email,
+                                  enabled: true,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.next,
+                                  cursorColor: ThemeService.primaryColor,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Email is Required";
+                                  //   }else if(!controller.emailRegex.hasMatch(e)){
+                                  //     return "Enter a valid email";
+                                  //   }
+                                  //   return null;
+                                  // },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor,
+                                          width: 1.5),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    errorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedErrorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    labelText: "Email",
+                                    contentPadding:
+                                    const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                    labelStyle: TextStyle(
+                                      color: ThemeService.primaryColor.withOpacity(0.5),
+                                      fontSize: AppSpacings.s18,
+
                                     ),
                                     errorStyle:TextStyle(
                                         fontSize: AppSpacings.s16,
@@ -613,7 +689,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                   ),
                                   validator: (e) {
                                     if (e!.isEmpty) {
-                                      return "company name / office address is Required";
+                                      return "company name";
                                     }
                                     return null;
                                   },
@@ -653,7 +729,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Company name / Office address*",
+                                    labelText: "Company name*",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -682,12 +758,12 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
-                                  validator: (e) {
-                                    if (e!.isEmpty) {
-                                      return "Drivers license number is Required";
-                                    }
-                                    return null;
-                                  },
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Drivers license number is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ThemeService.primaryColor.withOpacity(0.1),
@@ -724,7 +800,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Drivers license number*",
+                                    labelText: "Drivers license number",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -753,12 +829,12 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
-                                  validator: (e) {
-                                    if (e!.isEmpty) {
-                                      return "Vehicle insurance Number is Required";
-                                    }
-                                    return null;
-                                  },
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Vehicle insurance Number is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ThemeService.primaryColor.withOpacity(0.1),
@@ -795,7 +871,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Vehicle insurance Number*",
+                                    labelText: "Vehicle insurance Number",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -899,14 +975,14 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                           FocusScope.of(context).unfocus();
                           controller.key.currentState!.save();
 
-                          if(controller.selectedFile.value == null){
-                            Ui.ErrorSnackBar(title: "Upload Aadhar",message: "Please Upload Aadhar");
-                          } else {
+                          // if(controller.selectedFile.value == null){
+                          //   Ui.ErrorSnackBar(title: "Upload Aadhar",message: "Please Upload Aadhar");
+                          // } else {
 
                             FocusScope.of(context).unfocus();
-                            // controller.addLead();
+                            controller.vendorRegistration();
 
-                          }
+                          // }
                         }else{
                           log("Not validate");
                         }

@@ -163,6 +163,151 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children:[
+                                SizedBox(
+                                  height: AppSpacings.s15,
+                                ),
+                                TextFormField(
+                                  controller: controller.vendorName,
+                                  enabled: true,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.next,
+                                  cursorColor: ThemeService.primaryColor,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Vendor name is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor,
+                                          width: 1.5),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    errorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedErrorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    labelText: "Vendor name",
+                                    contentPadding:
+                                    const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                    labelStyle: TextStyle(
+                                      color: ThemeService.primaryColor.withOpacity(0.5),
+                                      fontSize: AppSpacings.s18,
+
+                                    ),
+                                    errorStyle:TextStyle(
+                                        fontSize: AppSpacings.s16,
+                                        color: Colors.redAccent
+                                    ),
+                                    hintStyle:
+                                    const TextStyle(color: ThemeService.white),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: AppSpacings.s15,
+                                ),
+                                TextFormField(
+                                  controller: controller.password,
+                                  enabled: true,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.next,
+                                  cursorColor: ThemeService.primaryColor,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "password is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor,
+                                          width: 1.5),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    errorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedErrorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    labelText: "password name",
+                                    contentPadding:
+                                    const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                    labelStyle: TextStyle(
+                                      color: ThemeService.primaryColor.withOpacity(0.5),
+                                      fontSize: AppSpacings.s18,
+
+                                    ),
+                                    errorStyle:TextStyle(
+                                        fontSize: AppSpacings.s16,
+                                        color: Colors.redAccent
+                                    ),
+                                    hintStyle:
+                                    const TextStyle(color: ThemeService.white),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: AppSpacings.s15,
+                                ),
                                 TextFormField(
                                   controller: controller.driverName,
                                   enabled: true,
@@ -376,6 +521,79 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                   height: AppSpacings.s15,
                                 ),
                                 TextFormField(
+                                  controller: controller.email,
+                                  enabled: true,
+                                  maxLines: 1,
+                                  keyboardType: TextInputType.text,
+                                  textInputAction: TextInputAction.next,
+                                  cursorColor: ThemeService.primaryColor,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                  ),
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Email is Required";
+                                  //   }else if(!controller.emailRegex.hasMatch(e)){
+                                  //     return "Enter a valid email";
+                                  //   }
+                                  //   return null;
+                                  // },
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor,
+                                          width: 1.5),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    disabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: ThemeService.primaryColor
+                                              .withOpacity(.5)),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    errorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    focusedErrorBorder:const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.redAccent),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    labelText: "Email",
+                                    contentPadding:
+                                    const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                    labelStyle: TextStyle(
+                                      color: ThemeService.primaryColor.withOpacity(0.5),
+                                      fontSize: AppSpacings.s18,
+
+                                    ),
+                                    errorStyle:TextStyle(
+                                        fontSize: AppSpacings.s16,
+                                        color: Colors.redAccent
+                                    ),
+                                    hintStyle:
+                                    const TextStyle(color: ThemeService.white),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: AppSpacings.s15,
+                                ),
+                                TextFormField(
                                   controller: controller.phone,
                                   enabled: true,
                                   // focusNode: controller.noteFocus,
@@ -471,7 +689,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                   ),
                                   validator: (e) {
                                     if (e!.isEmpty) {
-                                      return "company name / office address is Required";
+                                      return "company name";
                                     }
                                     return null;
                                   },
@@ -511,7 +729,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Company name / Office address",
+                                    labelText: "Company name",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -620,6 +838,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ThemeService.primaryColor.withOpacity(0.1),
+
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: ThemeService.primaryColor

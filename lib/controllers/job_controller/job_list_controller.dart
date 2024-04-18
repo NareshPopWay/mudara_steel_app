@@ -32,7 +32,9 @@ class JobListController extends GetxController {
   RxString fromDate = "".obs;
   RxString toDate = "".obs;
 
+  var showCount = [10, 15, 20, 25, 50, 100];
   RxInt showCountVal = 10.obs;
+
   RxString shortByVal = "LeadDate".obs;
   RxString selectedShortByVal = "CreatedOn".obs;
   RxString descending = "desc".obs;
@@ -40,9 +42,30 @@ class JobListController extends GetxController {
 
   RxBool isDescending = RxBool(false);
 
+  List<DropdownMenuItem<Object?>> buildsShowCountItems(List _testList) {
+    List<DropdownMenuItem<Object?>> items = [];
+    for (var i in _testList) {
+      items.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i.toString()),
+        ),
+      );
+    }
+    return items;
+  }
+
+  onChangeShowCount(newValue) {
+    print(newValue);
+    showCountVal.value = newValue!;
+    jobPage = 0;
+    jobList.clear();
+    getJob();
+  }
+
   @override
   void onInit() async {
-    appTitle.value = Get.arguments;
+    appTitle.value = Get.arguments ??"Job List";
     userTypeID.value = GetStorage().read(Constants.userTypeID) ?? "";
     leadScrollController.addListener(jobScrollListener);
     getJob();

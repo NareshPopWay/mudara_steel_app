@@ -51,7 +51,7 @@ class JobAllocationModel {
     jobAllocationTypeId: json["JobAllocationTypeID"],
     jobBidId: json["JobBidID"],
     vendorId: json["VendorID"],
-    cost: json["Cost"],
+    cost: json["Cost"]??0.0,
     remark: json["Remark"],
     isActive: json["IsActive"],
     createdOn: json["CreatedOn"],

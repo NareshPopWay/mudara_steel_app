@@ -202,7 +202,7 @@ class CreateJobAllocationScreen extends GetView<CreateJobAllocationController> {
                                   enabled: true,
                                   maxLines: 1,
                                   keyboardType: TextInputType.text,
-                                  textInputAction: TextInputAction.next,
+                                  textInputAction: TextInputAction.done,
                                   cursorColor: ThemeService.primaryColor,
                                   style: const TextStyle(
                                     fontSize: 14,

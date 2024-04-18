@@ -6,6 +6,7 @@ class AnimatedToggle extends StatefulWidget {
   final List<String> values;
   final ValueChanged onToggleCallback;
   final Color backgroundColor;
+  bool initialPosition;
   final Color buttonColor;
   final Color textColor;
 
@@ -15,13 +16,13 @@ class AnimatedToggle extends StatefulWidget {
     this.backgroundColor = const Color(0xFFe7e7e8),
     this.buttonColor = const Color(0xFFFFFFFF),
     this.textColor = const Color(0xFF000000),
+    this.initialPosition = false,
   });
   @override
   _AnimatedToggleState createState() => _AnimatedToggleState();
 }
 
 class _AnimatedToggleState extends State<AnimatedToggle> {
-  bool initialPosition = true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,9 +33,9 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              initialPosition = !initialPosition;
+              widget.initialPosition = !widget.initialPosition;
               var index = 0;
-              if (!initialPosition) {
+              if (!widget.initialPosition) {
                 index = 1;
               }
               widget.onToggleCallback(index);
@@ -73,7 +74,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
             duration: const Duration(milliseconds: 250),
             curve: Curves.decelerate,
             alignment:
-            initialPosition ? Alignment.centerLeft : Alignment.centerRight,
+            widget.initialPosition ? Alignment.centerLeft : Alignment.centerRight,
             child: Container(
               width: Get.width * 0.29,
               height: Get.width * 0.12,
@@ -85,7 +86,7 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
               ),
               alignment: Alignment.center,
               child: Text(
-                initialPosition ? widget.values[0] : widget.values[1],
+                widget.initialPosition ? widget.values[0] : widget.values[1],
                 style: TextStyle(
                   fontSize: Get.width * 0.045,
                   color: widget.textColor,

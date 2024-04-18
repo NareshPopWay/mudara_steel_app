@@ -1,11 +1,14 @@
 
 // ignore_for_file: iterable_contains_unrelated_type, unrelated_type_equality_checks, list_remove_unrelated_type
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
+import 'package:mudara_steel_app/controllers/job_controller/job_allocation_list_controller.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_allocation_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
@@ -20,7 +23,7 @@ class CreateJobAllocationController extends GetxController {
   TextEditingController cost = TextEditingController();
   TextEditingController remark = TextEditingController();
   Map data ={};
-  RxInt jobAllocationId = 0.obs;
+  RxString jobAllocationId = "".obs;
   RxBool isLoading = false.obs;
 
   RxBool isSelected = false.obs;
@@ -45,20 +48,20 @@ class CreateJobAllocationController extends GetxController {
   RxBool isVendorJobBidSearching = RxBool(false);
   Rx<TextEditingController> textVendorJobBid = TextEditingController().obs;
 
+  JobAllocationListController jobAllocationListController = Get.put(JobAllocationListController());
+
   @override
   void onInit() async {
 
     jobNameList.value = await APIProvider().getJobName();
     vendorJobBidList.value = await APIProvider().getVendorJobBide(jobId: 0);
 
-    if(Get.arguments != null && Get.arguments is int){
+    if(Get.arguments != null && Get.arguments is String){
       jobAllocationId.value = Get.arguments;
       isLoading.value= true;
       getJobAllocationById(jobAllocationId: jobAllocationId.value);
     }
-
-
-
+     log('jobAllocationId = ${jobAllocationId.value}');
     super.onInit();
   }
 
@@ -73,22 +76,34 @@ class CreateJobAllocationController extends GetxController {
       isLoading.value = true;
       SuccessModel successModel =  await  APIProvider().createJobAllocation(
         data: {
+          if (jobAllocationId.value != "") "JobAllocationID" : jobAllocationId.value ?? "",
           "JobID" : selectedJobNameId.value,
           "JobAllocationTypeID" : "0",
           "JobBidID" : selectedVendorJobBidId.value,
           "VendorID" : "0",
           "Cost" : cost.text,
           "Remark" : remark.text,
-          "CreatedOn" : DateFormat("yyyy/MM/dd").format(DateTime.now()),
-          "CreatedBY" : "1",
-          "CreatedUserTypeID" : "1"
+          // "CreatedOn" : DateFormat("yyyy/MM/dd").format(DateTime.now()),
+          // "CreatedBY" : "1",
+          // "CreatedUserTypeID" : "1"
         },
       );
       if(successModel.msgType == 0){
         isLoading.value = false;
-        Get.offAndToNamed(Routes.jobAllocationList,arguments: "Job Allocation List");
-        // Constants.successSnackBar(title: "Lead Added Successfully");
-        Ui.SuccessSnackBar(title:'Successful',message:'Lead Added Successfully');
+        if (jobAllocationId.value == "") {
+          // jobAllocationListController.jobAllocationPage = 0;
+          // jobAllocationListController.jobAllocationList.clear();
+          // jobAllocationListController.getJobAllocation();
+          // Get.offAndToNamed(Routes.jobAllocationList,arguments: "Job Allocation List");
+          Get.back();
+          Ui.SuccessSnackBar(title:'Successful',message:'Job allocated successfully done');
+        } else {
+          Get.back();
+          jobAllocationListController.jobAllocationPage = 0;
+          jobAllocationListController.jobAllocationList.clear();
+          jobAllocationListController.getJobAllocation();
+          Ui.SuccessSnackBar(title:'Successful',message:'Job Updated Successfully done ');
+        }
       }else if(successModel.msgType == 1){
         isLoading.value = false;
         Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
@@ -129,3 +144,4 @@ class CreateJobAllocationController extends GetxController {
     return;
   }
 }
+

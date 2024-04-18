@@ -699,6 +699,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                       controller.toggleValue.value = value;
                                       log('${controller.toggleValue.value}');
                                   },
+                                  initialPosition: controller.toggleValue.value == 0 ? true : false ,
                                   buttonColor: ThemeService.primaryColor,
                                   backgroundColor:ThemeService.primaryColor.withOpacity(0.1),
                                   textColor:ThemeService.white,

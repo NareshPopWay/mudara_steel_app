@@ -1,11 +1,14 @@
 
 // ignore_for_file: iterable_contains_unrelated_type, unrelated_type_equality_checks, list_remove_unrelated_type
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
+import 'package:mudara_steel_app/controllers/job_controller/job_list_controller.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_allocation_model.dart';
 import 'package:mudara_steel_app/model/job_model.dart';
@@ -26,7 +29,7 @@ class CreateJobController extends GetxController {
   TextEditingController toLocation = TextEditingController();
   TextEditingController deliveryDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
   RxString nextFollowUp = "".obs;
-  RxInt jobId = 0.obs;
+  RxString jobId = "".obs;
   Map data ={};
 
   RxBool isLoading = false.obs;
@@ -54,17 +57,21 @@ class CreateJobController extends GetxController {
   RxBool isJobStatusSearching = RxBool(false);
   Rx<TextEditingController> textJobStatus = TextEditingController().obs;
 
+
+  JobListController jobListController = Get.put(JobListController());
+
   @override
   void onInit() async {
 
     jobStatusList.value = await APIProvider().getJobStatusList();
     jobTypeList.value = await APIProvider().getJobTypeList();
 
-    if (Get.arguments != null && Get.arguments is int) {
+    if (Get.arguments != null && Get.arguments is String) {
       jobId.value = Get.arguments;
       isLoading.value= true;
       getJobById(jobId: jobId.value);
     }
+    log('jobId = ${jobId.value}');
     super.onInit();
   }
 
@@ -82,6 +89,7 @@ class CreateJobController extends GetxController {
       SuccessModel successModel =  await  APIProvider().createJob(
         data:
           {
+            if (jobId.value != "") "JobID" : jobId.value,
             "CompanyID": "0",
             "JobName": jobName.text,
             "JobStatusID": selectedJobStatusId.value,
@@ -101,9 +109,18 @@ class CreateJobController extends GetxController {
       );
       if(successModel.msgType == 0){
         isLoading.value = false;
-        Get.offAndToNamed(Routes.jobList,arguments: "Job List");
+        if (jobId.value == "") {
+          // Get.offAndToNamed(Routes.jobList,arguments: "Job List");
+          Get.back();
+          Ui.SuccessSnackBar(title:'Successful',message:'Job Created successfully done');
+        }else{
+          Get.back();
+          jobListController.jobPage = 0;
+          jobListController.jobList.clear();
+          jobListController.getJob();
+          Ui.SuccessSnackBar(title:'Successful',message:'Job Updated Successfully done');
+        }
         // Constants.successSnackBar(title: "Lead Added Successfully");
-        Ui.SuccessSnackBar(title:'Successful',message:'Lead Added Successfully');
       }else if(successModel.msgType == 1){
         isLoading.value = false;
         Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);

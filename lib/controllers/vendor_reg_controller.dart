@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
@@ -16,6 +17,7 @@ class VendorRegController extends GetxController {
 
   final key =  GlobalKey<FormState>();
   TextEditingController vendorName = TextEditingController();
+  TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController driverName = TextEditingController();
   TextEditingController driverAge = TextEditingController();
@@ -24,12 +26,11 @@ class VendorRegController extends GetxController {
   TextEditingController address = TextEditingController();
   TextEditingController drLicenseNo = TextEditingController();
   TextEditingController vehicleInNO = TextEditingController();
-  TextEditingController tempNextFollowUp = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
-  RxString nextFollowUp = "".obs;
+
   RxBool secureText = true.obs;
   RxBool isLoading = false.obs;
   AuthController authController = Get.put(AuthController());
-
+  RegExp emailRegex = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
   RxString getFilePath = "".obs;
   Rx<File?> selectedFile = Rx(null);
 
@@ -49,7 +50,7 @@ class VendorRegController extends GetxController {
   }
 
 
-  Future<void> createJob()async{
+  Future<void> registerVendor()async{
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
       isLoading.value = false;
@@ -60,49 +61,24 @@ class VendorRegController extends GetxController {
       isLoading.value = true;
       SuccessModel successModel =  await  APIProvider().registerVendor(
           data: {
-              "FirstName": "",
-              "MiddleName": "",
-              "LastName": "",
               "VendorName": vendorName.text,
-              "Email": "",
+              "Email": email.text,
               "Phone": phone.text,
-              "Fax": "",
-              "Website": "",
-              "Username": "",
               "Password": password.text,
               "CompanyName": companyName.text,
-              "CompanyPhone": "",
               "Address": address.text,
-              "Pincode": "",
-              "CountryID": "",
-              "StateID": "",
-              "CityID": "",
-              "BankName": "",
-              "AccountNumber": "",
-              "AccountHolderName": "",
-              "AccountType": "",
-              "AccountBranch": "",
-              "TIN_No": "",
-              "Description": "",
-              "IFCSCode": "",
-              "PAN_No": "",
-              "GST_No": "",
-              "Remark": "",
-              "VendorType": "",
-              "City": "",
-              "VendorTypeID": "",
               "DriverName": driverName.text,
               "DriverAge": driverAge.text,
-              "AadharCardUpload": "",
               "DriverLicenseNumber": drLicenseNo.text,
               "VehicleInsuranceNumber": vehicleInNO.text,
-              "IsApproved":""
+              "IsApproved":"false"
           },
-          path: selectedFile.value!.path ?? "");
+          path: selectedFile.value != null ?selectedFile.value!.path : "");
       if(successModel.msgType == 0){
         isLoading.value = false;
         // Get.offAndToNamed(Routes.jobList,arguments: "Job List");
-        Ui.SuccessSnackBar(title:'Successful',message:'Lead Added Successfully');
+        Get.back();
+        Ui.SuccessSnackBar(title:'Successful',message:'Vendor Register Successfully done');
       }else if(successModel.msgType == 1){
         isLoading.value = false;
         Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
@@ -110,7 +86,8 @@ class VendorRegController extends GetxController {
 
     }catch(e){
       isLoading.value = false;
-      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Lead not added");
+      log(e.toString());
+      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Vendor not Register");
     }
   }
 

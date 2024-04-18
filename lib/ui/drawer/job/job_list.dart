@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 import 'dart:developer';
 
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
+import 'package:mudara_steel_app/common/widget/dropdown_widget/dropdown_below.dart';
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
 import 'package:mudara_steel_app/common/widget/empty_widget.dart';
 import 'package:mudara_steel_app/common/widget/lead_card_widget.dart';
@@ -76,39 +78,74 @@ class JobListScreen extends GetView<JobListController> {
                           ),
                         ],
                       ),
-                      GestureDetector(
-                        onTap: ()async{
-                          await showModalBottomSheet(
-                              context: context,
-                              backgroundColor: ThemeService.white,
-                              elevation: 5.5,
-                              useSafeArea: true,
-                              constraints: const BoxConstraints(maxHeight:500),
-                              isScrollControlled:true,
-                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(25), topRight: Radius.circular(25))),
-                              builder: (context){
-                                return Filter(context);
-                              }
-                          );
-                        },
-                        child: Center(
-                          child: Container(
-                            decoration:  BoxDecoration(
-                                color: ThemeService.primaryColor,
-                                borderRadius: BorderRadius.circular(10)
+                      Row(
+                        children: [
+                          SizedBox(
+                            height: 35,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "Show",
+                                  style: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s18),
+                                ),
+                                SizedBox(
+                                  width: AppSpacings.s5,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(AppSpacings.s10, 0, AppSpacings.s10, 0),
+                                  decoration: BoxDecoration(color: ThemeService.primaryColor, borderRadius: BorderRadius.circular(10)),
+                                  child:DropdownBelow(
+                                      itemWidth: 80,
+                                      itemTextstyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black,fontFamily:'Poppins-Medium'),
+                                      boxTextstyle: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s16,color: Colors.white),
+                                      boxHeight: 50,
+                                      icon: const Icon(Icons.keyboard_arrow_down,color: ThemeService.white),
+                                      boxWidth: 50,
+                                      hint: Text('${controller.showCountVal.value}'),
+                                      value: controller.showCountVal.value,
+                                      items: controller.buildsShowCountItems(controller.showCount),
+                                      onChanged: controller.onChangeShowCount
+                                  ),
+                                ),
+                              ],
                             ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Image.asset(
-                                "assets/filter.png",
-                                height: AppSpacings.s30,
-                                color: ThemeService.white,
-                                alignment: Alignment.center,
+                          ),
+                          SizedBox(width: AppSpacings.s5),
+                          GestureDetector(
+                            onTap: ()async{
+                              await showModalBottomSheet(
+                                  context: context,
+                                  backgroundColor: ThemeService.white,
+                                  elevation: 5.5,
+                                  useSafeArea: true,
+                                  constraints: const BoxConstraints(maxHeight:500),
+                                  isScrollControlled:true,
+                                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+                                  builder: (context){
+                                    return Filter(context);
+                                  }
+                              );
+                            },
+                            child: Center(
+                              child: Container(
+                                decoration:  BoxDecoration(
+                                    color: ThemeService.primaryColor,
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(6.0),
+                                  child: Image.asset(
+                                    "assets/filter.png",
+                                    height: AppSpacings.s30,
+                                    color: ThemeService.white,
+                                    alignment: Alignment.center,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
@@ -121,10 +158,122 @@ class JobListScreen extends GetView<JobListController> {
                   color: ThemeService.primaryColor,
                   thickness: 3),
               SizedBox(
-                height: AppSpacings.s5,
+                height: AppSpacings.s2,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(AppSpacings.s30, AppSpacings.s20,
+                          AppSpacings.s10, AppSpacings.s20),
+                      child: Center(
+                        child: CupertinoSearchTextField(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: ThemeService.white,
+                              boxShadow:  [
+                                BoxShadow(
+                                  color: ThemeService.disable.withOpacity(0.8),
+                                  blurRadius: 08.0,
+                                )
+                              ]
+                            // border: Border.all(color: ThemeService.primaryColor),
+                          ),
+                          // backgroundColor: ThemeService.grayScale.withOpacity(.7),
+                          itemColor: ThemeService.black,
+                          placeholder: 'Search Job',
+                          controller: controller.searchTextEditController,
+                          placeholderStyle: TextStyle(
+                              fontSize: AppSpacings.s18,
+                              color: Get.theme.disabledColor),
+                          onSuffixTap: () {
+                            // controller.isMemberSearching.value = false;
+                            // controller.memberSearchResult.clear();
+                            controller.searchTextEditController.clear();
+                            controller.jobPage = 0;
+                            controller.jobList.clear();
+                            controller.getJob();
+                            controller.searchTextEditController.clear();
+                            FocusScope.of(context).unfocus();
+                          },
+                          suffixIcon: Icon(
+                            Icons.cancel,
+                            size: AppSpacings.s30,
+                            color: ThemeService.primaryColor,
+                          ),
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              Icons.search,
+                              size: AppSpacings.s30,
+                              color: ThemeService.primaryColor,
+                            ),
+                          ),
+                          onChanged: (value) {
+                            if(value.length >= 3){
+                              EasyDebounce.debounce('lead', const Duration(milliseconds: 700), () {
+                                controller.jobPage = 0;
+                                controller.jobList.clear();
+                                controller.getJob();
+                              });
+                            }else if(value.isEmpty){
+                              EasyDebounce.debounce('lead', const Duration(milliseconds: 700), () {
+                                controller.jobPage = 0;
+                                controller.jobList.clear();
+                                controller.getJob();
+                              });
+                            }
+
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () async {
+                      controller.isDescending.value = !controller.isDescending.value;
+                      // controller.isDescending.value == true ? controller.descending.value : controller.ascending.value;
+                      controller.jobPage = 0;
+                      controller.jobList.clear();
+                      controller.getJob();
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: AppSpacings.s8, vertical: AppSpacings.s12),
+                      margin: EdgeInsets.fromLTRB(0, 0,
+                          AppSpacings.s25, 0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        color: ThemeService.white,
+                        boxShadow:  [
+                          BoxShadow(
+                            color: ThemeService.disable.withOpacity(0.8),
+                            blurRadius: 08.0,
+                          ),],
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(1),
+                          child: Row(
+                            children: [
+                              const RotatedBox(
+                                quarterTurns: 1,
+                                child: Icon(Icons.compare_arrows,
+                                  color: ThemeService.primaryColor,
+                                ),
+                              ),
+                              Text(controller.isDescending.value ? 'Asc': 'Desc',
+                                style: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s20),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Expanded(
-                  child:  ListView(
+                  child: ListView(
                     controller: controller.leadScrollController,
                     shrinkWrap: true,
                     padding: EdgeInsets.fromLTRB(0,0, 0, AppSpacings.s55),
@@ -322,22 +471,22 @@ class JobListScreen extends GetView<JobListController> {
                                                             .animate(a1),
                                                         child: Opacity(
                                                           opacity: a1.value,
-                                                          child: Dialog(
+                                                          child: AlertDialog(
                                                             elevation: 5,
                                                             surfaceTintColor: ThemeService.white,
-                                                            backgroundColor: ThemeService.white,
-                                                            // shadowColor:ThemeService.primaryColor.withOpacity(.5),
-                                                            insetPadding: EdgeInsets.only(
-                                                                left: AppSpacings.s15,
-                                                                top: 0,
-                                                                right: AppSpacings.s15,
-                                                                bottom: AppSpacings.s15),
+                                                            shadowColor:ThemeService.primaryColor.withOpacity(.5),
+                                                            contentPadding: const EdgeInsets.all(5.0),
                                                             shape: const RoundedRectangleBorder(
+                                                              side: BorderSide(
+                                                                color: ThemeService.primaryColor,
+                                                                style: BorderStyle.solid,
+                                                              ),
                                                               borderRadius: BorderRadius.all(
-                                                                Radius.circular(25),
+                                                                Radius.circular(25.0),
                                                               ),
                                                             ),
-                                                            child: deleteJob(context,controller.jobList.isNotEmpty ? controller.jobList[index].jobId:0 , controller.jobList.isNotEmpty ? controller.jobList[index].jobName:''),
+                                                            titlePadding: EdgeInsets.zero,
+                                                            content: deleteJob(context,controller.jobList.isNotEmpty ? controller.jobList[index].jobId:0 , controller.jobList.isNotEmpty ? controller.jobList[index].jobName:''),
                                                           ),
                                                         ),
                                                       );
@@ -373,7 +522,7 @@ class JobListScreen extends GetView<JobListController> {
                                               onPressed: (){
                                                 Get.toNamed(
                                                   Routes.createJob,
-                                                  arguments: controller.jobList[index].jobId,
+                                                  arguments: controller.jobList[index].jobId.toString(),
                                                 );
                                                 // Get.toNamed(Routes.createJob,arguments: {
                                                 //   "jobName" : controller.jobList[index].jobName,
@@ -890,87 +1039,108 @@ class JobListScreen extends GetView<JobListController> {
     );
   }
 
-  deleteJob(context,jobId,jobName) {
-    return Obx(() => SizedBox(
-      height: Get.height *.30,
-      child: ListView(
-        shrinkWrap: true,
-        padding: EdgeInsets.only(
-            left: AppSpacings.s20,
-            top: AppSpacings.s30,
-            right: AppSpacings.s20,
-            bottom: AppSpacings.s15),
+  
+  deleteJob(context,jobId,jobName){
+    return Obx(() => Padding(
+      padding:
+      EdgeInsets.only(left: Get.width / 25.0, right: Get.width / 25.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Text(
-              'Are you sure?',
-              style: Get.textTheme.titleSmall!.copyWith(
-                color: ThemeService.primaryColor,
-                fontSize: AppSpacings.s25,
-                fontFamily: 'OpenSans-Semibold',
-              ),
+          SizedBox(
+            height: Get.width * 0.05,
+          ),
+          Text(
+            'Are you sure?',
+            style: Get.textTheme.titleSmall!.copyWith(
+              color: ThemeService.primaryColor,
+              fontSize: AppSpacings.s25,
+              fontFamily: 'OpenSans-Semibold',
             ),
           ),
           SizedBox(
-            height: AppSpacings.s20,
+            height: Get.width * 0.05,
           ),
-          Center(
-            child: Text(
-              'You want to delete this job $jobName',
-              style: Get.textTheme.titleSmall!.copyWith(
-                color: ThemeService.primaryColor,
-                fontSize: AppSpacings.s18,
-                fontFamily: 'OpenSans-Semibold',
-              ),
+          Text(
+            'You want to delete this job\n( $jobName )',
+            style: Get.textTheme.bodyLarge!.copyWith(
+              color: ThemeService.black,
+              fontSize: AppSpacings.s20,
+              fontWeight: FontWeight.w600,
             ),
           ),
           SizedBox(
-            height: AppSpacings.s40,
+            height: AppSpacings.s30,
           ),
-          controller.isDeleteJob.value
-              ? CupertinoActivityIndicator(radius: AppSpacings.s20)
-              : Bounce(
-            duration: const Duration(milliseconds: 150),
-            onPressed: () async {
-              FocusScope.of(context).unfocus();
-              controller.deleteJob(context,jobId: jobId);
-
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                color: ThemeService.primaryColor,
-                borderRadius: BorderRadius.circular(25),
-                // boxShadow: [
-                //   BoxShadow(
-                //     color: ThemeService.primaryColor
-                //         .withOpacity(0.5),
-                //     spreadRadius: 1.5,
-                //     blurRadius: 10,
-                //     offset: const Offset(0, 2),
-                //   ),
-                // ]
-              ),
-              child: Center(
-                child: Padding(
-                  padding: EdgeInsets.all(
-                    AppSpacings.s12,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Bounce(
+                duration: const Duration(milliseconds: 100),
+                onPressed: () async {
+                  Get.back();
+                },
+                child: Container(
+                  width: AppSpacings.s90,
+                  padding: EdgeInsets.all(AppSpacings.s8),
+                  decoration: BoxDecoration(
+                    color: ThemeService.primaryColor,
+                    borderRadius: BorderRadius.circular(AppSpacings.s15),
                   ),
-                  child: Text(
-                    "Delete",
-                    style: Get.textTheme.headline1!.copyWith(
-                      color: ThemeService.white,
-                      fontSize: AppSpacings.s25,
-                      fontWeight: FontWeight.w700,
+                  child: Center(
+                    child: Text(
+                      "Cancel",
+                      style: Get.textTheme.bodyLarge!.copyWith(
+                        fontSize: Get.width * 0.040,
+                        fontWeight: FontWeight.w600,
+                        color: ThemeService.white,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
+              SizedBox(
+                width: AppSpacings.s20,
+              ),
+              controller.isDeleteJob.value
+                  ? SizedBox(
+                  width: AppSpacings.s90,
+                  child: CupertinoActivityIndicator(radius: AppSpacings.s15))
+                  :  Bounce(
+                duration: const Duration(milliseconds: 100),
+                onPressed: () async {
+                  FocusScope.of(context).unfocus();
+                  controller.deleteJob(context,jobId: jobId);
+                },
+                child: Container(
+                  width: AppSpacings.s90,
+                  padding:  EdgeInsets.all(AppSpacings.s8),
+                  decoration: BoxDecoration(
+                    color: ThemeService.primaryColor,
+                    borderRadius: BorderRadius.circular(AppSpacings.s15),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Delete",
+                      style: Get.textTheme.bodyLarge!.copyWith(
+                        fontSize: Get.width * 0.040,
+                        fontWeight: FontWeight.w600,
+                        color: ThemeService.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: AppSpacings.s10),
+          SizedBox(
+            height: Get.width * 0.03,
+          ),
         ],
       ),
-    ));
+    ),);
   }
+
 
 }

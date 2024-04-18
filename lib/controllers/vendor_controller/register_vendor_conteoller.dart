@@ -1,11 +1,20 @@
 
 // ignore_for_file: iterable_contains_unrelated_type, unrelated_type_equality_checks, list_remove_unrelated_type
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/api_provider.dart';
+import 'package:mudara_steel_app/common/constant.dart';
+import 'package:mudara_steel_app/common/ui.dart';
+import 'package:mudara_steel_app/controllers/vendor_controller/vendor_list_controller.dart';
+import 'package:mudara_steel_app/model/job_model.dart';
+import 'package:mudara_steel_app/model/success_model.dart';
+import 'package:mudara_steel_app/model/vendor_model.dart';
 
 
 class RegisterVendorController extends GetxController {
@@ -20,6 +29,7 @@ class RegisterVendorController extends GetxController {
   TextEditingController phone = TextEditingController();
   TextEditingController companyName = TextEditingController();
   TextEditingController address = TextEditingController();
+  TextEditingController email = TextEditingController();
   TextEditingController drLicenseNo = TextEditingController();
   TextEditingController vehicleInNO = TextEditingController();
   TextEditingController tempNextFollowUp = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
@@ -28,12 +38,24 @@ class RegisterVendorController extends GetxController {
 
   RxBool isLoading = false.obs;
 
-
+  RxString vendorId = "".obs;
 
   RxString getFilePath = "".obs;
   Rx<File?> selectedFile = Rx(null);
+
+  VendorListController vendorListController = Get.put(VendorListController());
+
+
   @override
   void onInit() async {
+
+    if (Get.arguments != null && Get.arguments is String) {
+      vendorId.value = Get.arguments;
+      isLoading.value= true;
+      getVendorById(vendorId: vendorId.value);
+    }
+    log('vendorId = ${vendorId.value}');
+
     super.onInit();
   }
 
@@ -46,49 +68,82 @@ class RegisterVendorController extends GetxController {
       selectedFile.value = file;
     }
   }
-  // Future<void> addLead()async{
-  //   bool isInternet = await Constants.isInternetAvail();
-  //   if (!isInternet) {
-  //     isLoading.value = false;
-  //     Constants.ErrorSnackBar(title:"No Internet connection",message: "Please turn on internet connection");
-  //     return;
-  //   }
-  //   try{
-  //     isLoading.value = true;
-  //     SuccessModel successModel =  await  APIProvider().addLead(
-  //       data: {
-  //         "Phone": phone.text,
-  //         "ClientId": selectedClientId.value,
-  //         "ClientName": name.text,
-  //         "Address": address.text,
-  //         "StateID": selectedStateId.value,
-  //         "CityID": selectedCityId.value,
-  //         "LeadSourceID": selectedLeadSourceId.value,
-  //         "RefBy": referenceBy.text,
-  //         "RefPhone": referencePhone.text,
-  //         "ArchitechEmpID": selectedArchitectNameId.value,
-  //         "EmployeeID": selectedSalesPersonId.value,
-  //         "Remark": remark.text,
-  //         "LeadStatusID": selectedStatusId.value,
-  //         "NextFollowupDate": tempNextFollowUp.text,
-  //         "objLeadDetail": List.from(selectedProductList.map((e) => e.toJson()).toList()),
-  //       },
-  //     );
-  //     if(successModel.msgType == 0){
-  //       isLoading.value = false;
-  //       Get.offAndToNamed(Routes.leadList);
-  //       // Constants.successSnackBar(title: "Lead Added Successfully");
-  //       Ui.SuccessSnackBar(title:'Successful',message:'Lead Added Successfully');
-  //     }else if(successModel.msgType == 1){
-  //       isLoading.value = false;
-  //       Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
-  //     }
-  //
-  //   }catch(e){
-  //     isLoading.value = false;
-  //     Ui.ErrorSnackBar(title: "Something went wrong ",message: "Lead not added");
-  //   }
-  // }
 
+  Future<void> vendorRegistration()async{
+    bool isInternet = await Constants.isInternetAvail();
+    if (!isInternet) {
+      isLoading.value = false;
+      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      return;
+    }
+    try{
+      isLoading.value = true;
+      SuccessModel successModel =  await  APIProvider().vendorRegistration(
+          data: {
+            if (vendorId.value != "") "VendorID" : vendorId.value,
+            "VendorName": vendorName.text,
+            "Email": email.text,
+            "Phone": phone.text,
+            "Password": password.text,
+            "CompanyName": companyName.text,
+            "Address": address.text,
+            "DriverName": driverName.text,
+            "DriverAge": driverAge.text,
+            "DriverLicenseNumber": drLicenseNo.text,
+            "VehicleInsuranceNumber": vehicleInNO.text,
+            "IsApproved":"false"
+          },
+          path: selectedFile.value != null ?selectedFile.value!.path : "");
+      if(successModel.msgType == 0){
+        isLoading.value = false;
+        if (vendorId.value == "") {
+          // Get.offAndToNamed(Routes.jobList,arguments: "Job List");
+          Get.back();
+          Ui.SuccessSnackBar(title:'Successful',message:'Vendor Register Successfully done');
+        }else{
+          Get.back();
+          vendorListController.vendorPage = 0;
+          vendorListController.vendorList.clear();
+          vendorListController.getVendor();
+          Ui.SuccessSnackBar(title:'Successful',message:'vendorId Updated Successfully done');
+        }
+        // Get.offAndToNamed(Routes.jobList,arguments: "Job List");
+
+      }else if(successModel.msgType == 1){
+        isLoading.value = false;
+        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+      }
+
+    }catch(e){
+      isLoading.value = false;
+      log(e.toString());
+      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Vendor not Register");
+    }
+  }
+
+  Future<void> getVendorById({vendorId}) async {
+    isLoading.value = true;
+
+    VendorModel vendorModel = await APIProvider().getVendorById(
+        vendorId:  vendorId
+    );
+    if(vendorModel != null){
+
+       vendorName.text = vendorModel.vendorName!;
+       password.text = vendorModel.password! ;
+       driverName.text =vendorModel.driverName! ;
+       driverAge.text = vendorModel.driverAge!;
+       address.text =vendorModel.address! ;
+       email.text= vendorModel.email!;
+       phone.text= vendorModel.phone!;
+       companyName.text= vendorModel.companyName!;
+       drLicenseNo.text= vendorModel.driverLicenseNumber!;
+       vehicleInNO.text= vendorModel.vehicleInsuranceNumber!;
+
+      isLoading.value = false;
+    }
+    isLoading.value = false;
+    return;
+  }
 
 }

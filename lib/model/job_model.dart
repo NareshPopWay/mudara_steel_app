@@ -80,7 +80,7 @@ class JobModel {
     deliveryDate:  json["DeliveryDate"] == null ? null : DateTime.parse(json["DeliveryDate"]),
     jobTypeId: json["JobTypeID"],
     isTruck: json["IsTruck"],
-    weight: json["Weight"],
+    weight: json["Weight"]??"",
     weightUnit: json["WeightUnit"],
     column1: json["Column1"],
     column2: json["Column2"],

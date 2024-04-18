@@ -57,11 +57,11 @@ class HomeScreen extends GetView<RootController> {
                 ),
               ),
               actions: [
-              Container(
-                padding: const EdgeInsets.all(10),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Image.asset(
                   'assets/logo.png',
-                  fit: BoxFit.fill,
+                  width: AppSpacings.s50,
                 ),
               ),
               ],
@@ -353,7 +353,7 @@ class HomeScreen extends GetView<RootController> {
                               size: AppSpacings.s20,
                             ),
                             title: Text(
-                              "Vendor List",
+                              "Vendor",
                               style: Get.textTheme.bodyLarge!.copyWith(
                                 fontSize: AppSpacings.s20,
                                 fontWeight: FontWeight.w500,
@@ -423,7 +423,7 @@ class HomeScreen extends GetView<RootController> {
                               size: AppSpacings.s20,
                             ),
                             title: Text(
-                              "Job List",
+                              "Job",
                               style: Get.textTheme.bodyLarge!.copyWith(
                                 fontSize: AppSpacings.s20,
                                 fontWeight: FontWeight.w500,
@@ -432,7 +432,7 @@ class HomeScreen extends GetView<RootController> {
                             ),
                             onTap: () {
                               Get.back();
-                              Get.toNamed(Routes.jobList,arguments: "Job List");
+                              Get.toNamed(Routes.jobList,arguments: "Job");
                             },
                           ),
                           if(controller.userTypeID.value == "1")
@@ -458,7 +458,7 @@ class HomeScreen extends GetView<RootController> {
                               size: AppSpacings.s20,
                             ),
                             title: Text(
-                              "Job Bid List",
+                              "Job Bid",
                               style: Get.textTheme.bodyLarge!.copyWith(
                                 fontSize: AppSpacings.s20,
                                 fontWeight: FontWeight.w500,
@@ -528,7 +528,7 @@ class HomeScreen extends GetView<RootController> {
                               size: AppSpacings.s20,
                             ),
                             title: Text(
-                              "Job Allocation List",
+                              "Job Allocation",
                               style: Get.textTheme.bodyLarge!.copyWith(
                                 fontSize: AppSpacings.s20,
                                 fontWeight: FontWeight.w500,
@@ -537,7 +537,7 @@ class HomeScreen extends GetView<RootController> {
                             ),
                             onTap: () {
                               Get.back();
-                              Get.toNamed(Routes.jobAllocationList,arguments: "Job Allocation List");
+                              Get.toNamed(Routes.jobAllocationList,arguments: "Job Allocation");
                             },
                           ),
                           if(controller.userTypeID.value == "1")

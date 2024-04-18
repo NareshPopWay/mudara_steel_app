@@ -30,7 +30,31 @@ class JobAllocationListController extends GetxController {
   RxString fromDate = "".obs;
   RxString toDate = "".obs;
 
+  var showCount = [10, 15, 20, 25, 50, 100];
   RxInt showCountVal = 10.obs;
+
+
+  List<DropdownMenuItem<Object?>> buildsShowCountItems(List _testList) {
+    List<DropdownMenuItem<Object?>> items = [];
+    for (var i in _testList) {
+      items.add(
+        DropdownMenuItem(
+          value: i,
+          child: Text(i.toString()),
+        ),
+      );
+    }
+    return items;
+  }
+
+  onChangeShowCount(newValue) {
+    print(newValue);
+    showCountVal.value = newValue!;
+    jobAllocationPage = 0;
+    jobAllocationList.clear();
+    getJobAllocation();
+  }
+
   RxString shortByVal = "LeadDate".obs;
   RxString selectedShortByVal = "CreatedOn".obs;
   RxString descending = "desc".obs;
@@ -40,7 +64,7 @@ class JobAllocationListController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    appTitle.value = Get.arguments;
+    appTitle.value = Get.arguments ?? "JobAllocation List ";
     getJobAllocation();
     jobNameList.value = await APIProvider().getJobName();
     vendorNameList.value = await APIProvider().getVendorName();
@@ -124,11 +148,11 @@ class JobAllocationListController extends GetxController {
     return;
   }
 
-  Future<void> deleteJobAllocation(context,{int? jobId})async{
+  Future<void> deleteJobAllocation(context,{int? jobAllocationId})async{
     try{
       FocusScope.of(context).unfocus();
       isDeleteJobAllocation.value = true;
-      SuccessModel successModel =  await  APIProvider().deleteJobAllocation(jobId: jobId);
+      SuccessModel successModel =  await  APIProvider().deleteJobAllocation(jobAllocationId: jobAllocationId);
       if(successModel.msgType == 0){
         isDeleteJobAllocation.value = false;
         Get.back();

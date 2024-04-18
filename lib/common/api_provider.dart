@@ -19,6 +19,8 @@ import 'package:mudara_steel_app/model/job_allocation_model.dart';
 import 'package:mudara_steel_app/model/job_list_model.dart';
 import 'package:mudara_steel_app/model/job_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
+import 'package:mudara_steel_app/model/vendor_list_model.dart';
+import 'package:mudara_steel_app/model/vendor_model.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
 class APIProvider {
@@ -109,7 +111,7 @@ class APIProvider {
       log("$baseUrl/api/CommanAPI/SaveVendor");
       log('$data');
       log('$path');
-      var headers = {"Content-Type": "application/x-www-form-urlencoded"};
+      var headers = {"Content-Type": "application/form-data"};
 
       var request = http.MultipartRequest(
         'POST', Uri.parse("$baseUrl/api/CommanAPI/SaveVendor"),
@@ -119,7 +121,57 @@ class APIProvider {
       //   jsonEncode(body),
       // ));
       if (path != "" && path != null) {
-        request.files.add(await http.MultipartFile.fromPath('file', path));
+        request.files.add(await http.MultipartFile.fromPath('AadharCardUpload', path));
+      }
+      request.headers.addAll(headers);
+
+      var sendRequest = await request.send();
+      var response = await http.Response.fromStream(sendRequest);
+      responseJson = response.body.toString();
+      log(responseJson);
+      if(response.statusCode ==200){
+        if (responseJson != null) {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        } else {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        }
+      }else{
+        Get.offNamed(Routes.login);
+      }
+    } on SocketException {
+      Ui.ErrorSnackBar(title: 'No Internet connection');
+      return SuccessModel.fromJson(Map());
+    } catch (e) {
+      log("error ...registerVendor ...... $e");
+    }
+    return SuccessModel.fromJson(Map());
+  }
+
+  Future<SuccessModel> updateVendor(
+      {required Map<String, String> data,
+        String? path}) async {
+    var responseJson;
+    apiToken.value = GetStorage().read(Constants.token);
+    log("apiToken => ${apiToken.value}");
+    try {
+
+      log("$baseUrl/VendorApi/VendorAPI/SaveVendor");
+      log('$data');
+      log('$path');
+      var headers = {
+        "Content-Type": "application/form-data",
+        'Authorization': 'Bearer ${apiToken.value}'
+      };
+
+      var request = http.MultipartRequest(
+        'POST', Uri.parse("$baseUrl/VendorApi/VendorAPI/SaveVendor"),
+      );
+      request.fields.addAll(data);
+      // request.fields.addAll(jsonDecode(
+      //   jsonEncode(body),
+      // ));
+      if (path != "" && path != null) {
+        request.files.add(await http.MultipartFile.fromPath('AadharCardUpload', path));
       }
       request.headers.addAll(headers);
 
@@ -178,11 +230,11 @@ class APIProvider {
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
     try {
-      log("$baseUrl/AdminAPI/JobAPI/GetList?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobType$jobType");
+      log("$baseUrl/AdminAPI/JobAPI/GetList?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobType$jobType");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl/AdminAPI/JobAPI/GetList?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobType$jobType",
+            "$baseUrl/AdminAPI/JobAPI/GetList?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobType$jobType",
           ),
           headers: {
             'Content-Type': 'application/json',
@@ -654,7 +706,7 @@ class APIProvider {
     return list;
   }
 
-  Future<SuccessModel> deleteJobAllocation({int? jobId}) async {
+  Future<SuccessModel> deleteJobAllocation({int? jobAllocationId}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
       Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
@@ -663,11 +715,11 @@ class APIProvider {
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
     try {
-      log("$baseUrl/AdminAPI/JobAllocationAPI/Delete?Id=$jobId");
+      log("$baseUrl/AdminAPI/JobAllocationAPI/Delete?Id=$jobAllocationId");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl/AdminAPI/JobAllocationAPI/Delete?Id=$jobId",
+            "$baseUrl/AdminAPI/JobAllocationAPI/Delete?Id=$jobAllocationId",
           ),
           headers: {
             'Content-Type': 'application/json',
@@ -744,7 +796,48 @@ class APIProvider {
 
 ///-----------------------------Vendor ------------------------------------------------////
 
-  Future<List<JobListModel>> getVendorList({
+
+  Future<SuccessModel> checkVendorPhone({String? phone}) async {
+    bool isInternet = await Constants.isInternetAvail();
+    if (!isInternet) {
+      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+    }
+    var responseJson;
+
+    try {
+      log("$baseUrl/api/CommanAPI/IsVendorPhoneNoExist");
+
+      final response = await http.post(
+          Uri.parse(
+            "$baseUrl/api/CommanAPI/IsVendorPhoneNoExist",
+          ),
+          headers: {"Content-Type": "application/x-www-form-urlencoded",},
+        body: {
+            "VendorId" :"0",
+             "Phone" : phone
+          }
+          );
+      responseJson = response.body.toString();
+      log(responseJson.toString());
+      if(response.statusCode == 200){
+        if (responseJson != null) {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        } else {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        }
+      }else{
+        Get.offNamed(Routes.login);
+      }
+    } on SocketException {
+      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      return SuccessModel.fromJson(Map());
+    } catch (e) {
+      print("error ...deleteJobAllocation ...... $e");
+    }
+    return SuccessModel.fromJson(jsonDecode(responseJson));
+  }
+
+  Future<List<VendorListModel>> getVendorList({
     pageNumber,
     rowsOfPage,
     orderByName,
@@ -752,28 +845,27 @@ class APIProvider {
     fromDate,
     toDate,
     sortDirection,
-    vendorId
   }) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
       Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
     }
     var responseJson;
-    List<JobListModel> list = [];
+    List<VendorListModel> list = [];
 
-    if (vendorId == null || vendorId == "") {
-      vendorId = "0";
-    }
+    // if (vendorId == null || vendorId == "") {
+    //   vendorId = "0";
+    // }
 
 
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
     try {
-      log("$baseUrl/AdminApi/VendorAPI/GetLis?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&VendorTypeID=$vendorId");
+      log("$baseUrl/AdminApi/VendorAPI/GetList?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&VendorTypeID=0");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl/AdminApi/VendorAPI/GetLis?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&VendorTypeID=$vendorId",
+            "$baseUrl/AdminApi/VendorAPI/GetList?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&VendorTypeID=0",
           ),
           headers: {
             'Content-Type': 'application/json',
@@ -784,25 +876,155 @@ class APIProvider {
       log(responseJson["data"].toString());
 
       for (int i = 0; i < responseJson['data'].length; i++) {
-        list.add(JobListModel.fromJson(responseJson['data'][i]));
+        list.add(VendorListModel.fromJson(responseJson['data'][i]));
       }
     } on SocketException {
       Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
     } catch (e) {
-      print("error ...getLeadList ...... $e");
+      print("error ...getVendorList ...... $e");
     }
     return list;
   }
 
+  Future<SuccessModel> vendorRegistration(
+      {required Map<String, String> data,
+        String? path}) async {
+    var responseJson;
+    apiToken.value = GetStorage().read(Constants.token);
+    log("apiToken => ${apiToken.value}");
+    try {
 
-  //AdminAPI/JobAPI/GetDataByJobID?ID=1 - get data by job
+      log("$baseUrl/AdminApi/VendorAPI/SaveVendor");
+      log('$data');
+      log('$path');
+      var headers = {
+        "Content-Type": "application/form-data",
+        'Authorization': 'Bearer ${apiToken.value}'
+      };
+
+      var request = http.MultipartRequest(
+        'POST', Uri.parse("$baseUrl/AdminApi/VendorAPI/SaveVendor"),
+      );
+      request.fields.addAll(data);
+      // request.fields.addAll(jsonDecode(
+      //   jsonEncode(body),
+      // ));
+      if (path != "" && path != null) {
+        request.files.add(await http.MultipartFile.fromPath('AadharCardUpload', path));
+      }
+      request.headers.addAll(headers);
+
+      var sendRequest = await request.send();
+      var response = await http.Response.fromStream(sendRequest);
+      responseJson = response.body.toString();
+      log(responseJson);
+      if(response.statusCode ==200){
+        if (responseJson != null) {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        } else {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        }
+      }else{
+        Get.offNamed(Routes.login);
+      }
+    } on SocketException {
+      Ui.ErrorSnackBar(title: 'No Internet connection');
+      return SuccessModel.fromJson(Map());
+    } catch (e) {
+      log("error ...vendorRegistration ...... $e");
+    }
+    return SuccessModel.fromJson(Map());
+  }
+
+  Future<VendorModel> getVendorById({
+    vendorId
+  }) async {
+    bool isInternet = await Constants.isInternetAvail();
+    if (!isInternet) {
+      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+    }
+    var responseJson;
 
 
-  //AdminAPI/VendorAPI/Save - vendor save API
-  //AdminAPI/VendorAPI/Delete?Id=2 - vendor delete API
-  // AdminApi/VendorAPI/GetList?PageNumber=0&RowsOfPage=10&OrderByName=CreatedOn&SortDirection=&FromDate=&ToDate=&VendorTypeID=0  - get vendor list
-   //AdminAPI/VendorAPI/GetDataByVendorID?ID=1 - Get Vendor By Vendor ID
-  //AdminAPI/VendorAPI/Save - Update Vendor
+    if (vendorId == null || vendorId == "") {
+      vendorId = "0";
+    }
+
+    apiToken.value = GetStorage().read(Constants.token);
+    log("apiToken => ${apiToken.value}");
+    try {
+      log("$baseUrl/AdminAPI/VendorAPI/GetDataByVendorID?ID=$vendorId");
+
+      final response = await http.get(
+          Uri.parse(
+            "$baseUrl/AdminAPI/VendorAPI/GetDataByVendorID?ID=$vendorId",
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${apiToken.value}',
+          });
+      responseJson = response.body.toString();
+      log(responseJson.toString());
+      if(response.statusCode == 200){
+        if (responseJson != null) {
+          return VendorModel.fromJson(jsonDecode(responseJson));
+        } else {
+          return VendorModel.fromJson(jsonDecode(responseJson));
+        }
+      }else{
+        Get.offNamed(Routes.login);
+      }
+    } on SocketException {
+      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      return VendorModel.fromJson(Map());
+    } catch (e) {
+      print("error ...getVendorById ...... $e");
+    }
+    return VendorModel.fromJson(jsonDecode(responseJson));
+  }
+
+  Future<SuccessModel> deleteVendor({int? vendorId}) async {
+    bool isInternet = await Constants.isInternetAvail();
+    if (!isInternet) {
+      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+    }
+    var responseJson;
+    apiToken.value = GetStorage().read(Constants.token);
+    log("apiToken => ${apiToken.value}");
+    try {
+      log("$baseUrl/AdminAPI/VendorAPI/Delete?Id=$vendorId");
+
+      final response = await http.get(
+          Uri.parse(
+            "$baseUrl/AdminAPI/VendorAPI/Delete?Id=$vendorId",
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${apiToken.value}',
+          });
+      responseJson = response.body.toString();
+      log(responseJson.toString());
+      if(response.statusCode == 200){
+        if (responseJson != null) {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        } else {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        }
+      }else{
+        Get.offNamed(Routes.login);
+      }
+    } on SocketException {
+      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      return SuccessModel.fromJson(Map());
+    } catch (e) {
+      print("error ...deleteJobAllocation ...... $e");
+    }
+    return SuccessModel.fromJson(jsonDecode(responseJson));
+  }
+
+
   static dynamic _response(http.Response response) {
     switch (response.statusCode) {
       case 200:
@@ -831,4 +1053,14 @@ class APIProvider {
     }
   }
 
+
+  // VendorApi/VendorAPI/GetDataByVendorID - Vendor profile After login (work on token)
+  //
+  // api/CommanAPI/IsVendorPhoneNoExist - check number exist or not in vendor register ,(int VendorID,string Phone)
+  //
+  //VendorApi/VendorAPI/JobBidSave - in vendor login for job bide save (create job bide screen in vendor login (JobID Required Cost Required numberRemark) with this flied)
+  //
+  //AdminApi/JobAllocationAPI/GetJobBidList  - in admin login get job bid
+  //
+ //AdminApi/VendorAPI/Approve - in admin login approve vendor (if vendor true the show disapprove other wise approve and call api )
 }
