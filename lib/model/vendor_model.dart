@@ -10,7 +10,7 @@ VendorModel vendorModelFromJson(String str) => VendorModel.fromJson(json.decode(
 String vendorModelToJson(VendorModel data) => json.encode(data.toJson());
 
 class VendorModel {
-  // int? vendorId;
+  int? vendorId;
   // dynamic code;
   // dynamic firstName;
   // dynamic middleName;
@@ -65,7 +65,7 @@ class VendorModel {
   // dynamic deletedUserTypeId;
 
   VendorModel({
-     // this.vendorId,
+     this.vendorId,
      // this.code,
      // this.firstName,
      // this.middleName,
@@ -121,7 +121,7 @@ class VendorModel {
   });
 
   factory VendorModel.fromJson(Map<String, dynamic> json) => VendorModel(
-    // vendorId: json["VendorID"],
+    vendorId: json["VendorID"],
     // code: json["Code"],
     // firstName: json["FirstName"],
     // middleName: json["MiddleName"],
@@ -177,7 +177,7 @@ class VendorModel {
   );
 
   Map<String, dynamic> toJson() => {
-    // "VendorID": vendorId,
+    "VendorID": vendorId,
     // "Code": code,
     // "FirstName": firstName,
     // "MiddleName": middleName,

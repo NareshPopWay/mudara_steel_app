@@ -130,7 +130,7 @@ class VendorListController extends GetxController {
         vendorPage = 0;
         vendorList.clear();
         getVendor();
-        Ui.SuccessSnackBar(title:'Successful',message:'Vendor Approved successfully done');
+        Ui.SuccessSnackBar(title:'Successful',message: isApprove == true ? 'Vendor Approved successfully done' : 'Vendor DisApproved successfully done');
       }else if(successModel.msgType == 1){
         isLoading.value = false;
         Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);

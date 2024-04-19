@@ -318,12 +318,12 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
-                                  validator: (e) {
-                                    if (e!.isEmpty) {
-                                      return "Driver name is Required";
-                                    }
-                                    return null;
-                                  },
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Driver name is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ThemeService.primaryColor.withOpacity(0.1),
@@ -389,12 +389,12 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
-                                  validator: (e) {
-                                    if (e!.isEmpty) {
-                                      return "Driver Age is Required";
-                                    }
-                                    return null;
-                                  },
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Driver Age is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ThemeService.primaryColor.withOpacity(0.1),
@@ -460,12 +460,12 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
-                                  validator: (e) {
-                                    if (e!.isEmpty) {
-                                      return "Address is Required";
-                                    }
-                                    return null;
-                                  },
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Address is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ThemeService.primaryColor.withOpacity(0.1),
@@ -687,12 +687,12 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
-                                  validator: (e) {
-                                    if (e!.isEmpty) {
-                                      return "company name";
-                                    }
-                                    return null;
-                                  },
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "company name";
+                                  //   }
+                                  //   return null;
+                                  // },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ThemeService.primaryColor.withOpacity(0.1),
@@ -758,12 +758,12 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
-                                  validator: (e) {
-                                    if (e!.isEmpty) {
-                                      return "Drivers license number is Required";
-                                    }
-                                    return null;
-                                  },
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Drivers license number is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ThemeService.primaryColor.withOpacity(0.1),
@@ -829,12 +829,12 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
-                                  validator: (e) {
-                                    if (e!.isEmpty) {
-                                      return "Vehicle insurance Number is Required";
-                                    }
-                                    return null;
-                                  },
+                                  // validator: (e) {
+                                  //   if (e!.isEmpty) {
+                                  //     return "Vehicle insurance Number is Required";
+                                  //   }
+                                  //   return null;
+                                  // },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: ThemeService.primaryColor.withOpacity(0.1),
@@ -975,15 +975,15 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                         if(controller.key.currentState!.validate()) {
                           FocusScope.of(context).unfocus();
                           controller.key.currentState!.save();
-
-                          if(controller.selectedFile.value == null){
-                            Ui.ErrorSnackBar(title: "Upload Aadhar",message: "Please Upload Aadhar");
-                          } else {
+                          //
+                          // if(controller.selectedFile.value == null){
+                          //   Ui.ErrorSnackBar(title: "Upload Aadhar",message: "Please Upload Aadhar");
+                          // } else {
 
                             FocusScope.of(context).unfocus();
-                            // controller.addLead();
+                            controller.updateVendor();
 
-                          }
+                          // }
                         }else{
                           log("Not validate");
                         }

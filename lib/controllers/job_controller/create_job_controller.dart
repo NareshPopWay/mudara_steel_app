@@ -4,6 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
@@ -34,7 +35,7 @@ class CreateJobController extends GetxController {
 
   RxBool isLoading = false.obs;
   RxBool isSaveArchitech = false.obs;
-
+  RxString userTypeID = "".obs;
   RxBool isSelected = false.obs;
   RxInt toggleValue = 0.obs;
 
@@ -62,9 +63,9 @@ class CreateJobController extends GetxController {
 
   @override
   void onInit() async {
-
-    jobStatusList.value = await APIProvider().getJobStatusList();
-    jobTypeList.value = await APIProvider().getJobTypeList();
+    userTypeID.value = await GetStorage().read(Constants.userTypeID) ?? "";
+    jobStatusList.value = await APIProvider().getJobStatusList(userTypeID.value);
+    jobTypeList.value = await APIProvider().getJobTypeList(userTypeID.value);
 
     if (Get.arguments != null && Get.arguments is String) {
       jobId.value = Get.arguments;
@@ -116,8 +117,8 @@ class CreateJobController extends GetxController {
         }else{
           Get.back();
           jobListController.jobPage = 0;
-          jobListController.jobList.clear();
-          jobListController.getJob();
+          jobListController.openJobList.clear();
+          jobListController.getOpenJob();
           Ui.SuccessSnackBar(title:'Successful',message:'Job Updated Successfully done');
         }
         // Constants.successSnackBar(title: "Lead Added Successfully");
@@ -157,7 +158,7 @@ class CreateJobController extends GetxController {
         }
       }
       for (int i = 0; i < jobStatusList.length; i++) {
-        if (jobTypeList[i].value == jobModel.jobStatusId.toString()) {
+        if (jobStatusList[i].value == jobModel.jobStatusId.toString()) {
           selectedJobStatusId.value = jobStatusList[i].value.toString();
           selectedJobStatus.value = jobStatusList[i].text.toString();
           break;

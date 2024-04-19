@@ -45,6 +45,7 @@ class RegisterVendorController extends GetxController {
 
   VendorListController vendorListController = Get.put(VendorListController());
 
+  final RegExp passwordRegex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
 
   @override
   void onInit() async {

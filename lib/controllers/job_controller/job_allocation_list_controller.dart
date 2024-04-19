@@ -1,11 +1,14 @@
 
 // ignore_for_file: iterable_contains_unrelated_type, unrelated_type_equality_checks, list_remove_unrelated_type
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
+import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_allocation_list_model.dart';
@@ -65,12 +68,18 @@ class JobAllocationListController extends GetxController {
   void onInit() async {
     super.onInit();
     appTitle.value = Get.arguments ?? "JobAllocation List ";
-    getJobAllocation();
-    jobNameList.value = await APIProvider().getJobName();
-    vendorNameList.value = await APIProvider().getVendorName();
-    vendorJobBidList.value = await APIProvider().getVendorJobBide(jobId: 0);
-    jobName1List.value = await APIProvider().getJobName();
+    userTypeID.value = await GetStorage().read(Constants.userTypeID) ?? "";
     jobAllocationScrollController.addListener(jobAllocationScrollListener);
+    getJobAllocation();
+    log(userTypeID.value);
+    if(userTypeID.value == "1"){
+      jobNameList.value = await APIProvider().getJobNameList(userTypeID.value);
+      vendorNameList.value = await APIProvider().getVendorName();
+    }else{
+      jobNameList.value = await APIProvider().getJobNameList(userTypeID.value);
+    }
+
+
   }
 
   void jobAllocationScrollListener() async {
@@ -102,34 +111,14 @@ class JobAllocationListController extends GetxController {
   Rx<TextEditingController> textVendorName = TextEditingController().obs;
 
 
-
-
   TextEditingController cost = TextEditingController();
   TextEditingController remark = TextEditingController();
-
-  RxList<FieldItemValueModel> jobName1List = <FieldItemValueModel>[].obs;
-  RxBool isJobName1Expanded = false.obs;
-  RxString selectedJobName1 = "".obs;
-  RxString selectedJobName1Id = "".obs;
-  RxString tampSelectedJobName1 = "".obs;
-  RxString tampSelectedJobName1Id = "".obs;
-  RxBool isJobName1Searching = RxBool(false);
-  Rx<TextEditingController> textJobName1 = TextEditingController().obs;
-
-  RxList<FieldItemValueModel> vendorJobBidList = <FieldItemValueModel>[].obs;
-  RxBool isVendorJobBidExpanded = false.obs;
-  RxString selectedVendorJobBid = "".obs;
-  RxString selectedVendorJobBidId = "".obs;
-  RxString tampSelectedVendorJobBid = "".obs;
-  RxString tampSelectedVendorJobBidId = "".obs;
-  RxBool isVendorJobBidSearching = RxBool(false);
-  Rx<TextEditingController> textVendorJobBid = TextEditingController().obs;
-
 
   Future<void> getJobAllocation({bool pagination = false}) async {
     isJobAllocationListLoading.value = true;
 
     var leadResponse = await APIProvider().getJobAllocationList(
+      userTypeID : userTypeID.value,
       pageNumber: jobAllocationPage,
       rowsOfPage: showCountVal,
       orderByName: selectedShortByVal,

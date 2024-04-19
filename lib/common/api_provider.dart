@@ -50,7 +50,12 @@ class APIProvider {
     var responseJson;
     try {
       log("$baseUrl/token");
-
+      Map data ={
+        "UserName": userName,
+        "Password": password,
+        "grant_type": "password",
+      };
+      log("$data");
       final response = await http.post(
         Uri.parse(
           "$baseUrl/token",
@@ -79,9 +84,12 @@ class APIProvider {
         if (responseJson['access_token'] != null &&
             responseJson['access_token'] != "") {
           GetStorage().write(Constants.token, responseJson['access_token'].toString());
-          GetStorage().write(Constants.userName, responseJson['UserType'].toString());
           GetStorage().write(Constants.userTypeID, responseJson['UserTypeID'].toString());
-          // await APIProvider().getProfileData();
+          if(responseJson['UserTypeID'].toString() == "1"){
+            GetStorage().write(Constants.userName, responseJson['UserType'].toString());
+          }else{
+            await APIProvider().getVendorProfileData();
+          }
           return true;
         }
         else {
@@ -198,6 +206,49 @@ class APIProvider {
     return SuccessModel.fromJson(Map());
   }
 
+  Future<VendorModel> getVendorProfileData() async {
+    bool isInternet = await Constants.isInternetAvail();
+    if (!isInternet) {
+      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+    }
+    var responseJson;
+
+    apiToken.value = GetStorage().read(Constants.token);
+    log("apiToken => ${apiToken.value}");
+    try {
+      log("$baseUrl/VendorApi/VendorAPI/GetDataByVendorID");
+
+      final response = await http.get(
+          Uri.parse(
+            "$baseUrl/VendorApi/VendorAPI/GetDataByVendorID",
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ${apiToken.value}',
+          });
+      responseJson = jsonDecode(response.body.toString());
+      log(responseJson.toString());
+      if(response.statusCode == 200){
+        if (responseJson != null) {
+          log(responseJson['VendorName'].toString());
+          GetStorage().write(Constants.userName,responseJson['VendorName'].toString());
+          return VendorModel.fromJson(responseJson);
+        } else {
+          return VendorModel.fromJson(responseJson);
+        }
+      }else{
+        Get.offNamed(Routes.login);
+      }
+    } on SocketException {
+      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      return VendorModel.fromJson(Map());
+    } catch (e) {
+      print("error ...getVendorProfileData ...... $e");
+    }
+    return VendorModel.fromJson(responseJson);
+  }
+
 ///------------------------------ Get Job -----------------------------------///
   Future<List<JobListModel>> getJobList({
     pageNumber,
@@ -209,7 +260,8 @@ class APIProvider {
     sortDirection,
     jobType,
     jobStatusId,
-    jobId
+    jobId,
+    userTypeID
   }) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
@@ -218,9 +270,9 @@ class APIProvider {
     var responseJson;
     List<JobListModel> list = [];
 
-    // if (jobType == null || jobType == "") {
-    //   jobType = "0";
-    // }
+    if (jobType == null || jobType == "") {
+      jobType = "0";
+    }
     if (jobStatusId == null || jobStatusId == "") {
       jobStatusId = "0";
     }
@@ -231,11 +283,19 @@ class APIProvider {
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
     try {
-      log("$baseUrl/AdminAPI/JobAPI/GetList?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobType$jobType");
+
+      var url;
+      if(userTypeID == "1"){
+        url = "/AdminAPI/JobAPI/GetList";
+      }else{
+        url="/VendorApi/VendorAPI/GetJobList";
+      }
+
+      log("$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl/AdminAPI/JobAPI/GetList?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobType$jobType",
+            "$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType",
           ),
           headers: {
             'Content-Type': 'application/json',
@@ -256,7 +316,7 @@ class APIProvider {
     return list;
   }
 
-  Future<List<FieldItemValueModel>> getJobNameList() async {
+  Future<List<FieldItemValueModel>> getJobNameList(userTypeID) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
       Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
@@ -266,11 +326,18 @@ class APIProvider {
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
     try {
-      log("$baseUrl/AdminAPI/JobAPI/GetJobList");
+
+      var url;
+      if(userTypeID == "1"){
+        url = "/AdminAPI/JobAPI/GetJobList";
+      }else{
+        url="/VendorApi/VendorAPI/GetAllJobList";
+      }
+      log("$baseUrl$url");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl/AdminAPI/JobAPI/GetJobList",
+            "$baseUrl$url",
           ),
           headers: {
             'Content-Type': 'application/json',
@@ -291,7 +358,7 @@ class APIProvider {
     return list;
   }
 
-  Future<List<FieldItemValueModel>> getJobStatusList() async {
+  Future<List<FieldItemValueModel>> getJobStatusList(userTypeID) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
       Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
@@ -301,11 +368,17 @@ class APIProvider {
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
     try {
-      log("$baseUrl/AdminAPI/JobAPI/GetJobStatusList");
+      var url;
+      if(userTypeID == "1"){
+        url = "/AdminAPI/JobAPI/GetJobStatusList";
+      }else{
+        url="/VendorApi/VendorAPI/GetJobStatusList";
+      }
+      log("$baseUrl$url");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl/AdminAPI/JobAPI/GetJobStatusList",
+            "$baseUrl$url",
           ),
           headers: {
             'Content-Type': 'application/json',
@@ -326,7 +399,7 @@ class APIProvider {
     return list;
   }
 
-  Future<List<FieldItemValueModel>> getJobTypeList() async {
+  Future<List<FieldItemValueModel>> getJobTypeList(userTypeID) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
       Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
@@ -336,11 +409,19 @@ class APIProvider {
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
     try {
-      log("$baseUrl/AdminAPI/JobAPI/GetJobTypeList");
+
+
+      var url;
+      if(userTypeID == "1"){
+        url = "/AdminAPI/JobAPI/GetJobTypeList";
+      }else{
+        url="/VendorApi/VendorAPI/GetJobTypeList";
+      }
+      log("$baseUrl$url");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl/AdminAPI/JobAPI/GetJobTypeList",
+            "$baseUrl$url",
           ),
           headers: {
             'Content-Type': 'application/json',
@@ -547,7 +628,8 @@ class APIProvider {
     jobType,
     jobStatusId,
     jobId,
-    vendorID
+    vendorID,
+    userTypeID
   }) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
@@ -572,11 +654,19 @@ class APIProvider {
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
     try {
-      log("$baseUrl/AdminApi/JobAllocationAPI/GetJobBidList2?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobType=$jobType&VendorID=$vendorID");
+
+      var url;
+      if(userTypeID == "1"){
+        url = "/AdminApi/JobAllocationAPI/GetJobBidList2";
+      }else{
+        url="/VendorApi/VendorAPI/GetJobBidList";
+      }
+
+      log("$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType&VendorID=$vendorID");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl/AdminApi/JobAllocationAPI/GetJobBidList2?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobType=$jobType&VendorID=$vendorID",
+            "$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType&VendorID=$vendorID",
           ),
           headers: {
             'Content-Type': 'application/json',
@@ -592,11 +682,55 @@ class APIProvider {
     } on SocketException {
       Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
     } catch (e) {
-      print("error ...getLeadList ...... $e");
+      print("error ...getJobBidList ...... $e");
     }
     return list;
   }
 
+///-----------------------------Apply job-------------------------------///
+
+  Future<SuccessModel> applyJob({required data}) async {
+    bool isInternet = await Constants.isInternetAvail();
+    if (!isInternet) {
+      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+    }
+    var responseJson;
+    apiToken.value = GetStorage().read(Constants.token);
+    log("apiToken => ${apiToken.value}");
+    try {
+      var body = data;
+      log("Request :- ${body.toString()}");
+      log("$baseUrl/VendorApi/VendorAPI/JobBidSave");
+
+      final response = await http.post(
+        Uri.parse(
+          "$baseUrl/VendorApi/VendorAPI/JobBidSave",
+        ),
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ${apiToken.value}',
+        },
+        body: jsonEncode(body),
+      );
+      responseJson = response.body.toString();
+      log(responseJson.toString());
+      if(response.statusCode == 200){
+        if (responseJson != null) {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        } else {
+          return SuccessModel.fromJson(jsonDecode(responseJson));
+        }
+      }else{
+        Get.offNamed(Routes.login);
+      }
+    } on SocketException {
+      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      return SuccessModel.fromJson(Map());
+    } catch (e) {
+      print("error ...createJobAllocation ...... $e");
+    }
+    return SuccessModel.fromJson(jsonDecode(responseJson));
+  }
 
 ///-----------------------------Create Job Allocation----------------------////
 
@@ -693,6 +827,7 @@ class APIProvider {
     toDate,
     sortDirection,
     vendorID,
+    userTypeID,
     jobId
   }) async {
     bool isInternet = await Constants.isInternetAvail();
@@ -716,11 +851,20 @@ class APIProvider {
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
     try {
-      log("$baseUrl/AdminAPI/JobAllocationAPI/GetList?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&VendorID=$vendorID");
+
+      var url;
+      if(userTypeID == "1"){
+        url = "/AdminAPI/JobAllocationAPI/GetList";
+      }else{
+        url="/VendorApi/VendorAPI/GetJobAllocationList";
+      }
+
+
+      log("$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&JobTypeID=0$jobId&VendorID=$vendorID");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl/AdminAPI/JobAllocationAPI/GetList?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&VendorID=$vendorID",
+            "$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&JobTypeID=0$jobId&VendorID=$vendorID",
           ),
           headers: {
             'Content-Type': 'application/json',
@@ -910,17 +1054,13 @@ class APIProvider {
     var responseJson;
 
     try {
-      log("$baseUrl/api/CommanAPI/IsVendorPhoneNoExist");
+      log("$baseUrl/api/CommanAPI/IsVendorPhoneNoExist?VendorId=0&Phone=$phone");
 
-      final response = await http.post(
+      final response = await http.get(
           Uri.parse(
-            "$baseUrl/api/CommanAPI/IsVendorPhoneNoExist",
+            "$baseUrl/api/CommanAPI/IsVendorPhoneNoExist?VendorId=0&Phone=$phone",
           ),
           headers: {"Content-Type": "application/x-www-form-urlencoded",},
-        body: {
-            "VendorId" :"0",
-             "Phone" : phone
-          }
           );
       responseJson = response.body.toString();
       log(responseJson.toString());
@@ -937,7 +1077,7 @@ class APIProvider {
       Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
       return SuccessModel.fromJson(Map());
     } catch (e) {
-      print("error ...deleteJobAllocation ...... $e");
+      print("error ...checkVendorPhone ...... $e");
     }
     return SuccessModel.fromJson(jsonDecode(responseJson));
   }
@@ -1138,11 +1278,11 @@ class APIProvider {
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
     try {
-      log("$baseUrl/AdminApi/VendorAPI/Approve?ID=$vendorId&IsApprove=$isApprove");
+      log("$baseUrl/AdminApi/VendorAPI/Approve?ID=$vendorId&IsApproved=$isApprove");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl/AdminApi/VendorAPI/Approve?ID=$vendorId&IsApprove=$isApprove",
+            "$baseUrl/AdminApi/VendorAPI/Approve?ID=$vendorId&IsApproved=$isApprove",
           ),
           headers: {
             'Content-Type': 'application/json',
@@ -1198,13 +1338,6 @@ class APIProvider {
   }
 
 
-  // VendorApi/VendorAPI/GetDataByVendorID - Vendor profile After login (work on token)
-  //
-  // api/CommanAPI/IsVendorPhoneNoExist - check number exist or not in vendor register ,(int VendorID,string Phone)
-  //
   //VendorApi/VendorAPI/JobBidSave - in vendor login for job bide save (in vendor login (JobID Required Cost Required numberRemark) )
-  //
-  //AdminApi/JobAllocationAPI/GetJobBidList  - in admin login get job bid -Done
-  //
-  //AdminApi/VendorAPI/Approve - in admin login approve vendor (if vendor true the show disapprove other wise approve and call api )
+
 }

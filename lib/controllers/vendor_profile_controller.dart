@@ -6,11 +6,14 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
+import 'package:mudara_steel_app/controllers/root_controller.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
+import 'package:mudara_steel_app/model/vendor_model.dart';
 
 
 class VendorProfileController extends GetxController {
@@ -38,8 +41,12 @@ class VendorProfileController extends GetxController {
 
   RxString getFilePath = "".obs;
   Rx<File?> selectedFile = Rx(null);
+
+  RootController rootController = Get.put(RootController());
+
   @override
   void onInit() async {
+    getVendorProfileData();
     super.onInit();
   }
 
@@ -82,7 +89,9 @@ class VendorProfileController extends GetxController {
         isLoading.value = false;
         // Get.offAndToNamed(Routes.jobList,arguments: "Job List");
         Get.back();
-        Ui.SuccessSnackBar(title:'Successful',message:'Vendor Register Successfully done');
+        await APIProvider().getVendorProfileData();
+        rootController.userName.value = GetStorage().read(Constants.userName) ?? "";
+        Ui.SuccessSnackBar(title:'Successful',message:'Vendor profile updated successfully done');
       }else if(successModel.msgType == 1){
         isLoading.value = false;
         Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
@@ -95,4 +104,27 @@ class VendorProfileController extends GetxController {
     }
   }
 
+  Future<void> getVendorProfileData() async {
+    isLoading.value = true;
+
+    VendorModel vendorModel = await APIProvider().getVendorProfileData();
+    if(vendorModel != null){
+
+      vendorId.value= vendorModel.vendorId.toString();
+      vendorName.text = vendorModel.vendorName!;
+      password.text = vendorModel.password! ;
+      driverName.text =vendorModel.driverName! ;
+      driverAge.text = vendorModel.driverAge!;
+      address.text =vendorModel.address! ;
+      email.text= vendorModel.email!;
+      phone.text= vendorModel.phone!;
+      companyName.text= vendorModel.companyName!;
+      drLicenseNo.text= vendorModel.driverLicenseNumber!;
+      vehicleInNO.text= vendorModel.vehicleInsuranceNumber!;
+
+      isLoading.value = false;
+    }
+    isLoading.value = false;
+    return;
+  }
 }

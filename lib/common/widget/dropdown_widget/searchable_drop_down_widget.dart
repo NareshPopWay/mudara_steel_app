@@ -189,6 +189,8 @@ buildListView({
                       color: Get.theme.disabledColor),
                   onSuffixTap: () {
                     isSearching.value = false;
+                    selectedValue.value = "";
+                    selectedId.value = "";
                     searchResult.clear();
                     textfield.value.clear();
                   },

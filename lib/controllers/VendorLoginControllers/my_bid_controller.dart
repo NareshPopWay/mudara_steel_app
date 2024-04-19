@@ -12,10 +12,9 @@ import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_bid_model.dart';
 
 
-class BidListController extends GetxController {
+class MyBidController extends GetxController {
 
   RxList<JobBidModel> jobBidList = RxList();
-  RxString appTitle = "".obs;
   RxBool isSearching = RxBool(false);
   int jobBidPage = 0;
   RxBool isLoading = false.obs;
@@ -64,7 +63,6 @@ class BidListController extends GetxController {
     super.onInit();
     userTypeID.value = await GetStorage().read(Constants.userTypeID) ?? "";
     leadScrollController.addListener(jobScrollListener);
-    appTitle.value = Get.arguments;
     getJobBidList();
     if(userTypeID.value == "1"){
       jobNameList.value = await APIProvider().getJobNameList(userTypeID.value);
@@ -129,18 +127,18 @@ class BidListController extends GetxController {
     isJobBidListLoading.value = true;
 
     var leadResponse = await APIProvider().getJobBidList(
-      userTypeID : userTypeID.value,
-      pageNumber: jobBidPage,
-      rowsOfPage: showCountVal,
-      orderByName: selectedShortByVal,
-      searchVal: searchTextEditController.text,
-      fromDate: fromDate.value,
-      toDate: toDate.value,
-      sortDirection: isDescending.value == true ? ascending.value: descending.value,
-      jobId: selectedJobNameId.value,
-      jobStatusId:selectedJobStatusId.value,
-      jobType:selectedJobTypeId.value,
-      vendorID: selectedVendorNameId.value
+        userTypeID : userTypeID.value,
+        pageNumber: jobBidPage,
+        rowsOfPage: showCountVal,
+        orderByName: selectedShortByVal,
+        searchVal: searchTextEditController.text,
+        fromDate: fromDate.value,
+        toDate: toDate.value,
+        sortDirection: isDescending.value == true ? ascending.value: descending.value,
+        jobId: selectedJobNameId.value,
+        jobStatusId:selectedJobStatusId.value,
+        jobType:selectedJobTypeId.value,
+        vendorID: selectedVendorNameId.value
     );
     if (leadResponse.isNotEmpty) {
       jobBidPage++;

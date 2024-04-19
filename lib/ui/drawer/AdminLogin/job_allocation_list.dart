@@ -389,6 +389,7 @@ class JobAllocationListScreen extends GetView<JobAllocationListController> {
                                     title2: "Remark",
                                     value2: controller.jobAllocationList[index].remark ?? "-",
                                   ),
+                                  if(controller.userTypeID.value == "1")
                                   Divider(
                                       height: 2,
                                       endIndent: 10,
@@ -442,6 +443,8 @@ class JobAllocationListScreen extends GetView<JobAllocationListController> {
                                   //     ],
                                   //   ),
                                   // ),
+
+                                  if(controller.userTypeID.value == "1")
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: AppSpacings.s14, vertical: AppSpacings.s10),
                                     child:  Row(
@@ -866,9 +869,11 @@ class JobAllocationListScreen extends GetView<JobAllocationListController> {
                           isSearching: controller.isJobNameSearching,
                           textfield: controller.textJobName,
                         ),
+                        if(controller.userTypeID.value == "1")
                         SizedBox(
                           height: AppSpacings.s20,
                         ),
+                        if(controller.userTypeID.value == "1")
                         searchDropDwonWidget(
                           selectedValue: controller.tampSelectedVendorName,
                           selectedId: controller.tampSelectedVendorNameId,

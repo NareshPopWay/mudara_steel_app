@@ -230,9 +230,9 @@ class HomeScreen extends GetView<RootController> {
                           SizedBox(width: AppSpacings.s12),
                           Column(
                             mainAxisSize : MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Obx(
-                                    () => Text(
+                              Obx(() => Text(
                                   controller.userName.value != "" ? controller.userName.value : "Vendor",
                                   style:  TextStyle(
                                     fontSize:  AppSpacings.s30,
@@ -554,6 +554,41 @@ class HomeScreen extends GetView<RootController> {
                             dense: true,
                             visualDensity: VisualDensity(vertical: -AppSpacings.s5),
                             leading: Image.asset(
+                              "assets/drawer_icon/applyjob.png",
+                              height: AppSpacings.s35,
+                              color: ThemeService.primaryColor,
+                              alignment: Alignment.center,
+                            ),
+                            trailing: Icon(
+                              Icons.arrow_forward_ios,
+                              color: ThemeService.primaryColor.withOpacity(0.6),
+                              size: AppSpacings.s20,
+                            ),
+                            title: Text(
+                              "Apply Job",
+                              style: Get.textTheme.bodyLarge!.copyWith(
+                                fontSize: AppSpacings.s20,
+                                fontWeight: FontWeight.w500,
+                                color: ThemeService.primaryColor.withOpacity(0.7),
+                              ),
+                            ),
+                            onTap: () {
+                              Get.back();
+                              Get.toNamed(Routes.applyJob);
+                            },
+                          ),
+                          if(controller.userTypeID.value == "2")
+                          Divider(
+                            color:ThemeService.primaryColor.withOpacity(0.4),
+                            thickness: 1,
+                            indent: 10,
+                            endIndent: 10,
+                          ),
+                          if(controller.userTypeID.value == "2")
+                          ListTile(
+                            dense: true,
+                            visualDensity: VisualDensity(vertical: -AppSpacings.s5),
+                            leading: Image.asset(
                               "assets/drawer_icon/job_list.png",
                               height: AppSpacings.s35,
                               color: ThemeService.primaryColor,
@@ -574,7 +609,7 @@ class HomeScreen extends GetView<RootController> {
                             ),
                             onTap: () {
                               Get.back();
-                              Get.toNamed(Routes.jobList,arguments: "My Job");
+                              Get.toNamed(Routes.myJob);
                             },
                           ),
                           if(controller.userTypeID.value == "2")
@@ -609,7 +644,7 @@ class HomeScreen extends GetView<RootController> {
                             ),
                             onTap: () {
                               Get.back();
-                              Get.toNamed(Routes.bidList,arguments: "My Bid");
+                              Get.toNamed(Routes.myBid);
                             },
                           ),
                           if(controller.userTypeID.value == "2")
@@ -644,7 +679,7 @@ class HomeScreen extends GetView<RootController> {
                             ),
                             onTap: () {
                               Get.back();
-                              Get.toNamed(Routes.jobAllocationList,arguments: "My Allocated Job");
+                              Get.toNamed(Routes.myAllocatedJob);
                             },
                           ),
                           if(controller.userTypeID.value == "2")

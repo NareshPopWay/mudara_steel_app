@@ -4,14 +4,11 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/controllers/auth_controller.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
-import 'package:mudara_steel_app/routes/app_routes.dart';
 
 class VendorRegController extends GetxController {
 

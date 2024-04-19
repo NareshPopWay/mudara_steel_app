@@ -250,6 +250,9 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                   validator: (e) {
                                     if (e!.isEmpty) {
                                       return "password is Required";
+                                    }else if (!controller.passwordRegex.hasMatch(e)) {
+                                      // Return an error message if the input doesn't match the pattern
+                                      return 'Password must be at least 8 characters long,\nwith at least one uppercase letter,\none lowercase letter, one number,\nand one special character.';
                                     }
                                     return null;
                                   },
@@ -289,7 +292,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "password name*",
+                                    labelText: "password*",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -299,6 +302,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                     ),
                                     errorStyle:TextStyle(
                                         fontSize: AppSpacings.s16,
+                                        height: 1.5,
                                         color: Colors.redAccent
                                     ),
                                     hintStyle:
