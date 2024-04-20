@@ -47,7 +47,7 @@ class Ui {
           borderRadius: AppSpacings.s20,
           borderColor: Colors.green,
           dismissDirection: DismissDirection.horizontal,
-          duration: const Duration(seconds: 5),
+          duration: const Duration(seconds: 2),
         ),
       ),
     );
@@ -88,7 +88,7 @@ class Ui {
           ),
           borderRadius: AppSpacings.s20,
           borderColor: const Color(0xFFD8000C),
-          duration: const Duration(seconds: 5),
+          duration: const Duration(seconds: 3),
         ),
       ),
     );
@@ -127,7 +127,7 @@ class Ui {
           ),
           borderRadius: AppSpacings.s20,
           borderColor: const Color(0xFF9F6000),
-          duration: const Duration(seconds: 5),
+          duration: const Duration(seconds: 3),
         ),
       ),
     );

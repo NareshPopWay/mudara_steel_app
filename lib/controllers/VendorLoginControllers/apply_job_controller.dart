@@ -9,8 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
-import 'package:mudara_steel_app/controllers/job_controller/job_allocation_list_controller.dart';
-import 'package:mudara_steel_app/controllers/job_controller/job_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/job_allocation_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/job_list_controller.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_allocation_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
@@ -91,9 +91,9 @@ class ApplyJobController extends GetxController {
           Ui.SuccessSnackBar(title:'Successful',message:'Job applied successfully done');
         } else {
           Get.back();
-          jobListController.jobPage = 0;
-          jobListController.openJobList.clear();
-          jobListController.getOpenJob();
+          // jobListController.jobPage = 0;
+          // jobListController.openJobList.clear();
+          // jobListController.getOpenJob();
           Ui.SuccessSnackBar(title:'Successful',message:'Job applied Successfully done ');
         }
       }else if(successModel.msgType == 1){

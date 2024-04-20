@@ -14,7 +14,7 @@ import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/common/widget/animated_toggle.dart';
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
 import 'package:mudara_steel_app/controllers/VendorLoginControllers/apply_job_controller.dart';
-import 'package:mudara_steel_app/controllers/job_controller/create_job_allocation_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/create_job_allocation_controller.dart';
 
 
 class ApplyJobScreen extends GetView<ApplyJobController> {

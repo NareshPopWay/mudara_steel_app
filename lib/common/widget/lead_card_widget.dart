@@ -145,15 +145,15 @@ header({String? title, String? value, Color? color = Colors.black}) {
   );
 }
 
-dataRow({String? title1, String? value1, String? title2, String? value2, Color? titleColor, Color? valueColor, bool? isSingle = false}) {
+dataRow({String? title1, String? value1, String? title2, String? value2, Color? titleColor1, Color? valueColor1,Color? titleColor2, Color? valueColor2, bool? isSingle = false}) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: AppSpacings.s14, vertical: AppSpacings.s5),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        dataColumn(title: title1, value: value1,titleColor: titleColor,valueColor: valueColor),
-        if (isSingle != true) dataColumn(title: title2, value: value2,valueColor: valueColor,titleColor:titleColor ),
+        dataColumn(title: title1, value: value1,titleColor: titleColor1,valueColor: valueColor1),
+        if (isSingle != true) dataColumn(title: title2, value: value2,valueColor: valueColor2,titleColor:titleColor2),
       ],
     ),
   );

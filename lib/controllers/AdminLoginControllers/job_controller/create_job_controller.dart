@@ -9,7 +9,9 @@ import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
-import 'package:mudara_steel_app/controllers/job_controller/job_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/complited_job_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/job_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/open_job-list_controller.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_allocation_model.dart';
 import 'package:mudara_steel_app/model/job_model.dart';
@@ -58,8 +60,8 @@ class CreateJobController extends GetxController {
   RxBool isJobStatusSearching = RxBool(false);
   Rx<TextEditingController> textJobStatus = TextEditingController().obs;
 
-
-  JobListController jobListController = Get.put(JobListController());
+  OpenJobController openJobController = Get.put(OpenJobController());
+  ComplitedJobController complitedJobController = Get.put(ComplitedJobController());
 
   @override
   void onInit() async {
@@ -116,9 +118,12 @@ class CreateJobController extends GetxController {
           Ui.SuccessSnackBar(title:'Successful',message:'Job Created successfully done');
         }else{
           Get.back();
-          jobListController.jobPage = 0;
-          jobListController.openJobList.clear();
-          jobListController.getOpenJob();
+          openJobController.jobPage = 0;
+          openJobController.openJobList.clear();
+          openJobController.getOpenJob();
+          complitedJobController.jobPage = 0;
+          complitedJobController.completedJobList.clear();
+          complitedJobController.getComplitedJob();
           Ui.SuccessSnackBar(title:'Successful',message:'Job Updated Successfully done');
         }
         // Constants.successSnackBar(title: "Lead Added Successfully");

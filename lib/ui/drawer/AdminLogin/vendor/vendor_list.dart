@@ -16,7 +16,7 @@ import 'package:mudara_steel_app/common/widget/dropdown_widget/dropdown_below.da
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
 import 'package:mudara_steel_app/common/widget/empty_widget.dart';
 import 'package:mudara_steel_app/common/widget/lead_card_widget.dart';
-import 'package:mudara_steel_app/controllers/vendor_controller/vendor_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/vendor_controller/vendor_list_controller.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
 

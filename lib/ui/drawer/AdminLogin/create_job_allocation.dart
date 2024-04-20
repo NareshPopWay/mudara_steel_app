@@ -13,7 +13,7 @@ import 'package:mudara_steel_app/common/themeService.dart';
 import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/common/widget/animated_toggle.dart';
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
-import 'package:mudara_steel_app/controllers/job_controller/create_job_allocation_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/create_job_allocation_controller.dart';
 
 
 class CreateJobAllocationScreen extends GetView<CreateJobAllocationController> {
@@ -276,8 +276,8 @@ class CreateJobAllocationScreen extends GetView<CreateJobAllocationController> {
                         }else if(controller.selectedVendorJobBidId.value == ""){
                           Ui.ErrorSnackBar(title: "Select Vendor Bid",message: "Please Select Vendor Bid");
                         }else{
-                          FocusScope.of(context).unfocus();
-                          controller.createJobAllocation();
+                          // FocusScope.of(context).unfocus();
+                          // controller.createJobAllocation();
                         }
                       },
                       child: Container(

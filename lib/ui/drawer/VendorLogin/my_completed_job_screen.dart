@@ -16,15 +16,15 @@ import 'package:mudara_steel_app/common/widget/dropdown_widget/dropdown_below.da
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
 import 'package:mudara_steel_app/common/widget/empty_widget.dart';
 import 'package:mudara_steel_app/common/widget/lead_card_widget.dart';
-import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/job_list_controller.dart';
-import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/open_job-list_controller.dart';
-import 'package:mudara_steel_app/controllers/AdminLoginControllers/vendor_controller/vendor_list_controller.dart';
+import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_completed_job_controller.dart';
+import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_job_controller.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
-class OpenJobListScreen extends GetView<OpenJobController> {
-  OpenJobListScreen({Key? key}) : super(key: key);
 
-  OpenJobController controller = Get.put(OpenJobController());
+class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
+  MyCompletedJobScreen({Key? key}) : super(key: key);
+
+  MyCompletedJobController controller = Get.put(MyCompletedJobController());
 
   @override
   Widget build(BuildContext context) {
@@ -40,123 +40,6 @@ class OpenJobListScreen extends GetView<OpenJobController> {
           color: ThemeService.white,
           child: Column(
             children: [
-              // Container(
-              //   padding: EdgeInsets.only(
-              //       top: MediaQuery.of(context).padding.top),
-              //   child: Padding(
-              //     padding: const EdgeInsets.all(8.0),
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //       children: [
-              //         Row(
-              //           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //           children: [
-              //             InkWell(
-              //               onTap: () {
-              //                 Get.back();
-              //               },
-              //               child: Container(
-              //                 decoration: const BoxDecoration(
-              //                   color: ThemeService.primaryColor,
-              //                   shape: BoxShape.circle,
-              //                 ),
-              //                 child: Icon(
-              //                   Icons.chevron_left,
-              //                   color: ThemeService.white,
-              //                   size: AppSpacings.s50,
-              //                 ),
-              //               ),
-              //             ),
-              //             SizedBox(width: AppSpacings.s10),
-              //             Text(
-              //               controller.appTitle.value,
-              //               style: Get.textTheme.headlineSmall!.copyWith(
-              //                 fontWeight: FontWeight.w600,
-              //                 color: ThemeService.primaryColor,
-              //                 fontSize: AppSpacings.s25,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //         Row(
-              //           children: [
-              //             SizedBox(
-              //               height: 35,
-              //               child: Row(
-              //                 children: [
-              //                   Text(
-              //                     "Show",
-              //                     style: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s18),
-              //                   ),
-              //                   SizedBox(
-              //                     width: AppSpacings.s5,
-              //                   ),
-              //                   Container(
-              //                     padding: EdgeInsets.fromLTRB(AppSpacings.s10, 0, AppSpacings.s10, 0),
-              //                     decoration: BoxDecoration(color: ThemeService.primaryColor, borderRadius: BorderRadius.circular(10)),
-              //                     child:DropdownBelow(
-              //                         itemWidth: 80,
-              //                         itemTextstyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black,fontFamily:'Poppins-Medium'),
-              //                         boxTextstyle: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s16,color: Colors.white),
-              //                         boxHeight: 50,
-              //                         icon: const Icon(Icons.keyboard_arrow_down,color: ThemeService.white),
-              //                         boxWidth: 50,
-              //                         hint: Text('${controller.showCountVal.value}'),
-              //                         value: controller.showCountVal.value,
-              //                         items: controller.buildsShowCountItems(controller.showCount),
-              //                         onChanged: controller.onChangeShowCount
-              //                     ),
-              //                   ),
-              //                 ],
-              //               ),
-              //             ),
-              //             SizedBox(width: AppSpacings.s5),
-              //             GestureDetector(
-              //               onTap: ()async{
-              //                 await showModalBottomSheet(
-              //                     context: context,
-              //                     backgroundColor: ThemeService.white,
-              //                     elevation: 5.5,
-              //                     useSafeArea: true,
-              //                     constraints: const BoxConstraints(maxHeight:500),
-              //                     isScrollControlled:true,
-              //                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(
-              //                         topLeft: Radius.circular(25), topRight: Radius.circular(25))),
-              //                     builder: (context){
-              //                       return Filter(context);
-              //                     }
-              //                 );
-              //               },
-              //               child: Center(
-              //                 child: Container(
-              //                   decoration:  BoxDecoration(
-              //                       color: ThemeService.primaryColor,
-              //                       borderRadius: BorderRadius.circular(10)
-              //                   ),
-              //                   child: Padding(
-              //                     padding: const EdgeInsets.all(6.0),
-              //                     child: Image.asset(
-              //                       "assets/filter.png",
-              //                       height: AppSpacings.s30,
-              //                       color: ThemeService.white,
-              //                       alignment: Alignment.center,
-              //                     ),
-              //                   ),
-              //                 ),
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              // const Divider(
-              //     height: 10,
-              //     endIndent: 12,
-              //     indent: 12,
-              //     color: ThemeService.primaryColor,
-              //     thickness: 3),
               SizedBox(
                 height: AppSpacings.s5,
               ),
@@ -264,8 +147,8 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                             // controller.memberSearchResult.clear();
                             controller.searchTextEditController.clear();
                             controller.jobPage = 0;
-                            controller.openJobList.clear();
-                            controller.getOpenJob();
+                            controller.jobList.clear();
+                            controller.getJob();
                             controller.searchTextEditController.clear();
                             FocusScope.of(context).unfocus();
                           },
@@ -286,14 +169,14 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                             if(value.length >= 3){
                               EasyDebounce.debounce('lead', const Duration(milliseconds: 700), () {
                                 controller.jobPage = 0;
-                                controller.openJobList.clear();
-                                controller.getOpenJob();
+                                controller.jobList.clear();
+                                controller.getJob();
                               });
                             }else if(value.isEmpty){
                               EasyDebounce.debounce('lead', const Duration(milliseconds: 700), () {
                                 controller.jobPage = 0;
-                                controller.openJobList.clear();
-                                controller.getOpenJob();
+                                controller.jobList.clear();
+                                controller.getJob();
                               });
                             }
 
@@ -307,8 +190,8 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                       controller.isDescending.value = !controller.isDescending.value;
                       // controller.isDescending.value == true ? controller.descending.value : controller.ascending.value;
                       controller.jobPage = 0;
-                      controller.openJobList.clear();
-                      controller.getOpenJob();
+                      controller.jobList.clear();
+                      controller.getJob();
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: AppSpacings.s8, vertical: AppSpacings.s12),
@@ -353,31 +236,24 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                     primary: false,
                     physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
                     children: [
-                      if (controller.openJobList.isEmpty && !controller.isJobListLoading.value)
+                      if (controller.jobList.isEmpty && !controller.isJobListLoading.value)
                         Padding(
                           padding:  EdgeInsets.only(top: AppSpacings.s50),
                           child: const EmptyDataWidget(),
                         )
                       else
-                      ListView.builder(
-                          padding: EdgeInsets.only(
-                            left: AppSpacings.s20,
-                            right: AppSpacings.s20,
-                            bottom: AppSpacings.s20,
-                          ),
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: controller.openJobList.length,
-                          itemBuilder:(context,index){
+                        ListView.builder(
+                            padding: EdgeInsets.only(
+                              left: AppSpacings.s20,
+                              right: AppSpacings.s20,
+                              bottom: AppSpacings.s20,
+                            ),
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: controller.jobList.length,
+                            itemBuilder:(context,index){
 
-                            return  GestureDetector(
-                              onTap:(){
-                                Get.toNamed(
-                                  Routes.bidList,
-                                  arguments: controller.openJobList[index].jobId.toString(),
-                                );
-                              },
-                              child: Container(
+                              return  Container(
                                 margin: EdgeInsets.fromLTRB(0, AppSpacings.s20, 0, 0),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
@@ -399,60 +275,13 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                       height: AppSpacings.s5,
                                     ),
                                     headerRow1(
-                                      title1: controller.openJobList[index].createdOn != null
-                                          ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.openJobList[index].createdOn.toString()))
+                                      title1: controller.jobList[index].createdOn != null
+                                          ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].createdOn.toString()))
                                           : "-",
                                       icon1: Icon(Icons.calendar_month, size: AppSpacings.s25),
-                                      title2: controller.openJobList[index].jobName ?? "-",
+                                      title2: controller.jobList[index].jobName ?? "-",
                                       icon2: null,
                                     ),
-                                    // Container(
-                                    //   height: AppSpacings.s50,
-                                    //   padding: const EdgeInsets.symmetric(horizontal: 15),
-                                    //   child: Row(
-                                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    //     children: [
-                                    //       Expanded(
-                                    //         flex:4,
-                                    //         child: Row(
-                                    //           mainAxisAlignment: MainAxisAlignment.start,
-                                    //           children: [
-                                    //             Icon(Icons.calendar_month, size: AppSpacings.s25),
-                                    //             Text(
-                                    //               controller.jobList[index].createdOn != null
-                                    //                   ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].createdOn.toString()))
-                                    //                   : "-",
-                                    //               overflow: TextOverflow.ellipsis,
-                                    //               style: Get.textTheme.displayMedium!.copyWith(
-                                    //                 color: Colors.black,
-                                    //                 fontWeight: FontWeight.w700,
-                                    //                 fontSize: AppSpacings.s20,
-                                    //               ),
-                                    //             ),
-                                    //           ],
-                                    //         ),
-                                    //       ),
-                                    //       Expanded(
-                                    //         flex: 1,
-                                    //         child: Row(
-                                    //           mainAxisAlignment: MainAxisAlignment.end,
-                                    //           children: [
-                                    //             Expanded(
-                                    //               child: Text(
-                                    //                 controller.jobList[index].jobName ?? "-",
-                                    //                 style: Get.textTheme.displayMedium!.copyWith(
-                                    //                   color: Colors.black,
-                                    //                   fontWeight: FontWeight.w700,
-                                    //                   fontSize: AppSpacings.s20,
-                                    //                 ),
-                                    //               ),
-                                    //             ),
-                                    //           ],
-                                    //         ),
-                                    //       ),
-                                    //     ],
-                                    //   ),
-                                    // ),
                                     const Divider(
                                         height: 5,
                                         endIndent: 10,
@@ -461,9 +290,9 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                         thickness: 2),
                                     dataRow(
                                       title1: "From Location",
-                                      value1: controller.openJobList[index].fromLocation ?? "-",
+                                      value1: controller.jobList[index].fromLocation ?? "-",
                                       title2: "To Location",
-                                      value2:  controller.openJobList[index].toLocation ?? "-",
+                                      value2:  controller.jobList[index].toLocation ?? "-",
                                     ),
                                     Divider(
                                         height: 2,
@@ -473,11 +302,11 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                         thickness: 1),
                                     dataRow(
                                       title1: "Delivery Date",
-                                      value1: controller.openJobList[index].deliveryDate != null
-                                          ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.openJobList[index].deliveryDate.toString()))
+                                      value1: controller.jobList[index].deliveryDate != null
+                                          ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].deliveryDate.toString()))
                                           : "-",
                                       title2: "Weight",
-                                      value2: controller.openJobList[index].weight.toString() ?? "-",
+                                      value2: controller.jobList[index].weight.toString() ?? "-",
                                     ),
                                     Divider(
                                         height: 2,
@@ -487,9 +316,9 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                         thickness: 1),
                                     dataRow(
                                       title1: "Job Status",
-                                      value1: controller.openJobList[index].jobStatus ?? "-",
+                                      value1: controller.jobList[index].jobStatus ?? "-",
                                       title2: "Job Type",
-                                      value2: controller.openJobList[index].jobType ?? "-",
+                                      value2: controller.jobList[index].jobType ?? "-",
                                     ),
                                     Divider(
                                         height: 2,
@@ -497,13 +326,11 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                         indent: 10,
                                         color: ThemeService.primaryColor.withOpacity(0.2),
                                         thickness: 1),
-
-                                         ///Admin Login
-                                         if(controller.userTypeID.value == "1")
-                                         Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: AppSpacings.s14, vertical: AppSpacings.s10),
+                                    ///Vendor Login
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: AppSpacings.s14, vertical: AppSpacings.s8),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
                                           Expanded(
                                             child: Column(
@@ -518,7 +345,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                                   ),
                                                 ),
                                                 Text(
-                                                  controller.openJobList[index].isTruck == true ? "Truck" : "Trailer",
+                                                  controller.jobList[index].isTruck == true ? "Truck" : "Trailer",
                                                   style: Get.textTheme.headline4!.copyWith(
                                                     fontSize: AppSpacings.s18,
                                                     color: ThemeService.black,
@@ -528,196 +355,52 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                               ],
                                             ),
                                           ),
-                                          Row(
-                                            children: [
-                                              Bounce(
-                                                duration: Duration(milliseconds: 100),
-                                                onPressed: () {
-                                                  showGeneralDialog(
-                                                      transitionDuration:
-                                                      const Duration(milliseconds: 400),
-                                                      barrierDismissible: true,
-                                                      barrierLabel: '',
-                                                      pageBuilder: (ctx, a1, a2) {
-                                                        return Container();
-                                                      },
-                                                      context: context,
-                                                      transitionBuilder: (ctx, a1, a2, child) {
-                                                        // var curve = Curves.easeInOutCubic .transform(a1.value);
-                                                        return SlideTransition(
-                                                          position: Tween(
-                                                              begin: const Offset(0, 1),
-                                                              end: const Offset(0, 0))
-                                                              .animate(a1),
-                                                          child: Opacity(
-                                                            opacity: a1.value,
-                                                            child: AlertDialog(
-                                                              elevation: 5,
-                                                              surfaceTintColor: ThemeService.white,
-                                                              shadowColor:ThemeService.primaryColor.withOpacity(.5),
-                                                              contentPadding: const EdgeInsets.all(5.0),
-                                                              shape: const RoundedRectangleBorder(
-                                                                side: BorderSide(
-                                                                  color: ThemeService.primaryColor,
-                                                                  style: BorderStyle.solid,
-                                                                ),
-                                                                borderRadius: BorderRadius.all(
-                                                                  Radius.circular(25.0),
-                                                                ),
-                                                              ),
-                                                              titlePadding: EdgeInsets.zero,
-                                                              content: deleteJob(context,controller.openJobList.isNotEmpty ? controller.openJobList[index].jobId:0 , controller.openJobList.isNotEmpty ? controller.openJobList[index].jobName:''),
-                                                            ),
-                                                          ),
-                                                        );
-                                                      });
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
-                                                  decoration: BoxDecoration(
-                                                      color: ThemeService.white,
-                                                      boxShadow:  [
-                                                        BoxShadow(
-                                                            color: ThemeService.primaryColor.withOpacity(0.5),
-                                                            blurRadius: 9.5,
-                                                            blurStyle: BlurStyle.inner,
-                                                            offset: const Offset(1.5,1.5),
-                                                            spreadRadius: 1.0
-                                                        )
-                                                      ],
-                                                      border: Border.all(
-                                                        color: ThemeService.primaryColor,
-                                                      ),
-                                                      borderRadius: BorderRadius.circular(12)),
-                                                  child: const Center(
-                                                    child: Icon(Icons.delete,color: ThemeService.primaryColor,)
+                                          Bounce(
+                                            duration: const Duration(milliseconds: 100),
+                                            onPressed: (){
+                                              Get.toNamed(
+                                                Routes.applyJob,
+                                                arguments: controller.jobList[index].jobId.toString(),
+                                              );
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
+                                              decoration: BoxDecoration(
+                                                  color: ThemeService.white,
+                                                  boxShadow:  [
+                                                    BoxShadow(
+                                                        color: ThemeService.primaryColor.withOpacity(0.5),
+                                                        blurRadius: 9.5,
+                                                        blurStyle: BlurStyle.inner,
+                                                        offset: const Offset(1.5,1.5),
+                                                        spreadRadius: 1.0
+                                                    )
+                                                  ],
+                                                  border: Border.all(
+                                                    color: ThemeService.primaryColor,
+                                                  ),
+                                                  borderRadius: BorderRadius.circular(12)),
+                                              child: Center(
+                                                child: Text(
+                                                  "Apply",
+                                                  style: Get.textTheme.headlineLarge!.copyWith(
+                                                    color: ThemeService.primaryColor,
+                                                    fontSize: AppSpacings.s20,
+                                                    fontWeight: FontWeight.w600,
                                                   ),
                                                 ),
                                               ),
-                                              SizedBox(
-                                                width: AppSpacings.s15,
-                                              ),
-                                              Bounce(
-                                                duration: Duration(milliseconds: 100),
-                                                onPressed: (){
-                                                  Get.toNamed(
-                                                    Routes.createJob,
-                                                    arguments: controller.openJobList[index].jobId.toString(),
-                                                  );
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
-                                                  decoration: BoxDecoration(
-                                                      color: ThemeService.white,
-                                                      boxShadow:  [
-                                                        BoxShadow(
-                                                            color: ThemeService.primaryColor.withOpacity(0.5),
-                                                            blurRadius: 9.5,
-                                                            blurStyle: BlurStyle.inner,
-                                                            offset: const Offset(1.5,1.5),
-                                                            spreadRadius: 1.0
-                                                        )
-                                                      ],
-                                                      border: Border.all(
-                                                        color: ThemeService.primaryColor,
-                                                      ),
-                                                      borderRadius: BorderRadius.circular(12)),
-                                                  child: const Center(
-                                                      child: Icon(Icons.edit,color: ThemeService.primaryColor,)
-                                                    // Text(
-                                                    //   "Delete",
-                                                    //   style: Get.textTheme.headlineLarge!.copyWith(
-                                                    //     color: ThemeService.primaryColor,
-                                                    //     fontSize: AppSpacings.s20,
-                                                    //     fontWeight: FontWeight.w600,
-                                                    //   ),
-                                                    // ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
                                         ],
                                       ),
-                                     )
-                                         else
-                                        ///Vendor Login
-                                        Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: AppSpacings.s14, vertical: AppSpacings.s8),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Expanded(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Truck/Trailer",
-                                              style: Get.textTheme.bodyText2!.copyWith(
-                                                color: ThemeService.disable,
-                                                fontSize: AppSpacings.s15,
-                                              ),
-                                            ),
-                                            Text(
-                                              controller.openJobList[index].isTruck == true ? "Truck" : "Trailer",
-                                              style: Get.textTheme.headline4!.copyWith(
-                                                fontSize: AppSpacings.s18,
-                                                color: ThemeService.black,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Bounce(
-                                        duration: const Duration(milliseconds: 100),
-                                        onPressed: (){
-                                          Get.toNamed(
-                                            Routes.applyJob,
-                                            arguments: controller.openJobList[index].jobId.toString(),
-                                          );
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
-                                          decoration: BoxDecoration(
-                                              color: ThemeService.white,
-                                              boxShadow:  [
-                                                BoxShadow(
-                                                    color: ThemeService.primaryColor.withOpacity(0.5),
-                                                    blurRadius: 9.5,
-                                                    blurStyle: BlurStyle.inner,
-                                                    offset: const Offset(1.5,1.5),
-                                                    spreadRadius: 1.0
-                                                )
-                                              ],
-                                              border: Border.all(
-                                                color: ThemeService.primaryColor,
-                                              ),
-                                              borderRadius: BorderRadius.circular(12)),
-                                          child: Center(
-                                            child: Text(
-                                              "Apply",
-                                              style: Get.textTheme.headlineLarge!.copyWith(
-                                                color: ThemeService.primaryColor,
-                                                fontSize: AppSpacings.s20,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-
+                                    ),
                                     SizedBox(height: AppSpacings.s5),
                                   ],
                                 ),
-                              ),
-                            );
-                          }
-                      ),
+                              );
+                            }
+                        ),
                       if (controller.isJobListLoading.value == true)  Padding(
                         padding: EdgeInsets.fromLTRB(0, AppSpacings.s150, 0,0),
                         child: CupertinoActivityIndicator(radius: AppSpacings.s20,),
@@ -819,8 +502,8 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                       // controller.textJobStatus.value.clear();
                       controller.textJobType.value.clear();
                       controller.jobPage = 0;
-                      controller.openJobList.clear();
-                      controller.getOpenJob();
+                      controller.jobList.clear();
+                      controller.getJob();
                       // Get.back();
                     },
                     child: Text(
@@ -1013,9 +696,9 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                           isSearching: controller.isJobNameSearching,
                           textfield: controller.textJobName,
                         ),
-                        // SizedBox(
-                        //   height: AppSpacings.s20,
-                        // ),
+                        SizedBox(
+                          height: AppSpacings.s20,
+                        ),
                         // searchDropDwonWidget(
                         //   selectedValue: controller.tampSelectedJobStatus,
                         //   selectedId: controller.tampSelectedJobStatusId,
@@ -1025,9 +708,9 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                         //   isSearching: controller.isJobStatusSearching,
                         //   textfield: controller.textJobStatus,
                         // ),
-                        SizedBox(
-                          height: AppSpacings.s20,
-                        ),
+                        // SizedBox(
+                        //   height: AppSpacings.s20,
+                        // ),
                         searchDropDwonWidget(
                           selectedValue: controller.tampSelectedJobType,
                           selectedId: controller.tampSelectedJobTypeId,
@@ -1072,8 +755,8 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                 controller.tempToDate.text = "";
 
                 controller.jobPage = 0;
-                controller.openJobList.clear();
-                controller.getOpenJob();
+                controller.jobList.clear();
+                controller.getJob();
                 Get.back();
               },
               child: Container(
@@ -1137,7 +820,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
     );
   }
 
-  
+
   deleteJob(context,jobId,jobName){
     return Obx(() => Padding(
       padding:

@@ -16,9 +16,9 @@ import 'package:mudara_steel_app/common/widget/dropdown_widget/dropdown_below.da
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
 import 'package:mudara_steel_app/common/widget/empty_widget.dart';
 import 'package:mudara_steel_app/common/widget/lead_card_widget.dart';
-import 'package:mudara_steel_app/controllers/bid_controller/bid_list_controller.dart';
-import 'package:mudara_steel_app/controllers/job_controller/job_list_controller.dart';
-import 'package:mudara_steel_app/controllers/vendor_controller/vendor_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/bid_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/job_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/vendor_controller/vendor_list_controller.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
 
@@ -70,7 +70,7 @@ class BidListScreen extends GetView<BidListController> {
                           ),
                           SizedBox(width: AppSpacings.s10),
                           Text(
-                            controller.appTitle.value,
+                            "Job Bid",
                             style: Get.textTheme.headlineSmall!.copyWith(
                               fontWeight: FontWeight.w600,
                               color: ThemeService.primaryColor,
@@ -298,192 +298,208 @@ class BidListScreen extends GetView<BidListController> {
                           itemCount: controller.jobBidList.length,
                           itemBuilder:(context,index){
 
-                            return  Container(
-                              margin: EdgeInsets.fromLTRB(0, AppSpacings.s20, 0, 0),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: ThemeService.white,
-                                  boxShadow:  [
-                                    BoxShadow(
-                                        color: ThemeService.primaryColor.withOpacity(0.3),
-                                        blurRadius: 7.5,
-                                        blurStyle: BlurStyle.normal,
-                                        spreadRadius: 1.0
-                                    )
+                            return  GestureDetector(
+                              onTap: (){
+                                Get.toNamed(
+                                  Routes.createJobAllocation,
+                                  arguments: {
+                                   "jobId": controller.jobBidList[index].jobId.toString(),
+                                   "vendorId": controller.jobBidList[index].vendorId.toString(),
+                                   "vendorName": controller.jobBidList[index].vendorName.toString(),
+                                   "cost": controller.jobBidList[index].cost.toString(),
+                                   "remark": controller.jobBidList[index].remark.toString(),
+                                    },
+                                );
+                              },
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(0, AppSpacings.s20, 0, 0),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: ThemeService.white,
+                                    boxShadow:  [
+                                      BoxShadow(
+                                          color: ThemeService.primaryColor.withOpacity(0.3),
+                                          blurRadius: 7.5,
+                                          blurStyle: BlurStyle.normal,
+                                          spreadRadius: 1.0
+                                      )
+                                    ],
+                                    border: const BorderDirectional(start: BorderSide(color: ThemeService.primaryColor,width:4))
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: AppSpacings.s5,
+                                    ),
+                                    headerRow(
+                                      title1:controller.jobBidList[index].createdOn != null
+                                          ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobBidList[index].createdOn.toString()))
+                                          : "-",
+                                      icon1: Icon(Icons.calendar_month, size: AppSpacings.s25),
+                                    ),
+                                    // Container(
+                                    //   height: AppSpacings.s50,
+                                    //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                                    //   child: Row(
+                                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    //     children: [
+                                    //       Row(
+                                    //         children: [
+                                    //           Icon(Icons.calendar_month, size: AppSpacings.s25),
+                                    //           Text(
+                                    //             "15/04/24",
+                                    //             overflow: TextOverflow.ellipsis,
+                                    //             style: Get.textTheme.displayMedium!.copyWith(
+                                    //               color: Colors.black,
+                                    //               fontWeight: FontWeight.w700,
+                                    //               fontSize: AppSpacings.s20,
+                                    //             ),
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //       Row(
+                                    //         children: [
+                                    //           Text(
+                                    //             "JOB",
+                                    //             overflow: TextOverflow.ellipsis,
+                                    //             style: Get.textTheme.displayMedium!.copyWith(
+                                    //               color: Colors.black,
+                                    //               fontWeight: FontWeight.w700,
+                                    //               fontSize: AppSpacings.s20,
+                                    //             ),
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
+                                    const Divider(
+                                        height: 5,
+                                        endIndent: 10,
+                                        indent: 10,
+                                        color: ThemeService.primaryColor,
+                                        thickness: 2),
+                                    dataRow(
+                                      title1: "Job Name",
+                                      value1: controller.jobBidList[index].jobName??"-",
+                                      title2: "Vendor Name",
+                                      value2:  controller.jobBidList[index].vendorName ??  "-",
+                                    ),
+                                    Divider(
+                                        height: 2,
+                                        endIndent: 10,
+                                        indent: 10,
+                                        color: ThemeService.primaryColor.withOpacity(0.2),
+                                        thickness: 1),
+                                    dataRow(
+                                      title1: "Cost",
+                                      value1: controller.jobBidList[index].cost.toString() ?? "-",
+                                      valueColor1: Colors.redAccent,
+                                      titleColor1: Colors.red,
+                                      title2: "Remark",
+                                      value2: controller.jobBidList[index].remark??"-",
+                                    ),
+                                    Divider(
+                                        height: 2,
+                                        endIndent: 10,
+                                        indent: 10,
+                                        color: ThemeService.primaryColor.withOpacity(0.2),
+                                        thickness: 1),
+                                    dataRow(
+                                      title1: "Job Status",
+                                      value1: controller.jobBidList[index].jobStatus ?? "-",
+                                      title2: "Job Type",
+                                      value2: controller.jobBidList[index].jobType ??"-",
+                                    ),
+                                    // Divider(
+                                    //     height: 10,
+                                    //     endIndent: 15,
+                                    //     indent: 15,
+                                    //     color: ThemeService.primaryColor.withOpacity(0.2),
+                                    //     thickness: 1),
+                                    // Padding(
+                                    //   padding: EdgeInsets.symmetric(horizontal: AppSpacings.s14, vertical: AppSpacings.s10),
+                                    //   child: Row(
+                                    //     mainAxisAlignment: MainAxisAlignment.end,
+                                    //     children: [
+                                    //       Container(
+                                    //         padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
+                                    //         decoration: BoxDecoration(
+                                    //             color: ThemeService.white,
+                                    //             boxShadow:  [
+                                    //               BoxShadow(
+                                    //                   color: ThemeService.primaryColor.withOpacity(0.5),
+                                    //                   blurRadius: 9.5,
+                                    //                   blurStyle: BlurStyle.inner,
+                                    //                   offset: const Offset(1.5,1.5),
+                                    //                   spreadRadius: 1.0
+                                    //               )
+                                    //             ],
+                                    //             border: Border.all(
+                                    //               color: ThemeService.primaryColor,
+                                    //             ),
+                                    //             borderRadius: BorderRadius.circular(12)),
+                                    //         child: const Center(
+                                    //             child: Icon(Icons.delete,color: ThemeService.primaryColor,)
+                                    //           // Text(
+                                    //           //   "Update",
+                                    //           //   style: Get.textTheme.headlineLarge!.copyWith(
+                                    //           //     color: ThemeService.primaryColor,
+                                    //           //     fontSize: AppSpacings.s20,
+                                    //           //     fontWeight: FontWeight.w600,
+                                    //           //   ),
+                                    //           // ),
+                                    //         ),
+                                    //       ),
+                                    //       SizedBox(
+                                    //         width: AppSpacings.s15,
+                                    //       ),
+                                    //       GestureDetector(
+                                    //         onTap: (){
+                                    //           Get.toNamed(Routes.createJob,arguments: {
+                                    //             "jobName" : "Job",
+                                    //             "fromLocation":"Ahmedabad",
+                                    //             "toLocation" :"Surat",
+                                    //             "deliveryDate":"16/01/24",
+                                    //             "weight":"32"
+                                    //           });
+                                    //         },
+                                    //         child: Container(
+                                    //           padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
+                                    //           decoration: BoxDecoration(
+                                    //               color: ThemeService.white,
+                                    //               boxShadow:  [
+                                    //                 BoxShadow(
+                                    //                     color: ThemeService.primaryColor.withOpacity(0.5),
+                                    //                     blurRadius: 9.5,
+                                    //                     blurStyle: BlurStyle.inner,
+                                    //                     offset: const Offset(1.5,1.5),
+                                    //                     spreadRadius: 1.0
+                                    //                 )
+                                    //               ],
+                                    //               border: Border.all(
+                                    //                 color: ThemeService.primaryColor,
+                                    //               ),
+                                    //               borderRadius: BorderRadius.circular(12)),
+                                    //           child: const Center(
+                                    //               child: Icon(Icons.edit,color: ThemeService.primaryColor,)
+                                    //             // Text(
+                                    //             //   "Delete",
+                                    //             //   style: Get.textTheme.headlineLarge!.copyWith(
+                                    //             //     color: ThemeService.primaryColor,
+                                    //             //     fontSize: AppSpacings.s20,
+                                    //             //     fontWeight: FontWeight.w600,
+                                    //             //   ),
+                                    //             // ),
+                                    //           ),
+                                    //         ),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // )
                                   ],
-                                  border: const BorderDirectional(start: BorderSide(color: ThemeService.primaryColor,width:4))
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    height: AppSpacings.s5,
-                                  ),
-                                  headerRow(
-                                    title1:controller.jobBidList[index].createdOn != null
-                                        ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobBidList[index].createdOn.toString()))
-                                        : "-",
-                                    icon1: Icon(Icons.calendar_month, size: AppSpacings.s25),
-                                  ),
-                                  // Container(
-                                  //   height: AppSpacings.s50,
-                                  //   padding: const EdgeInsets.symmetric(horizontal: 15),
-                                  //   child: Row(
-                                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  //     children: [
-                                  //       Row(
-                                  //         children: [
-                                  //           Icon(Icons.calendar_month, size: AppSpacings.s25),
-                                  //           Text(
-                                  //             "15/04/24",
-                                  //             overflow: TextOverflow.ellipsis,
-                                  //             style: Get.textTheme.displayMedium!.copyWith(
-                                  //               color: Colors.black,
-                                  //               fontWeight: FontWeight.w700,
-                                  //               fontSize: AppSpacings.s20,
-                                  //             ),
-                                  //           ),
-                                  //         ],
-                                  //       ),
-                                  //       Row(
-                                  //         children: [
-                                  //           Text(
-                                  //             "JOB",
-                                  //             overflow: TextOverflow.ellipsis,
-                                  //             style: Get.textTheme.displayMedium!.copyWith(
-                                  //               color: Colors.black,
-                                  //               fontWeight: FontWeight.w700,
-                                  //               fontSize: AppSpacings.s20,
-                                  //             ),
-                                  //           ),
-                                  //         ],
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  const Divider(
-                                      height: 5,
-                                      endIndent: 10,
-                                      indent: 10,
-                                      color: ThemeService.primaryColor,
-                                      thickness: 2),
-                                  dataRow(
-                                    title1: "Job Name",
-                                    value1: controller.jobBidList[index].jobName??"-",
-                                    title2: "Vendor Name",
-                                    value2:  controller.jobBidList[index].vendorName ??  "-",
-                                  ),
-                                  Divider(
-                                      height: 2,
-                                      endIndent: 10,
-                                      indent: 10,
-                                      color: ThemeService.primaryColor.withOpacity(0.2),
-                                      thickness: 1),
-                                  dataRow(
-                                    title1: "Cost",
-                                    value1: controller.jobBidList[index].cost.toString() ?? "-",
-                                    title2: "Remark",
-                                    value2: controller.jobBidList[index].remark??"-",
-                                  ),
-                                  Divider(
-                                      height: 2,
-                                      endIndent: 10,
-                                      indent: 10,
-                                      color: ThemeService.primaryColor.withOpacity(0.2),
-                                      thickness: 1),
-                                  dataRow(
-                                    title1: "Job Status",
-                                    value1: controller.jobBidList[index].jobStatus ?? "-",
-                                    title2: "Job Type",
-                                    value2: controller.jobBidList[index].jobType ??"-",
-                                  ),
-                                  // Divider(
-                                  //     height: 10,
-                                  //     endIndent: 15,
-                                  //     indent: 15,
-                                  //     color: ThemeService.primaryColor.withOpacity(0.2),
-                                  //     thickness: 1),
-                                  // Padding(
-                                  //   padding: EdgeInsets.symmetric(horizontal: AppSpacings.s14, vertical: AppSpacings.s10),
-                                  //   child: Row(
-                                  //     mainAxisAlignment: MainAxisAlignment.end,
-                                  //     children: [
-                                  //       Container(
-                                  //         padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
-                                  //         decoration: BoxDecoration(
-                                  //             color: ThemeService.white,
-                                  //             boxShadow:  [
-                                  //               BoxShadow(
-                                  //                   color: ThemeService.primaryColor.withOpacity(0.5),
-                                  //                   blurRadius: 9.5,
-                                  //                   blurStyle: BlurStyle.inner,
-                                  //                   offset: const Offset(1.5,1.5),
-                                  //                   spreadRadius: 1.0
-                                  //               )
-                                  //             ],
-                                  //             border: Border.all(
-                                  //               color: ThemeService.primaryColor,
-                                  //             ),
-                                  //             borderRadius: BorderRadius.circular(12)),
-                                  //         child: const Center(
-                                  //             child: Icon(Icons.delete,color: ThemeService.primaryColor,)
-                                  //           // Text(
-                                  //           //   "Update",
-                                  //           //   style: Get.textTheme.headlineLarge!.copyWith(
-                                  //           //     color: ThemeService.primaryColor,
-                                  //           //     fontSize: AppSpacings.s20,
-                                  //           //     fontWeight: FontWeight.w600,
-                                  //           //   ),
-                                  //           // ),
-                                  //         ),
-                                  //       ),
-                                  //       SizedBox(
-                                  //         width: AppSpacings.s15,
-                                  //       ),
-                                  //       GestureDetector(
-                                  //         onTap: (){
-                                  //           Get.toNamed(Routes.createJob,arguments: {
-                                  //             "jobName" : "Job",
-                                  //             "fromLocation":"Ahmedabad",
-                                  //             "toLocation" :"Surat",
-                                  //             "deliveryDate":"16/01/24",
-                                  //             "weight":"32"
-                                  //           });
-                                  //         },
-                                  //         child: Container(
-                                  //           padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
-                                  //           decoration: BoxDecoration(
-                                  //               color: ThemeService.white,
-                                  //               boxShadow:  [
-                                  //                 BoxShadow(
-                                  //                     color: ThemeService.primaryColor.withOpacity(0.5),
-                                  //                     blurRadius: 9.5,
-                                  //                     blurStyle: BlurStyle.inner,
-                                  //                     offset: const Offset(1.5,1.5),
-                                  //                     spreadRadius: 1.0
-                                  //                 )
-                                  //               ],
-                                  //               border: Border.all(
-                                  //                 color: ThemeService.primaryColor,
-                                  //               ),
-                                  //               borderRadius: BorderRadius.circular(12)),
-                                  //           child: const Center(
-                                  //               child: Icon(Icons.edit,color: ThemeService.primaryColor,)
-                                  //             // Text(
-                                  //             //   "Delete",
-                                  //             //   style: Get.textTheme.headlineLarge!.copyWith(
-                                  //             //     color: ThemeService.primaryColor,
-                                  //             //     fontSize: AppSpacings.s20,
-                                  //             //     fontWeight: FontWeight.w600,
-                                  //             //   ),
-                                  //             // ),
-                                  //           ),
-                                  //         ),
-                                  //       ),
-                                  //     ],
-                                  //   ),
-                                  // )
-                                ],
+                                ),
                               ),
                             );
                           }
@@ -503,8 +519,8 @@ class BidListScreen extends GetView<BidListController> {
   }
 
   Filter(context) {
-    controller.tampSelectedJobName.value = controller.selectedJobName.value;
-    controller.tampSelectedJobNameId.value = controller.selectedJobNameId.value;
+    // controller.tampSelectedJobName.value = controller.selectedJobName.value;
+    // controller.tampSelectedJobNameId.value = controller.selectedJobNameId.value;
 
     controller.tampSelectedVendorName.value = controller.selectedVendorName.value;
     controller.tampSelectedVendorNameId.value = controller.selectedVendorNameId.value;
@@ -563,10 +579,10 @@ class BidListScreen extends GetView<BidListController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      controller.tampSelectedJobName.value = "";
-                      controller.tampSelectedJobNameId.value = "";
-                      controller.selectedJobName.value = "";
-                      controller.selectedJobNameId.value = "";
+                      // controller.tampSelectedJobName.value = "";
+                      // controller.tampSelectedJobNameId.value = "";
+                      // controller.selectedJobName.value = "";
+                      // controller.selectedJobNameId.value = "";
 
                       controller.tampSelectedVendorName.value = "";
                       controller.tampSelectedVendorNameId.value = "";
@@ -590,7 +606,7 @@ class BidListScreen extends GetView<BidListController> {
                       controller.fromDate.value = "";
                       controller.toDate.value = "";
 
-                      controller.textJobName.value.clear();
+                      // controller.textJobName.value.clear();
                       controller.textJobStatus.value.clear();
                       controller.textJobType.value.clear();
                       controller.textVendorName.value.clear();
@@ -777,18 +793,18 @@ class BidListScreen extends GetView<BidListController> {
                             const TextStyle(color: ThemeService.white),
                           ),
                         ),
-                        SizedBox(
-                          height: AppSpacings.s15,
-                        ),
-                        searchDropDwonWidget(
-                          selectedValue: controller.tampSelectedJobName,
-                          selectedId: controller.tampSelectedJobNameId,
-                          emptyTitle: "Job Name",
-                          list: controller.jobNameList,
-                          isExpanded: controller.isJobNameExpanded,
-                          isSearching: controller.isJobNameSearching,
-                          textfield: controller.textJobName,
-                        ),
+                        // SizedBox(
+                        //   height: AppSpacings.s15,
+                        // ),
+                        // searchDropDwonWidget(
+                        //   selectedValue: controller.tampSelectedJobName,
+                        //   selectedId: controller.tampSelectedJobNameId,
+                        //   emptyTitle: "Job Name",
+                        //   list: controller.jobNameList,
+                        //   isExpanded: controller.isJobNameExpanded,
+                        //   isSearching: controller.isJobNameSearching,
+                        //   textfield: controller.textJobName,
+                        // ),
                         SizedBox(
                           height: AppSpacings.s20,
                         ),
@@ -841,10 +857,10 @@ class BidListScreen extends GetView<BidListController> {
               duration: const Duration(milliseconds: 100),
               onPressed: (){
 
-                controller.selectedJobName.value = controller.tampSelectedJobName.value;
-                controller.selectedJobNameId.value = controller.tampSelectedJobNameId.value;
-                controller.tampSelectedJobName.value = "";
-                controller.tampSelectedJobNameId.value = "";
+                // controller.selectedJobName.value = controller.tampSelectedJobName.value;
+                // controller.selectedJobNameId.value = controller.tampSelectedJobNameId.value;
+                // controller.tampSelectedJobName.value = "";
+                // controller.tampSelectedJobNameId.value = "";
 
                 controller.selectedVendorName.value = controller.tampSelectedVendorName.value;
                 controller.selectedVendorNameId.value = controller.tampSelectedVendorNameId.value;

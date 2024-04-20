@@ -1,6 +1,9 @@
 
 // ignore_for_file: iterable_contains_unrelated_type, unrelated_type_equality_checks, list_remove_unrelated_type
 import 'dart:developer';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -12,22 +15,16 @@ import 'package:mudara_steel_app/model/job_list_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
 
 
-class JobListController extends GetxController with GetTickerProviderStateMixin{
+class MyOpenJobController extends GetxController {
 
-  RxList<JobListModel> openJobList = RxList();
-  RxList<JobListModel> completedJobList = RxList();
+  RxList<JobListModel> jobList = RxList();
   ScrollController leadScrollController = ScrollController();
   TextEditingController searchTextEditController = TextEditingController();
-  RxString appTitle = "".obs;
   RxBool isSearching = RxBool(false);
   int jobPage = 0;
   RxBool isLoading = false.obs;
   RxBool isJobListLoading = false.obs;
   RxString userTypeID = "".obs;
-
-  RxInt currentTab = 0.obs;
-  Rxn<TabController> tabController = Rxn<TabController>();
-
 
   TextEditingController tempToDate = TextEditingController();
   TextEditingController tempFromDate = TextEditingController();
@@ -62,21 +59,18 @@ class JobListController extends GetxController with GetTickerProviderStateMixin{
     print(newValue);
     showCountVal.value = newValue!;
     jobPage = 0;
-    openJobList.clear();
-    getOpenJob();
+    jobList.clear();
+    getJob();
   }
 
   @override
   void onInit() async {
-    appTitle.value = Get.arguments ??"Job List";
-    tabController.value = TabController(length: 2, vsync: this);
+
     userTypeID.value =  GetStorage().read(Constants.userTypeID) ?? "";
     log(userTypeID.value);
-    leadScrollController.addListener(openJobScrollListener);
-    getOpenJob();
-    getComplitedJob();
+    leadScrollController.addListener(jobScrollListener);
+    getJob();
     jobNameList.value = await APIProvider().getJobNameList(userTypeID.value);
-    jobStatusList.value = await APIProvider().getJobStatusList(userTypeID.value);
     jobTypeList.value = await APIProvider().getJobTypeList(userTypeID.value);
 
     super.onInit();
@@ -92,16 +86,6 @@ class JobListController extends GetxController with GetTickerProviderStateMixin{
   Rx<TextEditingController> textJobName = TextEditingController().obs;
 
 
-  RxList<FieldItemValueModel> jobStatusList = <FieldItemValueModel>[].obs;
-  RxBool isJobStatusExpanded = false.obs;
-  RxString selectedJobStatus = "".obs;
-  RxString selectedJobStatusId = "".obs;
-  RxString tampSelectedJobStatus = "".obs;
-  RxString tampSelectedJobStatusId = "".obs;
-  RxBool isJobStatusSearching = RxBool(false);
-  Rx<TextEditingController> textJobStatus = TextEditingController().obs;
-
-
   RxList<FieldItemValueModel> jobTypeList = <FieldItemValueModel>[].obs;
   RxBool isJobTypeExpanded = false.obs;
   RxString selectedJobType = "".obs;
@@ -111,40 +95,16 @@ class JobListController extends GetxController with GetTickerProviderStateMixin{
   RxBool isJobTypeSearching = RxBool(false);
   Rx<TextEditingController> textJobType = TextEditingController().obs;
 
-  void openJobScrollListener() async {
+  void jobScrollListener() async {
     double maxScroll = leadScrollController.position.maxScrollExtent;
     double currentScroll = leadScrollController.position.pixels;
     double delta = Get.height / 3;
     if (maxScroll - currentScroll <= delta && !isJobListLoading.value) {
-      await getOpenJob(pagination: true);
+      await getJob(pagination: true);
     }
   }
 
-  Future<void> getOpenJob({bool pagination = false}) async {
-    isJobListLoading.value = true;
-
-    var leadResponse = await APIProvider().getJobList(
-        userTypeID:userTypeID.value,
-        pageNumber: jobPage,
-        rowsOfPage: showCountVal,
-        orderByName: selectedShortByVal,
-        searchVal: searchTextEditController.text,
-        fromDate: fromDate.value,
-        toDate: toDate.value,
-        sortDirection: isDescending.value == true ? ascending.value: descending.value,
-        jobId: selectedJobNameId.value,
-        jobStatusId:"1",
-        jobType:selectedJobTypeId.value,
-    );
-    if (leadResponse.isNotEmpty) {
-      jobPage++;
-      openJobList.addAll(leadResponse);
-    }
-    isJobListLoading.value = false;
-    return;
-  }
-
-  Future<void> getComplitedJob({bool pagination = false}) async {
+  Future<void> getJob({bool pagination = false}) async {
     isJobListLoading.value = true;
 
     var leadResponse = await APIProvider().getJobList(
@@ -157,16 +117,17 @@ class JobListController extends GetxController with GetTickerProviderStateMixin{
       toDate: toDate.value,
       sortDirection: isDescending.value == true ? ascending.value: descending.value,
       jobId: selectedJobNameId.value,
-      jobStatusId:"2",
+      jobStatusId:"1",
       jobType:selectedJobTypeId.value,
     );
     if (leadResponse.isNotEmpty) {
       jobPage++;
-      completedJobList.addAll(leadResponse);
+      jobList.addAll(leadResponse);
     }
     isJobListLoading.value = false;
     return;
   }
+
 
   Future<void> deleteJob(context,{int? jobId})async{
     try{
@@ -177,8 +138,8 @@ class JobListController extends GetxController with GetTickerProviderStateMixin{
         isLoading.value = false;
         Get.back();
         jobPage = 0;
-        openJobList.clear();
-        getOpenJob();
+        jobList.clear();
+        getJob();
         Ui.SuccessSnackBar(title:'Successful',message:'Job deleted successful');
       }else if(successModel.msgType == 1){
         isLoading.value = false;
@@ -200,8 +161,8 @@ class JobListController extends GetxController with GetTickerProviderStateMixin{
       if(successModel.msgType == 0){
         isLoading.value = false;
         jobPage = 0;
-        openJobList.clear();
-        getOpenJob();
+        jobList.clear();
+        getJob();
         Ui.SuccessSnackBar(title:'Successful',message:'Job successfully applied');
       }else if(successModel.msgType == 1){
         isLoading.value = false;

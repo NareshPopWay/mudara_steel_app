@@ -18,12 +18,12 @@ import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_d
 import 'package:mudara_steel_app/common/widget/empty_widget.dart';
 import 'package:mudara_steel_app/common/widget/lead_card_widget.dart';
 import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_allocated_job_controller.dart';
-import 'package:mudara_steel_app/controllers/bid_controller/bid_list_controller.dart';
-import 'package:mudara_steel_app/controllers/job_controller/job_allocation_list_controller.dart';
-import 'package:mudara_steel_app/controllers/job_controller/job_allocation_list_controller.dart';
-import 'package:mudara_steel_app/controllers/job_controller/job_allocation_list_controller.dart';
-import 'package:mudara_steel_app/controllers/job_controller/job_list_controller.dart';
-import 'package:mudara_steel_app/controllers/vendor_controller/vendor_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/bid_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/job_allocation_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/job_allocation_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/job_allocation_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/job_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/vendor_controller/vendor_list_controller.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
 

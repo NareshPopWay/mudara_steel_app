@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
-import 'package:mudara_steel_app/controllers/vendor_controller/vendor_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/vendor_controller/vendor_list_controller.dart';
 import 'package:mudara_steel_app/model/job_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
 import 'package:mudara_steel_app/model/vendor_model.dart';

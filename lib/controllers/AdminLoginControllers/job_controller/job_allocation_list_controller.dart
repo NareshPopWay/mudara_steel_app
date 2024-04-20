@@ -20,7 +20,6 @@ class JobAllocationListController extends GetxController {
   RxList<JobAllocationListModel> jobAllocationList = RxList();
   ScrollController jobAllocationScrollController = ScrollController();
   TextEditingController searchTextEditController = TextEditingController();
-  RxString appTitle = "".obs;
   RxBool isSearching = RxBool(false);
   RxBool isJobAllocationListLoading = false.obs;
   int jobAllocationPage = 0;
@@ -67,7 +66,6 @@ class JobAllocationListController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    appTitle.value = Get.arguments ?? "JobAllocation List ";
     userTypeID.value = await GetStorage().read(Constants.userTypeID) ?? "";
     jobAllocationScrollController.addListener(jobAllocationScrollListener);
     getJobAllocation();

@@ -10,7 +10,7 @@ import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
 import 'package:mudara_steel_app/common/ui.dart';
-import 'package:mudara_steel_app/controllers/vendor_controller/register_vendor_conteoller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/vendor_controller/register_vendor_conteoller.dart';
 import 'package:path/path.dart';
 
 class RegisterVendorScreen extends GetView<RegisterVendorController> {

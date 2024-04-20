@@ -779,7 +779,7 @@ class APIProvider {
     return SuccessModel.fromJson(jsonDecode(responseJson));
   }
 
-  Future<List<FieldItemValueModel>> getVendorJobBide({int? jobId}) async {
+  Future<List<FieldItemValueModel>> getVendorJobBide({jobId}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
       Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');

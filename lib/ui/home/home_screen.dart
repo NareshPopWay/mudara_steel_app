@@ -442,111 +442,111 @@ class HomeScreen extends GetView<RootController> {
                             indent: 10,
                             endIndent: 10,
                           ),
-                          if(controller.userTypeID.value == "1")
-                          ListTile(
-                            dense: true,
-                            visualDensity: VisualDensity(vertical: -AppSpacings.s5),
-                            leading: Image.asset(
-                              "assets/drawer_icon/bid_list.png",
-                              height: AppSpacings.s35,
-                              color: ThemeService.primaryColor,
-                              alignment: Alignment.center,
-                            ),
-                            trailing: Icon(
-                              Icons.arrow_forward_ios,
-                              color: ThemeService.primaryColor.withOpacity(0.6),
-                              size: AppSpacings.s20,
-                            ),
-                            title: Text(
-                              "Job Bid",
-                              style: Get.textTheme.bodyLarge!.copyWith(
-                                fontSize: AppSpacings.s20,
-                                fontWeight: FontWeight.w500,
-                                color: ThemeService.primaryColor.withOpacity(0.7),
-                              ),
-                            ),
-                            onTap: () {
-                              Get.back();
-                              Get.toNamed(Routes.bidList,arguments: "Job Bid List");
-                            },
-                          ),
-                          if(controller.userTypeID.value == "1")
-                          Divider(
-                            color:ThemeService.primaryColor.withOpacity(0.4),
-                            thickness: 1,
-                            indent: 10,
-                            endIndent: 10,
-                          ),
-                          if(controller.userTypeID.value == "1")
-                            ListTile(
-                              dense: true,
-                              visualDensity: VisualDensity(vertical: -AppSpacings.s5),
-                              leading: Image.asset(
-                                "assets/drawer_icon/create_job.png",
-                                height: AppSpacings.s35,
-                                color: ThemeService.primaryColor,
-                                alignment: Alignment.center,
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios,
-                                color: ThemeService.primaryColor.withOpacity(0.6),
-                                size: AppSpacings.s20,
-                              ),
-                              title: Text(
-                                "Create JobAllocation",
-                                style: Get.textTheme.bodyLarge!.copyWith(
-                                  fontSize: AppSpacings.s20,
-                                  fontWeight: FontWeight.w500,
-                                  color: ThemeService.primaryColor.withOpacity(0.7),
-                                ),
-                              ),
-                              onTap: () {
-                                Get.back();
-                                Get.toNamed(Routes.createJobAllocation);
-                              },
-                            ),
-                          if(controller.userTypeID.value == "1")
-                            Divider(
-                              color:ThemeService.primaryColor.withOpacity(0.4),
-                              thickness: 1,
-                              indent: 10,
-                              endIndent: 10,
-                            ),
-                          if(controller.userTypeID.value == "1")
-                          ListTile(
-                            dense: true,
-                            visualDensity: VisualDensity(vertical: -AppSpacings.s5),
-                            leading: Image.asset(
-                              "assets/drawer_icon/joballocation_list.png",
-                              height: AppSpacings.s35,
-                              color: ThemeService.primaryColor,
-                              alignment: Alignment.center,
-                            ),
-                            trailing: Icon(
-                              Icons.arrow_forward_ios,
-                              color: ThemeService.primaryColor.withOpacity(0.6),
-                              size: AppSpacings.s20,
-                            ),
-                            title: Text(
-                              "Job Allocation",
-                              style: Get.textTheme.bodyLarge!.copyWith(
-                                fontSize: AppSpacings.s20,
-                                fontWeight: FontWeight.w500,
-                                color: ThemeService.primaryColor.withOpacity(0.7),
-                              ),
-                            ),
-                            onTap: () {
-                              Get.back();
-                              Get.toNamed(Routes.jobAllocationList,arguments: "Job Allocation");
-                            },
-                          ),
-                          if(controller.userTypeID.value == "1")
-                          Divider(
-                            color:ThemeService.primaryColor.withOpacity(0.4),
-                            thickness: 1,
-                            indent: 10,
-                            endIndent: 10,
-                          ),
+                          // if(controller.userTypeID.value == "1")
+                          // ListTile(
+                          //   dense: true,
+                          //   visualDensity: VisualDensity(vertical: -AppSpacings.s5),
+                          //   leading: Image.asset(
+                          //     "assets/drawer_icon/bid_list.png",
+                          //     height: AppSpacings.s35,
+                          //     color: ThemeService.primaryColor,
+                          //     alignment: Alignment.center,
+                          //   ),
+                          //   trailing: Icon(
+                          //     Icons.arrow_forward_ios,
+                          //     color: ThemeService.primaryColor.withOpacity(0.6),
+                          //     size: AppSpacings.s20,
+                          //   ),
+                          //   title: Text(
+                          //     "Job Bid",
+                          //     style: Get.textTheme.bodyLarge!.copyWith(
+                          //       fontSize: AppSpacings.s20,
+                          //       fontWeight: FontWeight.w500,
+                          //       color: ThemeService.primaryColor.withOpacity(0.7),
+                          //     ),
+                          //   ),
+                          //   onTap: () {
+                          //     Get.back();
+                          //     Get.toNamed(Routes.bidList,arguments: "Job Bid List");
+                          //   },
+                          // ),
+                          // if(controller.userTypeID.value == "1")
+                          // Divider(
+                          //   color:ThemeService.primaryColor.withOpacity(0.4),
+                          //   thickness: 1,
+                          //   indent: 10,
+                          //   endIndent: 10,
+                          // ),
+                          // if(controller.userTypeID.value == "1")
+                          //   ListTile(
+                          //     dense: true,
+                          //     visualDensity: VisualDensity(vertical: -AppSpacings.s5),
+                          //     leading: Image.asset(
+                          //       "assets/drawer_icon/create_job.png",
+                          //       height: AppSpacings.s35,
+                          //       color: ThemeService.primaryColor,
+                          //       alignment: Alignment.center,
+                          //     ),
+                          //     trailing: Icon(
+                          //       Icons.arrow_forward_ios,
+                          //       color: ThemeService.primaryColor.withOpacity(0.6),
+                          //       size: AppSpacings.s20,
+                          //     ),
+                          //     title: Text(
+                          //       "Create JobAllocation",
+                          //       style: Get.textTheme.bodyLarge!.copyWith(
+                          //         fontSize: AppSpacings.s20,
+                          //         fontWeight: FontWeight.w500,
+                          //         color: ThemeService.primaryColor.withOpacity(0.7),
+                          //       ),
+                          //     ),
+                          //     onTap: () {
+                          //       Get.back();
+                          //       Get.toNamed(Routes.createJobAllocation);
+                          //     },
+                          //   ),
+                          // if(controller.userTypeID.value == "1")
+                          //   Divider(
+                          //     color:ThemeService.primaryColor.withOpacity(0.4),
+                          //     thickness: 1,
+                          //     indent: 10,
+                          //     endIndent: 10,
+                          //   ),
+                          // if(controller.userTypeID.value == "1")
+                          // ListTile(
+                          //   dense: true,
+                          //   visualDensity: VisualDensity(vertical: -AppSpacings.s5),
+                          //   leading: Image.asset(
+                          //     "assets/drawer_icon/joballocation_list.png",
+                          //     height: AppSpacings.s35,
+                          //     color: ThemeService.primaryColor,
+                          //     alignment: Alignment.center,
+                          //   ),
+                          //   trailing: Icon(
+                          //     Icons.arrow_forward_ios,
+                          //     color: ThemeService.primaryColor.withOpacity(0.6),
+                          //     size: AppSpacings.s20,
+                          //   ),
+                          //   title: Text(
+                          //     "Job Allocation",
+                          //     style: Get.textTheme.bodyLarge!.copyWith(
+                          //       fontSize: AppSpacings.s20,
+                          //       fontWeight: FontWeight.w500,
+                          //       color: ThemeService.primaryColor.withOpacity(0.7),
+                          //     ),
+                          //   ),
+                          //   onTap: () {
+                          //     Get.back();
+                          //     Get.toNamed(Routes.jobAllocationList,arguments: "Job Allocation");
+                          //   },
+                          // ),
+                          // if(controller.userTypeID.value == "1")
+                          // Divider(
+                          //   color:ThemeService.primaryColor.withOpacity(0.4),
+                          //   thickness: 1,
+                          //   indent: 10,
+                          //   endIndent: 10,
+                          // ),
 
                           /// Vendor Login
                           if(controller.userTypeID.value == "2")

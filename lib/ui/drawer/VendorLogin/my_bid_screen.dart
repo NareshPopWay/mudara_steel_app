@@ -380,6 +380,8 @@ class MyBidScreen extends GetView<MyBidController> {
                                     dataRow(
                                       title1: "Cost",
                                       value1: controller.jobBidList[index].cost.toString() ?? "-",
+                                      valueColor1: Colors.redAccent,
+                                      titleColor1: Colors.red,
                                       title2: "Remark",
                                       value2: controller.jobBidList[index].remark??"-",
                                     ),

@@ -1,9 +1,6 @@
 
 // ignore_for_file: iterable_contains_unrelated_type, unrelated_type_equality_checks, list_remove_unrelated_type
 import 'dart:developer';
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,19 +12,20 @@ import 'package:mudara_steel_app/model/job_list_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
 
 
-class MyJobController extends GetxController with GetTickerProviderStateMixin{
+class JobListController extends GetxController with GetTickerProviderStateMixin{
 
   RxString userTypeID = "".obs;
 
   RxInt currentTab = 0.obs;
   Rxn<TabController> tabController = Rxn<TabController>();
 
+
   @override
   void onInit() async {
+
     tabController.value = TabController(length: 2, vsync: this);
     userTypeID.value =  GetStorage().read(Constants.userTypeID) ?? "";
     log(userTypeID.value);
-
     super.onInit();
   }
 
