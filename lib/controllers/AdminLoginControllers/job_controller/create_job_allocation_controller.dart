@@ -8,6 +8,8 @@ import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_bid_controller/completed_job_bid_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_bid_controller/open_job_bid_controller.dart';
 import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/job_allocation_list_controller.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_allocation_model.dart';
@@ -49,6 +51,8 @@ class CreateJobAllocationController extends GetxController {
   Rx<TextEditingController> textVendorJobBid = TextEditingController().obs;
 
   JobAllocationListController jobAllocationListController = Get.put(JobAllocationListController());
+  OpenJobBidListController openJobBidListController = Get.put(OpenJobBidListController());
+  CompletedJobBidListController completedJobBidListController = Get.put(CompletedJobBidListController());
 
   @override
   void onInit() async {
@@ -117,9 +121,16 @@ class CreateJobAllocationController extends GetxController {
           Ui.SuccessSnackBar(title:'Successful',message:'Job allocated successfully done');
         } else {
           Get.back();
-          jobAllocationListController.jobAllocationPage = 0;
-          jobAllocationListController.jobAllocationList.clear();
-          jobAllocationListController.getJobAllocation();
+          // jobAllocationListController.jobAllocationPage = 0;
+          // jobAllocationListController.jobAllocationList.clear();
+          // jobAllocationListController.getJobAllocation();
+          openJobBidListController.jobBidPage = 0;
+          openJobBidListController.jobBidList.clear();
+          openJobBidListController.getJobBidList();
+
+          completedJobBidListController.jobBidPage = 0;
+          completedJobBidListController.jobBidList.clear();
+          completedJobBidListController.getJobBidList();
           Ui.SuccessSnackBar(title:'Successful',message:'Job Updated Successfully done ');
         }
       }else if(successModel.msgType == 1){
