@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison, use_build_context_synchronously, must_be_immutable
+// ignore_for_file: unnecessary_null_comparison, must_be_immutable
 import 'dart:developer';
 
 import 'package:easy_debounce/easy_debounce.dart';
@@ -9,7 +9,6 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -17,20 +16,15 @@ import 'package:mudara_steel_app/common/widget/dropdown_widget/dropdown_below.da
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
 import 'package:mudara_steel_app/common/widget/empty_widget.dart';
 import 'package:mudara_steel_app/common/widget/lead_card_widget.dart';
-import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_allocated_job_controller.dart';
-import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_bid_controller/bid_list_controller.dart';
-import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/job_allocation_list_controller.dart';
-import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/job_allocation_list_controller.dart';
-import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/job_allocation_list_controller.dart';
-import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/job_list_controller.dart';
-import 'package:mudara_steel_app/controllers/AdminLoginControllers/vendor_controller/vendor_list_controller.dart';
-import 'package:mudara_steel_app/routes/app_routes.dart';
+import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_bid_controller.dart';
+import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_open_job_bid_controller.dart';
 
 
-class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
-  MyAllocatedJobScreen({Key? key}) : super(key: key);
 
-  MyAllocatedJobController controller = Get.put(MyAllocatedJobController());
+class MyOpenJobBidScreen extends GetView<MyOpenJobBidController> {
+  MyOpenJobBidScreen({Key? key}) : super(key: key);
+
+  MyOpenJobBidController controller = Get.put(MyOpenJobBidController());
 
   @override
   Widget build(BuildContext context) {
@@ -46,125 +40,81 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
           color: ThemeService.white,
           child: Column(
             children: [
-              Container(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).padding.top),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                color: ThemeService.primaryColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.chevron_left,
-                                color: ThemeService.white,
-                                size: AppSpacings.s50,
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: AppSpacings.s10),
-                          Text(
-                           "Allocated Job",
-                            style: Get.textTheme.headlineSmall!.copyWith(
-                              fontWeight: FontWeight.w600,
-                              color: ThemeService.primaryColor,
-                              fontSize: AppSpacings.s25,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            height: 35,
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Show",
-                                  style: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s18),
-                                ),
-                                SizedBox(
-                                  width: AppSpacings.s5,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(AppSpacings.s10, 0, AppSpacings.s10, 0),
-                                  decoration: BoxDecoration(color: ThemeService.primaryColor, borderRadius: BorderRadius.circular(10)),
-                                  child:DropdownBelow(
-                                      itemWidth: 80,
-                                      itemTextstyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black,fontFamily:'Poppins-Medium'),
-                                      boxTextstyle: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s16,color: Colors.white),
-                                      boxHeight: 50,
-                                      icon: const Icon(Icons.keyboard_arrow_down,color: ThemeService.white),
-                                      boxWidth: 50,
-                                      hint: Text('${controller.showCountVal.value}'),
-                                      value: controller.showCountVal.value,
-                                      items: controller.buildsShowCountItems(controller.showCount),
-                                      onChanged: controller.onChangeShowCount
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: AppSpacings.s5),
-                          GestureDetector(
-                            onTap: ()async{
-                              await showModalBottomSheet(
-                                  context: context,
-                                  backgroundColor: ThemeService.white,
-                                  elevation: 5.5,
-                                  useSafeArea: true,
-                                  constraints: const BoxConstraints(maxHeight:500),
-                                  isScrollControlled:true,
-                                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(25), topRight: Radius.circular(25))),
-                                  builder: (context){
-                                    return Filter(context);
-                                  }
-                              );
-                            },
-                            child: Center(
-                              child: Container(
-                                decoration:  BoxDecoration(
-                                    color: ThemeService.primaryColor,
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(6.0),
-                                  child: Image.asset(
-                                    "assets/filter.png",
-                                    height: AppSpacings.s30,
-                                    color: ThemeService.white,
-                                    alignment: Alignment.center,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const Divider(
-                  height: 10,
-                  endIndent: 12,
-                  indent: 12,
-                  color: ThemeService.primaryColor,
-                  thickness: 3),
               SizedBox(
                 height: AppSpacings.s5,
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(AppSpacings.s10,AppSpacings.s5,AppSpacings.s10,AppSpacings.s2),
+                child: Row(
+                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: 35,
+                      child: Row(
+                        children: [
+                          Text(
+                            "Show",
+                            style: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s18),
+                          ),
+                          SizedBox(
+                            width: AppSpacings.s5,
+                          ),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(AppSpacings.s10, 0, AppSpacings.s10, 0),
+                            decoration: BoxDecoration(color: ThemeService.primaryColor, borderRadius: BorderRadius.circular(10)),
+                            child:DropdownBelow(
+                                itemWidth: 80,
+                                itemTextstyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.black,fontFamily:'Poppins-Medium'),
+                                boxTextstyle: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s16,color: Colors.white),
+                                boxHeight: 50,
+                                icon: const Icon(Icons.keyboard_arrow_down,color: ThemeService.white),
+                                boxWidth: 50,
+                                hint: Text('${controller.showCountVal.value}'),
+                                value: controller.showCountVal.value,
+                                items: controller.buildsShowCountItems(controller.showCount),
+                                onChanged: controller.onChangeShowCount
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: AppSpacings.s5),
+                    GestureDetector(
+                      onTap: ()async{
+                        await showModalBottomSheet(
+                            context: context,
+                            backgroundColor: ThemeService.white,
+                            elevation: 5.5,
+                            useSafeArea: true,
+                            constraints: const BoxConstraints(maxHeight:500),
+                            isScrollControlled:true,
+                            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25), topRight: Radius.circular(25))),
+                            builder: (context){
+                              return Filter(context);
+                            }
+                        );
+                      },
+                      child: Center(
+                        child: Container(
+                          decoration:  BoxDecoration(
+                              color: ThemeService.primaryColor,
+                              borderRadius: BorderRadius.circular(10)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(6.0),
+                            child: Image.asset(
+                              "assets/filter.png",
+                              height: AppSpacings.s30,
+                              color: ThemeService.white,
+                              alignment: Alignment.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Row(
                 children: [
@@ -196,9 +146,9 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                             // controller.isMemberSearching.value = false;
                             // controller.memberSearchResult.clear();
                             controller.searchTextEditController.clear();
-                            controller.jobAllocationPage = 0;
-                            controller.jobAllocationList.clear();
-                            controller.getJobAllocation();
+                            controller.jobBidPage = 0;
+                            controller.jobBidList.clear();
+                            controller.getJobBidList();
                             controller.searchTextEditController.clear();
                             FocusScope.of(context).unfocus();
                           },
@@ -218,15 +168,15 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                           onChanged: (value) {
                             if(value.length >= 3){
                               EasyDebounce.debounce('lead', const Duration(milliseconds: 700), () {
-                                controller.jobAllocationPage = 0;
-                                controller.jobAllocationList.clear();
-                                controller.getJobAllocation();
+                                controller.jobBidPage = 0;
+                                controller.jobBidList.clear();
+                                controller.getJobBidList();
                               });
                             }else if(value.isEmpty){
                               EasyDebounce.debounce('lead', const Duration(milliseconds: 700), () {
-                                controller.jobAllocationPage = 0;
-                                controller.jobAllocationList.clear();
-                                controller.getJobAllocation();
+                                controller.jobBidPage = 0;
+                                controller.jobBidList.clear();
+                                controller.getJobBidList();
                               });
                             }
 
@@ -239,9 +189,9 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                     onTap: () async {
                       controller.isDescending.value = !controller.isDescending.value;
                       // controller.isDescending.value == true ? controller.descending.value : controller.ascending.value;
-                      controller.jobAllocationPage = 0;
-                      controller.jobAllocationList.clear();
-                      controller.getJobAllocation();
+                      controller.jobBidPage = 0;
+                      controller.jobBidList.clear();
+                      controller.getJobBidList();
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: AppSpacings.s8, vertical: AppSpacings.s12),
@@ -279,14 +229,14 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                 ],
               ),
               Expanded(
-                  child: ListView(
-                    controller: controller.jobAllocationScrollController,
+                  child:  ListView(
+                    controller: controller.leadScrollController,
                     shrinkWrap: true,
                     padding: EdgeInsets.fromLTRB(0,0, 0, AppSpacings.s55),
                     primary: false,
                     physics: const BouncingScrollPhysics(parent: BouncingScrollPhysics()),
                     children: [
-                      if (controller.jobAllocationList.isEmpty && !controller.isJobAllocationListLoading.value)
+                      if (controller.jobBidList.isEmpty && !controller.isJobBidListLoading.value)
                         Padding(
                           padding:  EdgeInsets.only(top: AppSpacings.s50),
                           child: const EmptyDataWidget(),
@@ -300,7 +250,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                             ),
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: controller.jobAllocationList.length,
+                            itemCount: controller.jobBidList.length,
                             itemBuilder:(context,index){
 
                               return  Container(
@@ -325,8 +275,8 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                                       height: AppSpacings.s5,
                                     ),
                                     headerRow(
-                                      title1: controller.jobAllocationList[index].createdOn != null
-                                          ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobAllocationList[index].createdOn.toString()))
+                                      title1:controller.jobBidList[index].createdOn != null
+                                          ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobBidList[index].createdOn.toString()))
                                           : "-",
                                       icon1: Icon(Icons.calendar_month, size: AppSpacings.s25),
                                     ),
@@ -374,9 +324,9 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                                         thickness: 2),
                                     dataRow(
                                       title1: "Job Name",
-                                      value1: controller.jobAllocationList[index].jobName ?? "-",
+                                      value1: controller.jobBidList[index].jobName??"-",
                                       title2: "Vendor Name",
-                                      value2:  controller.jobAllocationList[index].vendorName ?? "-",
+                                      value2:  controller.jobBidList[index].vendorName ??  "-",
                                     ),
                                     Divider(
                                         height: 2,
@@ -386,24 +336,30 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                                         thickness: 1),
                                     dataRow(
                                       title1: "Cost",
-                                      value1: controller.jobAllocationList[index].cost.toString() ?? "-",
+                                      value1: controller.jobBidList[index].cost.toString() ?? "-",
+                                      valueColor1: Colors.redAccent,
+                                      titleColor1: Colors.red,
                                       title2: "Remark",
-                                      value2: controller.jobAllocationList[index].remark ?? "-",
+                                      value2: controller.jobBidList[index].remark??"-",
                                     ),
-                                    if(controller.userTypeID.value == "1")
-                                      Divider(
-                                          height: 2,
-                                          endIndent: 10,
-                                          indent: 10,
-                                          color: ThemeService.primaryColor.withOpacity(0.2),
-                                          thickness: 1),
-                                    SizedBox(height: AppSpacings.s5),
+                                    Divider(
+                                        height: 2,
+                                        endIndent: 10,
+                                        indent: 10,
+                                        color: ThemeService.primaryColor.withOpacity(0.2),
+                                        thickness: 1),
+                                    dataRow(
+                                      title1: "Job Status",
+                                      value1: controller.jobBidList[index].jobStatus ?? "-",
+                                      title2: "Job Type",
+                                      value2: controller.jobBidList[index].jobType ??"-",
+                                    ),
                                   ],
                                 ),
                               );
                             }
                         ),
-                      if (controller.isJobAllocationListLoading.value == true)  Padding(
+                      if (controller.isJobBidListLoading.value == true)  Padding(
                         padding: EdgeInsets.fromLTRB(0, AppSpacings.s150, 0,0),
                         child: CupertinoActivityIndicator(radius: AppSpacings.s20,),
                       )
@@ -418,16 +374,20 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
   }
 
   Filter(context) {
-
     controller.tampSelectedJobName.value = controller.selectedJobName.value;
     controller.tampSelectedJobNameId.value = controller.selectedJobNameId.value;
 
     controller.tampSelectedVendorName.value = controller.selectedVendorName.value;
     controller.tampSelectedVendorNameId.value = controller.selectedVendorNameId.value;
 
+    controller.tampSelectedJobStatus.value = controller.selectedJobStatus.value;
+    controller.tampSelectedJobStatusId.value = controller.selectedJobStatusId.value;
+
+    controller.tampSelectedJobType.value = controller.selectedJobType.value;
+    controller.tampSelectedJobTypeId.value = controller.selectedJobTypeId.value;
+
     controller.tempFromDate.text = controller.fromDate.value;
     controller.tempToDate.text = controller.toDate.value;
-
     return Padding(
       padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -474,29 +434,40 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                   ),
                   GestureDetector(
                     onTap: () {
-
                       controller.tampSelectedJobName.value = "";
                       controller.tampSelectedJobNameId.value = "";
                       controller.selectedJobName.value = "";
                       controller.selectedJobNameId.value = "";
-
 
                       controller.tampSelectedVendorName.value = "";
                       controller.tampSelectedVendorNameId.value = "";
                       controller.selectedVendorName.value = "";
                       controller.selectedVendorNameId.value = "";
 
+                      controller.tampSelectedJobStatus.value = "";
+                      controller.tampSelectedJobStatusId.value = "";
+                      controller.selectedJobStatus.value = "";
+                      controller.selectedJobStatusId.value = "";
+
+                      controller.tampSelectedJobType.value = "";
+                      controller.tampSelectedJobTypeId.value = "";
+                      controller.selectedJobType.value = "";
+                      controller.selectedJobTypeId.value = "";
+
 
                       controller.tempFromDate.text = "";
                       controller.tempToDate.text = "";
+
                       controller.fromDate.value = "";
                       controller.toDate.value = "";
 
                       controller.textJobName.value.clear();
+                      controller.textJobStatus.value.clear();
+                      controller.textJobType.value.clear();
                       controller.textVendorName.value.clear();
-                      controller.jobAllocationPage = 0;
-                      controller.jobAllocationList.clear();
-                      controller.getJobAllocation();
+                      controller.jobBidPage = 0;
+                      controller.jobBidList.clear();
+                      controller.getJobBidList();
                       // Get.back();
                     },
                     child: Text(
@@ -637,6 +608,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                               String formattedDate = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
                               controller.tempToDate.text = formattedDate;
                               log(controller.tempToDate.text);
+                              // controller.nextFollowUp.value = DateFormat('yyyy-MM-dd').format(followUpPickedDate);
                             }
                           },
                           decoration: InputDecoration(
@@ -688,10 +660,9 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                           isSearching: controller.isJobNameSearching,
                           textfield: controller.textJobName,
                         ),
-                        if(controller.userTypeID.value == "1")
-                          SizedBox(
-                            height: AppSpacings.s20,
-                          ),
+                        SizedBox(
+                          height: AppSpacings.s20,
+                        ),
                         if(controller.userTypeID.value == "1")
                           searchDropDwonWidget(
                             selectedValue: controller.tampSelectedVendorName,
@@ -702,9 +673,35 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                             isSearching: controller.isVendorNameSearching,
                             textfield: controller.textVendorName,
                           ),
+                        if(controller.userTypeID.value == "1")
+                          SizedBox(
+                            height: AppSpacings.s20,
+                          ),
+                        searchDropDwonWidget(
+                          selectedValue: controller.tampSelectedJobStatus,
+                          selectedId: controller.tampSelectedJobStatusId,
+                          emptyTitle: "Job Status",
+                          list: controller.jobStatusList,
+                          isExpanded: controller.isJobStatusExpanded,
+                          isSearching: controller.isJobStatusSearching,
+                          textfield: controller.textJobStatus,
+                        ),
                         SizedBox(
                           height: AppSpacings.s20,
                         ),
+                        searchDropDwonWidget(
+                          selectedValue: controller.tampSelectedJobType,
+                          selectedId: controller.tampSelectedJobTypeId,
+                          emptyTitle: "Job Type",
+                          list: controller.jobTypeList,
+                          isExpanded: controller.isJobTypeExpanded,
+                          isSearching: controller.isJobTypeSearching,
+                          textfield: controller.textJobType,
+                        ),
+                        SizedBox(
+                          height: AppSpacings.s20,
+                        ),
+
                       ],
                     ),
                   ),)
@@ -725,15 +722,24 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                 controller.tampSelectedVendorName.value = "";
                 controller.tampSelectedVendorNameId.value = "";
 
+                controller.selectedJobStatus.value = controller.tampSelectedJobStatus.value;
+                controller.selectedJobStatusId.value = controller.tampSelectedJobStatusId.value;
+                controller.tampSelectedJobStatus.value = "";
+                controller.tampSelectedJobStatusId.value = "";
 
-                controller.fromDate.value = controller.tempFromDate.text;
+                controller.selectedJobType.value = controller.tampSelectedJobType.value;
+                controller.selectedJobTypeId.value = controller.tampSelectedJobTypeId.value;
+                controller.tampSelectedJobType.value = "";
+                controller.tampSelectedJobTypeId.value = "";
+
                 controller.toDate.value = controller.tempToDate.text;
+                controller.fromDate.value = controller.tempFromDate.text;
+
                 controller.tempFromDate.text = "";
                 controller.tempToDate.text = "";
-
-                controller.jobAllocationPage = 0;
-                controller.jobAllocationList.clear();
-                controller.getJobAllocation();
+                controller.jobBidPage = 0;
+                controller.jobBidList.clear();
+                controller.getJobBidList();
                 Get.back();
               },
               child: Container(
@@ -773,112 +779,28 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
               ),
             ),
             SizedBox(height: AppSpacings.s30),
+            // TextButton(
+            //   style: TextButton.styleFrom(
+            //     foregroundColor: ThemeService.white,
+            //     backgroundColor: ThemeService.primaryColor,
+            //     // shape: RoundedRectangleBorder(
+            //     //   side: const BorderSide(
+            //     //     color: ThemeService.primaryColor,
+            //     //     width: 1.5,
+            //     //   ),
+            //     //   borderRadius: BorderRadius.circular(30.0),
+            //     // ),
+            //   ),
+            //   onPressed: () async {
+            //
+            //   },
+            //   child: Text("Apply", style: Get.textTheme.displayMedium!.copyWith(color: ThemeService.white)),
+            // ),
+
           ],
         ),
       ),
     );
-  }
-
-  deleteJobAllocation(context,jobAllocationId,jobName){
-    return Obx(() => Padding(
-      padding:
-      EdgeInsets.only(left: Get.width / 25.0, right: Get.width / 25.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: Get.width * 0.05,
-          ),
-          Text(
-            'Are you sure?',
-            style: Get.textTheme.titleSmall!.copyWith(
-              color: ThemeService.primaryColor,
-              fontSize: AppSpacings.s25,
-              fontFamily: 'OpenSans-Semibold',
-            ),
-          ),
-          SizedBox(
-            height: Get.width * 0.05,
-          ),
-          Text(
-            'You want to delete this job\n( $jobName )',
-            style: Get.textTheme.bodyLarge!.copyWith(
-              color: ThemeService.black,
-              fontSize: AppSpacings.s20,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          SizedBox(
-            height: AppSpacings.s30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Bounce(
-                duration: const Duration(milliseconds: 100),
-                onPressed: () async {
-                  Get.back();
-                },
-                child: Container(
-                  width: AppSpacings.s90,
-                  padding: EdgeInsets.all(AppSpacings.s8),
-                  decoration: BoxDecoration(
-                    color: ThemeService.primaryColor,
-                    borderRadius: BorderRadius.circular(AppSpacings.s15),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Cancel",
-                      style: Get.textTheme.bodyLarge!.copyWith(
-                        fontSize: Get.width * 0.040,
-                        fontWeight: FontWeight.w600,
-                        color: ThemeService.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: AppSpacings.s20,
-              ),
-              controller.isDeleteJobAllocation.value
-                  ? SizedBox(
-                  width: AppSpacings.s90,
-                  child: CupertinoActivityIndicator(radius: AppSpacings.s15))
-                  :  Bounce(
-                duration: const Duration(milliseconds: 100),
-                onPressed: () async {
-                  FocusScope.of(context).unfocus();
-                  controller.deleteJobAllocation(context,jobAllocationId: jobAllocationId);
-                },
-                child: Container(
-                  width: AppSpacings.s90,
-                  padding:  EdgeInsets.all(AppSpacings.s8),
-                  decoration: BoxDecoration(
-                    color: ThemeService.primaryColor,
-                    borderRadius: BorderRadius.circular(AppSpacings.s15),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Delete",
-                      style: Get.textTheme.bodyLarge!.copyWith(
-                        fontSize: Get.width * 0.040,
-                        fontWeight: FontWeight.w600,
-                        color: ThemeService.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: Get.width * 0.03,
-          ),
-        ],
-      ),
-    ),);
   }
 
 }

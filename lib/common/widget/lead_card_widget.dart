@@ -37,7 +37,6 @@ headerRow({String? title1, Icon? icon1,}) {
         icon1 ?? const SizedBox(),
         Text(
           title1 ?? "",
-          overflow: TextOverflow.ellipsis,
           style: Get.textTheme.displayMedium!.copyWith(
             color: Colors.black,
             fontWeight: FontWeight.w700,
@@ -72,7 +71,6 @@ headerRow1({String? title1, Icon? icon1, String? title2, Icon? icon2, bool? isSi
               width: isSingle == true ? Get.width * .8 : Get.width / 3,
               child: Text(
                 title1 ?? "",
-                overflow: TextOverflow.ellipsis,
                 style: Get.textTheme.displayMedium!.copyWith(
                   color: Colors.black,
                   fontWeight: FontWeight.w700,
@@ -100,7 +98,6 @@ headerRow1({String? title1, Icon? icon1, String? title2, Icon? icon2, bool? isSi
                   width: Get.width / 3,
                   child: Text(
                     title2 ?? "",
-                    overflow: TextOverflow.ellipsis,
                     style: Get.textTheme.displayMedium!.copyWith(
                       color: Colors.black,
                       fontWeight: FontWeight.w700,

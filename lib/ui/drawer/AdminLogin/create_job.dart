@@ -388,6 +388,12 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
+                                  validator: (e) {
+                                    if (e!.isEmpty) {
+                                      return "Delivery Date is Required";
+                                    }
+                                    return null;
+                                  },
                                   onTap: () async {
                                     // initialDate = textEditingController.text != "" ? DateTime.parse(textEditingController.text.toString()) : DateTime.now();
                                     DateTime? followUpPickedDate =
@@ -449,7 +455,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                   controller: controller.weight,
                                   enabled: true,
                                   maxLines: 1,
-                                  keyboardType: TextInputType.text,
+                                  keyboardType: TextInputType.number,
                                   textInputAction: TextInputAction.next,
                                   cursorColor: ThemeService.primaryColor,
                                   style: const TextStyle(

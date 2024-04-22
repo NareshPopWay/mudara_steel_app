@@ -180,7 +180,7 @@ class JobListScreen extends GetView<JobListController> {
                 text: "Open",
               ),
               Tab(
-                text: "Complited",
+                text: "Completed",
               ),
             ],
           ),

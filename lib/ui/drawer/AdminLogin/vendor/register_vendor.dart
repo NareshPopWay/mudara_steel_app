@@ -240,6 +240,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                 TextFormField(
                                   controller: controller.password,
                                   enabled: true,
+                                  focusNode: controller.noteFocus,
                                   maxLines: 1,
                                   keyboardType: TextInputType.text,
                                   textInputAction: TextInputAction.next,
@@ -249,8 +250,10 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                   ),
                                   validator: (e) {
                                     if (e!.isEmpty) {
+                                      controller.noteFocus.requestFocus();
                                       return "password is Required";
                                     }else if (!controller.passwordRegex.hasMatch(e)) {
+                                      controller.noteFocus.requestFocus();
                                       // Return an error message if the input doesn't match the pattern
                                       return 'Password must be at least 8 characters long,\nwith at least one uppercase letter,\none lowercase letter, one number,\nand one special character.';
                                     }

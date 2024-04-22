@@ -38,16 +38,21 @@ dependencies:
   get: ^4.6.6
   get_storage: ^2.1.1
   flutter_bounce: ^1.1.0
+  firebase_core: ^2.11.0
+  firebase_analytics: ^10.2.1
+  firebase_messaging:
+  firebase_crashlytics:
+  flutter_local_notifications: ^15.1.1
   http: ^1.2.0
   particles_fly: ^0.0.8
   easy_debounce: ^2.0.3
   blurrycontainer: ^1.0.2
   flutter_staggered_animations: ^1.1.1
   intl: ^0.17.0
+  package_info_plus:
   file_picker:
   flutter_svg:
   flutter_launcher_icons:
-  flutter_app_name:
 
 dev_dependencies:
   flutter_test:
@@ -70,7 +75,6 @@ flutter_icons:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter packages.
 flutter:
 

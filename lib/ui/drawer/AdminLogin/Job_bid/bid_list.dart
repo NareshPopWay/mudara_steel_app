@@ -16,21 +16,21 @@ import 'package:mudara_steel_app/common/widget/dropdown_widget/dropdown_below.da
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
 import 'package:mudara_steel_app/common/widget/empty_widget.dart';
 import 'package:mudara_steel_app/common/widget/lead_card_widget.dart';
-import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_job_controller.dart';
-import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_open_job_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_bid_controller/bid_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/job_list_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/vendor_controller/vendor_list_controller.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
-import 'package:mudara_steel_app/ui/drawer/VendorLogin/my_completed_job_screen.dart';
-import 'package:mudara_steel_app/ui/drawer/VendorLogin/my_open_job_screen.dart';
+import 'package:mudara_steel_app/ui/drawer/AdminLogin/Job_bid/completed_job_bid_list.dart';
+import 'package:mudara_steel_app/ui/drawer/AdminLogin/Job_bid/open_job_bid_list.dart';
 
 
-class MyJobScreen extends GetView<MyJobController> {
-  MyJobScreen({Key? key}) : super(key: key);
+class BidListScreen extends GetView<BidListController> {
+  BidListScreen({Key? key}) : super(key: key);
 
-  MyJobController controller = Get.put(MyJobController());
+  BidListController controller = Get.put(BidListController());
 
   @override
   Widget build(BuildContext context) {
-    final MyJobController controller = Get.put(MyJobController());
     return Obx(() => Scaffold(
       backgroundColor: ThemeService.white,
       body: Column(
@@ -64,7 +64,7 @@ class MyJobScreen extends GetView<MyJobController> {
                       ),
                       SizedBox(width: AppSpacings.s10),
                       Text(
-                        'Job List',
+                        'Job Bid',
                         style: Get.textTheme.headlineSmall!.copyWith(
                           fontWeight: FontWeight.w600,
                           color: ThemeService.primaryColor,
@@ -239,8 +239,8 @@ class MyJobScreen extends GetView<MyJobController> {
                         controller: controller.tabController.value,
                         physics: const BouncingScrollPhysics(),
                         children:[
-                          MyOpenJobScreen(),
-                          MyCompletedJobScreen(),
+                          OpenJobBidListScreen(jobId:controller.jobId.value),
+                          CompletedJobBidListScreen(),
                         ]),
                   ),
                 ],
@@ -251,5 +251,6 @@ class MyJobScreen extends GetView<MyJobController> {
       ),
     ));
   }
+
 
 }

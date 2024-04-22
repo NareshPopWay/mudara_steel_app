@@ -276,8 +276,8 @@ class CreateJobAllocationScreen extends GetView<CreateJobAllocationController> {
                         }else if(controller.selectedVendorJobBidId.value == ""){
                           Ui.ErrorSnackBar(title: "Select Vendor Bid",message: "Please Select Vendor Bid");
                         }else{
-                          // FocusScope.of(context).unfocus();
-                          // controller.createJobAllocation();
+                          FocusScope.of(context).unfocus();
+                          controller.createJobAllocation();
                         }
                       },
                       child: Container(

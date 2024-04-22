@@ -130,7 +130,8 @@ class OpenJobController extends GetxController with GetTickerProviderStateMixin{
       toDate: toDate.value,
       sortDirection: isDescending.value == true ? ascending.value: descending.value,
       jobId: selectedJobNameId.value,
-      jobStatusId:"1",
+      jobStatusId:"0",
+      tempStatusID:"1",
       jobType:selectedJobTypeId.value,
     );
     if (leadResponse.isNotEmpty) {

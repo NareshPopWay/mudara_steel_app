@@ -31,7 +31,7 @@ class LoginController extends GetxController {
       isLoading.value = true;
       bool login = await APIProvider().login(userName: userName.value.text, password:password.value.text);
       // log('${verifyOtpList!.patientList!.length}');
-      await Future.delayed(const Duration(milliseconds: 500));
+      // await Future.delayed(const Duration(milliseconds: 500));
       if (login == true) {
         isLoading.value = false;
         // GetStorage().write(Constants.userName, userName.value.text);

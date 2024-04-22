@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:mudara_steel_app/binders/VendorLoginBinders/apply_job_binder.dart';
+import 'package:mudara_steel_app/binders/VendorLoginBinders/edit_job_bid_binder.dart';
 import 'package:mudara_steel_app/binders/VendorLoginBinders/my_allocated_job_binder.dart';
 import 'package:mudara_steel_app/binders/VendorLoginBinders/my_bid_binder.dart';
 import 'package:mudara_steel_app/binders/VendorLoginBinders/my_job_binder.dart';
@@ -9,23 +10,25 @@ import 'package:mudara_steel_app/binders/AdminLoginBinders/create_job_allocation
 import 'package:mudara_steel_app/binders/AdminLoginBinders/create_job_binder.dart';
 import 'package:mudara_steel_app/binders/AdminLoginBinders/job_allocation_list_binder.dart';
 import 'package:mudara_steel_app/binders/AdminLoginBinders/job_list_binder.dart';
+import 'package:mudara_steel_app/binders/home_binder.dart';
 import 'package:mudara_steel_app/binders/login_binder.dart';
 import 'package:mudara_steel_app/binders/AdminLoginBinders/register_vendor_binder.dart';
 import 'package:mudara_steel_app/binders/AdminLoginBinders/vendor_list_binder.dart';
 import 'package:mudara_steel_app/binders/vendor_profile_binder.dart';
 import 'package:mudara_steel_app/binders/vendor_reg_binder.dart';
 import 'package:mudara_steel_app/ui/drawer/AdminLogin/Job/job_list_screen.dart';
+import 'package:mudara_steel_app/ui/drawer/VendorLogin/JobBid/edit_job_bid_screen.dart';
 import 'package:mudara_steel_app/ui/drawer/VendorLogin/my_allocated_job_screen.dart';
-import 'package:mudara_steel_app/ui/drawer/VendorLogin/my_bid_screen.dart';
+import 'package:mudara_steel_app/ui/drawer/VendorLogin/JobBid/my_bid_screen.dart';
 import 'package:mudara_steel_app/ui/drawer/VendorLogin/my_job_screen.dart';
-import 'package:mudara_steel_app/ui/drawer/AdminLogin/bid_list.dart';
+import 'package:mudara_steel_app/ui/drawer/AdminLogin/Job_bid/bid_list.dart';
 import 'package:mudara_steel_app/ui/drawer/VendorLogin/apply_job_screen.dart';
 import 'package:mudara_steel_app/ui/drawer/AdminLogin/create_job.dart';
 import 'package:mudara_steel_app/ui/drawer/AdminLogin/create_job_allocation.dart';
 import 'package:mudara_steel_app/ui/drawer/AdminLogin/job_allocation_list.dart';
-import 'package:mudara_steel_app/ui/drawer/AdminLogin/Job/open_job_list.dart';
 import 'package:mudara_steel_app/ui/drawer/AdminLogin/vendor/register_vendor.dart';
 import 'package:mudara_steel_app/ui/drawer/AdminLogin/vendor/vendor_list.dart';
+import 'package:mudara_steel_app/ui/home/home_screen.dart';
 import 'package:mudara_steel_app/ui/login_screen.dart';
 import 'package:mudara_steel_app/ui/vendor_profile.dart';
 import 'package:mudara_steel_app/ui/vendor_reg_screen.dart';
@@ -45,6 +48,11 @@ class PageRoutes {
       name: Routes.login,
       page: () => const LoginScreen(),
       binding: LoginBinder(),
+    ),
+    GetPage(
+      name: Routes.home,
+      page: () => const HomeScreen(),
+      binding: HomeBinder(),
     ),
     GetPage(
       name: Routes.vendorReg,
@@ -88,7 +96,7 @@ class PageRoutes {
     ),
     GetPage(
       name: Routes.myBid,
-      page: () =>   MyBidScreen(),
+      page: () =>  MyOpenJobBidScreen(),
       binding: MyBidBinder(),
     ),
     GetPage(
@@ -110,6 +118,11 @@ class PageRoutes {
       name: Routes.vendorProfile,
       page: () =>   const VendorProfileScreen(),
       binding: VendorProfileBinder(),
+    ),
+    GetPage(
+      name: Routes.editJobBid,
+      page: () =>   const EditJobBidScreen(),
+      binding: EditJobBidBinder(),
     ),
   ];
 }

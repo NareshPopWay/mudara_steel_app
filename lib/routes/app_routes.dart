@@ -1,7 +1,7 @@
 class Routes {
   static const root = '/';
-  static const home = '/home';
   static const login = '/login';
+  static const home = '/home';
   static const vendorReg = '/vendorReg';
   static const registerVendor = '/registerVendor';
   static const vendorList = '/vendorList';
@@ -15,5 +15,6 @@ class Routes {
   static const jobAllocationList = '/jobAllocationList';
   static const myAllocatedJob = '/myAllocatedJob';
   static const vendorProfile = '/vendorProfile';
+  static const editJobBid = '/editJobBid';
 
 }

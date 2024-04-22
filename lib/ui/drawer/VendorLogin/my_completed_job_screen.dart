@@ -252,150 +252,198 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: controller.jobList.length,
                             itemBuilder:(context,index){
-
-                              return  Container(
-                                margin: EdgeInsets.fromLTRB(0, AppSpacings.s20, 0, 0),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: ThemeService.white,
-                                    boxShadow:  [
-                                      BoxShadow(
-                                          color: ThemeService.primaryColor.withOpacity(0.3),
-                                          blurRadius: 7.5,
-                                          blurStyle: BlurStyle.normal,
-                                          spreadRadius: 1.0
-                                      )
-                                    ],
-                                    border: const BorderDirectional(start: BorderSide(color: ThemeService.primaryColor,width:4))
+                              return  Padding(
+                                padding: EdgeInsets.only(
+                                  bottom: AppSpacings.s20,
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                child: Stack(
+                                  alignment: Alignment.topRight,
+                                  fit: StackFit.loose,
                                   children: [
-                                    SizedBox(
-                                      height: AppSpacings.s5,
-                                    ),
-                                    headerRow1(
-                                      title1: controller.jobList[index].createdOn != null
-                                          ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].createdOn.toString()))
-                                          : "-",
-                                      icon1: Icon(Icons.calendar_month, size: AppSpacings.s25),
-                                      title2: controller.jobList[index].jobName ?? "-",
-                                      icon2: null,
-                                    ),
-                                    const Divider(
-                                        height: 5,
-                                        endIndent: 10,
-                                        indent: 10,
-                                        color: ThemeService.primaryColor,
-                                        thickness: 2),
-                                    dataRow(
-                                      title1: "From Location",
-                                      value1: controller.jobList[index].fromLocation ?? "-",
-                                      title2: "To Location",
-                                      value2:  controller.jobList[index].toLocation ?? "-",
-                                    ),
-                                    Divider(
-                                        height: 2,
-                                        endIndent: 10,
-                                        indent: 10,
-                                        color: ThemeService.primaryColor.withOpacity(0.2),
-                                        thickness: 1),
-                                    dataRow(
-                                      title1: "Delivery Date",
-                                      value1: controller.jobList[index].deliveryDate != null
-                                          ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].deliveryDate.toString()))
-                                          : "-",
-                                      title2: "Weight",
-                                      value2: controller.jobList[index].weight.toString() ?? "-",
-                                    ),
-                                    Divider(
-                                        height: 2,
-                                        endIndent: 10,
-                                        indent: 10,
-                                        color: ThemeService.primaryColor.withOpacity(0.2),
-                                        thickness: 1),
-                                    dataRow(
-                                      title1: "Job Status",
-                                      value1: controller.jobList[index].jobStatus ?? "-",
-                                      title2: "Job Type",
-                                      value2: controller.jobList[index].jobType ?? "-",
-                                    ),
-                                    Divider(
-                                        height: 2,
-                                        endIndent: 10,
-                                        indent: 10,
-                                        color: ThemeService.primaryColor.withOpacity(0.2),
-                                        thickness: 1),
-                                    ///Vendor Login
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: AppSpacings.s14, vertical: AppSpacings.s8),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                    Container(
+                                      margin: EdgeInsets.fromLTRB(0, AppSpacings.s20, 0, 0),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: ThemeService.white,
+                                          boxShadow:  [
+                                            BoxShadow(
+                                                color: ThemeService.primaryColor.withOpacity(0.3),
+                                                blurRadius: 7.5,
+                                                blurStyle: BlurStyle.normal,
+                                                spreadRadius: 1.0
+                                            )
+                                          ],
+                                          border: const BorderDirectional(start: BorderSide(color: ThemeService.primaryColor,width:4))
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Expanded(
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                          SizedBox(
+                                            height: AppSpacings.s25,
+                                          ),
+                                          headerRow1(
+                                            title1: controller.jobList[index].createdOn != null
+                                                ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].createdOn.toString()))
+                                                : "-",
+                                            icon1: Icon(Icons.calendar_month, size: AppSpacings.s25),
+                                            title2: controller.jobList[index].jobName ?? "-",
+                                            icon2: null,
+                                          ),
+                                          const Divider(
+                                              height: 5,
+                                              endIndent: 10,
+                                              indent: 10,
+                                              color: ThemeService.primaryColor,
+                                              thickness: 2),
+                                          dataRow(
+                                            title1: "From Location",
+                                            value1: controller.jobList[index].fromLocation ?? "-",
+                                            title2: "To Location",
+                                            value2:  controller.jobList[index].toLocation ?? "-",
+                                          ),
+                                          Divider(
+                                              height: 2,
+                                              endIndent: 10,
+                                              indent: 10,
+                                              color: ThemeService.primaryColor.withOpacity(0.2),
+                                              thickness: 1),
+                                          dataRow(
+                                            title1: "Delivery Date",
+                                            value1: controller.jobList[index].deliveryDate != null
+                                                ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].deliveryDate.toString()))
+                                                : "-",
+                                            title2: "Weight",
+                                            value2: controller.jobList[index].weight.toString() ?? "-",
+                                          ),
+                                          Divider(
+                                              height: 2,
+                                              endIndent: 10,
+                                              indent: 10,
+                                              color: ThemeService.primaryColor.withOpacity(0.2),
+                                              thickness: 1),
+                                          dataRow(
+                                            title1: "Job Status",
+                                            value1: controller.jobList[index].jobStatus ?? "-",
+                                            title2: "Job Type",
+                                            value2: controller.jobList[index].jobType ?? "-",
+                                          ),
+                                          Divider(
+                                              height: 2,
+                                              endIndent: 10,
+                                              indent: 10,
+                                              color: ThemeService.primaryColor.withOpacity(0.2),
+                                              thickness: 1),
+                                          ///Vendor Login
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(horizontal: AppSpacings.s14, vertical: AppSpacings.s8),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
-                                                Text(
-                                                  "Truck/Trailer",
-                                                  style: Get.textTheme.bodyText2!.copyWith(
-                                                    color: ThemeService.disable,
-                                                    fontSize: AppSpacings.s15,
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        "Truck/Trailer",
+                                                        style: Get.textTheme.bodyText2!.copyWith(
+                                                          color: ThemeService.disable,
+                                                          fontSize: AppSpacings.s15,
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        controller.jobList[index].isTruck == true ? "Truck" : "Trailer",
+                                                        style: Get.textTheme.headline4!.copyWith(
+                                                          fontSize: AppSpacings.s18,
+                                                          color: ThemeService.black,
+                                                          fontWeight: FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                Text(
-                                                  controller.jobList[index].isTruck == true ? "Truck" : "Trailer",
-                                                  style: Get.textTheme.headline4!.copyWith(
-                                                    fontSize: AppSpacings.s18,
-                                                    color: ThemeService.black,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
+                                                // Bounce(
+                                                //   duration: const Duration(milliseconds: 100),
+                                                //   onPressed: (){
+                                                //     Get.toNamed(
+                                                //       Routes.applyJob,
+                                                //       arguments: controller.jobList[index].jobId.toString(),
+                                                //     );
+                                                //   },
+                                                //   child: Container(
+                                                //     padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
+                                                //     decoration: BoxDecoration(
+                                                //         color: ThemeService.white,
+                                                //         boxShadow:  [
+                                                //           BoxShadow(
+                                                //               color: ThemeService.primaryColor.withOpacity(0.5),
+                                                //               blurRadius: 9.5,
+                                                //               blurStyle: BlurStyle.inner,
+                                                //               offset: const Offset(1.5,1.5),
+                                                //               spreadRadius: 1.0
+                                                //           )
+                                                //         ],
+                                                //         border: Border.all(
+                                                //           color: ThemeService.primaryColor,
+                                                //         ),
+                                                //         borderRadius: BorderRadius.circular(12)),
+                                                //     child: Center(
+                                                //       child: Text(
+                                                //         "Apply",
+                                                //         style: Get.textTheme.headlineLarge!.copyWith(
+                                                //           color: ThemeService.primaryColor,
+                                                //           fontSize: AppSpacings.s20,
+                                                //           fontWeight: FontWeight.w600,
+                                                //         ),
+                                                //       ),
+                                                //     ),
+                                                //   ),
+                                                // ),
                                               ],
                                             ),
                                           ),
-                                          Bounce(
-                                            duration: const Duration(milliseconds: 100),
-                                            onPressed: (){
-                                              Get.toNamed(
-                                                Routes.applyJob,
-                                                arguments: controller.jobList[index].jobId.toString(),
-                                              );
-                                            },
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
-                                              decoration: BoxDecoration(
-                                                  color: ThemeService.white,
-                                                  boxShadow:  [
-                                                    BoxShadow(
-                                                        color: ThemeService.primaryColor.withOpacity(0.5),
-                                                        blurRadius: 9.5,
-                                                        blurStyle: BlurStyle.inner,
-                                                        offset: const Offset(1.5,1.5),
-                                                        spreadRadius: 1.0
-                                                    )
-                                                  ],
-                                                  border: Border.all(
-                                                    color: ThemeService.primaryColor,
-                                                  ),
-                                                  borderRadius: BorderRadius.circular(12)),
-                                              child: Center(
-                                                child: Text(
-                                                  "Apply",
-                                                  style: Get.textTheme.headlineLarge!.copyWith(
-                                                    color: ThemeService.primaryColor,
-                                                    fontSize: AppSpacings.s20,
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                          SizedBox(height: AppSpacings.s5),
                                         ],
                                       ),
                                     ),
-                                    SizedBox(height: AppSpacings.s5),
+                                    Container(
+                                      margin: EdgeInsets.fromLTRB(0, 0,AppSpacings.s15,0),
+                                      // decoration: BoxDecoration(
+                                      //     borderRadius: BorderRadius.circular(50),
+                                      //     color: ThemeService.primaryColor,
+                                      //     boxShadow:  [
+                                      //       BoxShadow(
+                                      //         color: ThemeService.disable.withOpacity(0.8),
+                                      //         blurRadius: 08.0,
+                                      //       )
+                                      //     ]
+                                      //   // border: Border.all(color: ThemeService.primaryColor),
+                                      // ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(50),
+                                        color: ThemeService.white,
+                                        boxShadow:  [
+                                          BoxShadow(
+                                              color: ThemeService.primaryColor.withOpacity(0.1),
+                                              blurRadius: 5.5,
+                                              blurStyle: BlurStyle.normal,
+                                              spreadRadius: 1.5
+                                          )
+                                        ],
+                                        border: Border.all(color: ThemeService.primaryColor.withOpacity(0.4)),
+                                      ),
+                                      child:  Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text('Job Code : ${controller.jobList[index].code}',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Get.textTheme.headline4!.copyWith(
+                                            fontSize: AppSpacings.s18,
+                                            color: ThemeService.black,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                               );

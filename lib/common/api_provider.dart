@@ -5,10 +5,10 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:mudara_steel_app/common/appconstant.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/custom_exceptions.dart';
 import 'package:mudara_steel_app/common/ui.dart';
@@ -30,7 +30,6 @@ class APIProvider {
   RxString userName = "".obs;
   RxString password = "".obs;
   RxString apiToken = "".obs;
-
   // String {{apiToken.value}} = Get.find<RootController>().token.value;
   // String userName = Get.find<RootController>().userName.value != "" ? Get.find<RootController>().userName.value : "AD";
   // String password = Get.find<RootController>().password.value != "" ? Get.find<RootController>().password.value : "furniture";
@@ -85,6 +84,7 @@ class APIProvider {
             responseJson['access_token'] != "") {
           GetStorage().write(Constants.token, responseJson['access_token'].toString());
           GetStorage().write(Constants.userTypeID, responseJson['UserTypeID'].toString());
+          APIProvider().updateFCMToken(userTypeID: responseJson['UserTypeID'].toString());
           if(responseJson['UserTypeID'].toString() == "1"){
             GetStorage().write(Constants.userName, responseJson['UserType'].toString());
           }else{
@@ -106,6 +106,45 @@ class APIProvider {
       print("error ...login ...... $e");
     }
     return false;
+  }
+
+  Future<void> updateFCMToken({userTypeID}) async {
+    var responseJson;
+    apiToken.value = GetStorage().read(Constants.token);
+    log("apiToken => ${apiToken.value}");
+    try {
+
+      var url;
+      if(userTypeID == "1"){
+        url = "/AdminApi/EmployeeAPI/UpdateFCMToken";
+      }else{
+        url="/VendorApi/VendorAPI/UpdateFCMToken";
+      }
+
+      String? firebaseToken;
+      firebaseToken = await FirebaseMessaging.instance.getToken();
+      log('FirebaseToken : $firebaseToken');
+      Map body = {
+        "FCMToken": firebaseToken.toString(),
+      };
+      log('$baseUrl$url');
+      log(body.toString());
+
+      final response = await http.get(
+        Uri.parse('$baseUrl$url?FCMToken=$firebaseToken'),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ${apiToken.value}',
+        },
+      );
+      responseJson = _response(response);
+      log('updateFCMToken :- $responseJson');
+    } on SocketException {
+      Ui.ErrorSnackBar(title: 'No Internet connection');
+    } catch (e) {
+      log("error ...updateFCMToken ...... $e");
+    }
   }
 
 
@@ -260,6 +299,7 @@ class APIProvider {
     sortDirection,
     jobType,
     jobStatusId,
+    tempStatusID,
     jobId,
     userTypeID
   }) async {
@@ -279,6 +319,9 @@ class APIProvider {
     if (jobId == null || jobId == "") {
       jobId = "0";
     }
+    if (tempStatusID == null || tempStatusID == "") {
+      tempStatusID = "0";
+    }
 
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
@@ -291,11 +334,11 @@ class APIProvider {
         url="/VendorApi/VendorAPI/GetJobList";
       }
 
-      log("$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType");
+      log("$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType&TempStatusID=$tempStatusID");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType",
+            "$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType&TempStatusID=$tempStatusID",
           ),
           headers: {
             'Content-Type': 'application/json',
@@ -628,6 +671,7 @@ class APIProvider {
     jobType,
     jobStatusId,
     jobId,
+    tempStatusID,
     vendorID,
     userTypeID
   }) async {
@@ -650,7 +694,9 @@ class APIProvider {
     if (vendorID == null || vendorID == "") {
       vendorID = "0";
     }
-
+    if (tempStatusID == null || tempStatusID == "") {
+      tempStatusID = "0";
+    }
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
     try {
@@ -662,11 +708,11 @@ class APIProvider {
         url="/VendorApi/VendorAPI/GetJobBidList";
       }
 
-      log("$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType&VendorID=$vendorID");
+      log("$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType&VendorID=$vendorID&TempStatusID=$tempStatusID");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType&VendorID=$vendorID",
+            "$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType&VendorID=$vendorID&TempStatusID=$tempStatusID",
           ),
           headers: {
             'Content-Type': 'application/json',

@@ -13,17 +13,17 @@ import 'package:mudara_steel_app/common/themeService.dart';
 import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/common/widget/animated_toggle.dart';
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
-import 'package:mudara_steel_app/controllers/VendorLoginControllers/apply_job_controller.dart';
 import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/create_job_allocation_controller.dart';
+import 'package:mudara_steel_app/controllers/VendorLoginControllers/edit_job_bid_controller.dart';
 
 
-class ApplyJobScreen extends GetView<ApplyJobController> {
-  const ApplyJobScreen({Key? key}) : super(key: key);
+class EditJobBidScreen extends GetView<EditJobBIdController> {
+  const EditJobBidScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ApplyJobController>(
-        init: ApplyJobController(),
+    return GetBuilder<EditJobBIdController>(
+        init: EditJobBIdController(),
         builder: (controller) {
           return Obx(() => Scaffold(
             body: OverlayLoaderWithAppIcon(
@@ -63,7 +63,7 @@ class ApplyJobScreen extends GetView<ApplyJobController> {
                             ),
                             SizedBox(width: AppSpacings.s10),
                             Text(
-                              "Apply Job",
+                              "Edit Job Bid",
                               style: Get.textTheme.headlineSmall!.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: ThemeService.primaryColor,
@@ -117,11 +117,22 @@ class ApplyJobScreen extends GetView<ApplyJobController> {
                                   isExpanded: controller.isJobNameExpanded,
                                   isSearching: controller.isJobNameSearching,
                                   textfield: controller.textJobName,
-                                  // fun: controller.getJobIdWiseData,
                                 ),
                                 SizedBox(
                                   height: AppSpacings.s15,
                                 ),
+                                // searchDropDwonWidget(
+                                //   selectedValue: controller.selectedVendorJobBid,
+                                //   selectedId: controller.selectedVendorJobBidId,
+                                //   emptyTitle: "Vendor Job Bid",
+                                //   list: controller.vendorJobBidList,
+                                //   isExpanded: controller.isVendorJobBidExpanded,
+                                //   isSearching: controller.isVendorJobBidSearching,
+                                //   textfield: controller.textVendorJobBid,
+                                // ),
+                                // SizedBox(
+                                //   height: AppSpacings.s20,
+                                // ),
                                 TextFormField(
                                   controller: controller.cost,
                                   enabled: true,
@@ -265,7 +276,7 @@ class ApplyJobScreen extends GetView<ApplyJobController> {
                           Ui.ErrorSnackBar(title: "Select Job Name",message: "Please Select Job Name");
                         }else{
                           FocusScope.of(context).unfocus();
-                          controller.applyJob();
+                          controller.createJobAllocation();
                         }
                       },
                       child: Container(
@@ -290,7 +301,7 @@ class ApplyJobScreen extends GetView<ApplyJobController> {
                           ),
                           child: Center(
                             child: Text(
-                              "Apply",
+                              "Submit",
                               style: Get.textTheme.headline1!.copyWith(
                                 color: ThemeService.primaryColor,
                                 fontSize: AppSpacings.s25,

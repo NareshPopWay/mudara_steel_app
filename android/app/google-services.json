@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "600149927142",
+    "project_id": "mudrasteel-711c1",
+    "storage_bucket": "mudrasteel-711c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600149927142:android:5d700a946b003171644727",
+        "android_client_info": {
+          "package_name": "com.mudrasteel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMPMhF9ZSKrHtGj9L79p5JyIzbdAe4Md8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

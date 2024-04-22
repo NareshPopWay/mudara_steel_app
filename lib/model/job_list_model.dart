@@ -40,6 +40,8 @@ class JobListModel {
   dynamic deletedUserTypeId;
   String? jobStatus;
   String? jobType;
+  String? code;
+  bool? isApply;
 
   JobListModel({
      this.totalRows,
@@ -72,6 +74,8 @@ class JobListModel {
      this.deletedUserTypeId,
      this.jobStatus,
      this.jobType,
+     this.code,
+     this.isApply,
   });
 
   JobListModel copyWith({
@@ -105,6 +109,8 @@ class JobListModel {
     dynamic deletedUserTypeId,
     String? jobStatus,
     String? jobType,
+    String? code,
+    bool? isApply,
   }) =>
       JobListModel(
         totalRows: totalRows ?? this.totalRows,
@@ -137,6 +143,8 @@ class JobListModel {
         deletedUserTypeId: deletedUserTypeId ?? this.deletedUserTypeId,
         jobStatus: jobStatus ?? this.jobStatus,
         jobType: jobType ?? this.jobType,
+        code: jobType ?? this.code,
+        isApply: isApply ?? this.isApply,
       );
 
   factory JobListModel.fromJson(Map<String, dynamic> json) => JobListModel(
@@ -170,6 +178,8 @@ class JobListModel {
     deletedUserTypeId: json["DeletedUserTypeID"],
     jobStatus: json["JobStatus"],
     jobType: json["JobType"],
+    code: json["Code"]??"0",
+    isApply: json["IsApply"]?? false,
   );
 
   Map<String, dynamic> toJson() => {
@@ -203,5 +213,7 @@ class JobListModel {
     "DeletedUserTypeID": deletedUserTypeId,
     "JobStatus": jobStatus,
     "JobType": jobType,
+    "code": code,
+    "isApply": isApply,
   };
 }

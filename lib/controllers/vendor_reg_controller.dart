@@ -12,6 +12,7 @@ import 'package:mudara_steel_app/model/success_model.dart';
 
 class VendorRegController extends GetxController {
 
+  final FocusNode noteFocus = FocusNode();
   final key =  GlobalKey<FormState>();
   TextEditingController vendorName = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -23,6 +24,8 @@ class VendorRegController extends GetxController {
   TextEditingController address = TextEditingController();
   TextEditingController drLicenseNo = TextEditingController();
   TextEditingController vehicleInNO = TextEditingController();
+
+  final RegExp passwordRegex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
 
   RxBool secureText = true.obs;
   RxBool isLoading = false.obs;

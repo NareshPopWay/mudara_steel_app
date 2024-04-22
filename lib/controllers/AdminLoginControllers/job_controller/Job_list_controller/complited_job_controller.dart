@@ -94,7 +94,7 @@ class ComplitedJobController extends GetxController with GetTickerProviderStateM
   RxList<FieldItemValueModel> jobStatusList = <FieldItemValueModel>[].obs;
   RxBool isJobStatusExpanded = false.obs;
   RxString selectedJobStatus = "".obs;
-  RxString selectedJobStatusId = "2".obs;
+  RxString selectedJobStatusId = "".obs;
   RxString tampSelectedJobStatus = "".obs;
   RxString tampSelectedJobStatusId = "".obs;
   RxBool isJobStatusSearching = RxBool(false);
@@ -132,7 +132,8 @@ class ComplitedJobController extends GetxController with GetTickerProviderStateM
       toDate: toDate.value,
       sortDirection: isDescending.value == true ? ascending.value: descending.value,
       jobId: selectedJobNameId.value,
-      jobStatusId:selectedJobStatusId.value,
+      jobStatusId:"0",
+      tempStatusID: "2",
       jobType:selectedJobTypeId.value,
     );
     if (leadResponse.isNotEmpty) {

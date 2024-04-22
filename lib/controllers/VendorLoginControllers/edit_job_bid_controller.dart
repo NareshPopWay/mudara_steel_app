@@ -4,18 +4,20 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/job_allocation_list_controller.dart';
+import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_open_job_bid_controller.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_allocation_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
 
-class CreateJobAllocationController extends GetxController {
+class EditJobBIdController extends GetxController {
 
   final key =  GlobalKey<FormState>();
   final key1 =  GlobalKey<FormState>();
@@ -23,7 +25,7 @@ class CreateJobAllocationController extends GetxController {
   TextEditingController cost = TextEditingController();
   TextEditingController remark = TextEditingController();
   Map data ={};
-  RxString jobAllocationId = "".obs;
+  RxString jobBidId = "".obs;
   RxBool isLoading = false.obs;
 
   RxBool isSelected = false.obs;
@@ -49,17 +51,24 @@ class CreateJobAllocationController extends GetxController {
   Rx<TextEditingController> textVendorJobBid = TextEditingController().obs;
 
   JobAllocationListController jobAllocationListController = Get.put(JobAllocationListController());
+  MyOpenJobBidController myOpenJobBidController = Get.put(MyOpenJobBidController());
+
+  RxString userTypeID = "".obs;
 
   @override
   void onInit() async {
 
-    jobNameList.value = await APIProvider().getJobName();
-    vendorJobBidList.value = await APIProvider().getVendorJobBide(jobId: 0);
+    userTypeID.value =  GetStorage().read(Constants.userTypeID) ?? "";
+    jobNameList.value = await APIProvider().getJobNameList(userTypeID.value);
+
+    // vendorJobBidList.value = await APIProvider().getVendorJobBide(jobId: 0);
+
     isLoading.value = true;
     if(Get.arguments != null && Get.arguments is Map){
       data = Get.arguments;
       cost.text = data['cost'];
       remark.text = data['remark'];
+      jobBidId.value = data['jobBidId'].toString();
       for (int i = 0; i < jobNameList.length; i++) {
         if (jobNameList[i].value == data['jobId'].toString()) {
           selectedJobNameId.value = jobNameList[i].value.toString();
@@ -67,18 +76,15 @@ class CreateJobAllocationController extends GetxController {
           break;
         }
       }
-      for (int i = 0; i < vendorJobBidList.length; i++) {
-        if (vendorJobBidList[i].value == data['jobBidId'].toString()) {
-          selectedVendorJobBidId.value = vendorJobBidList[i].value.toString();
-          selectedVendorJobBid.value = vendorJobBidList[i].text.toString();
-          break;
-        }
-      }
+
+      // for (int i = 0; i < vendorJobBidList.length; i++) {
+      //   if (vendorJobBidList[i].value == data['jobBidId'].toString()) {
+      //     selectedVendorJobBidId.value = vendorJobBidList[i].value.toString();
+      //     selectedVendorJobBid.value = vendorJobBidList[i].text.toString();
+      //     break;
+      //   }
+      // }
       isLoading.value = false;
-    }else if(Get.arguments != null && Get.arguments is String){
-      jobAllocationId.value = Get.arguments;
-      isLoading.value= true;
-      getJobAllocationById(jobAllocationId: jobAllocationId.value);
     }
     super.onInit();
   }
@@ -92,34 +98,27 @@ class CreateJobAllocationController extends GetxController {
     }
     try{
       isLoading.value = true;
-      SuccessModel successModel =  await  APIProvider().createJobAllocation(
+      SuccessModel successModel =  await  APIProvider().applyJob(
         data: {
-          if (jobAllocationId.value != "") "JobAllocationID" : jobAllocationId.value ?? "",
           "JobID" : selectedJobNameId.value,
-          "JobAllocationTypeID" : "0",
-          "JobBidID" : selectedVendorJobBidId.value,
-          "VendorID" : "0",
+          "JobBidID" : jobBidId.value,
           "Cost" : cost.text,
           "Remark" : remark.text,
-          // "CreatedOn" : DateFormat("yyyy/MM/dd").format(DateTime.now()),
-          // "CreatedBY" : "1",
-          // "CreatedUserTypeID" : "1"
         },
       );
       if(successModel.msgType == 0){
         isLoading.value = false;
         if (selectedJobNameId.value == "") {
-          // jobAllocationListController.jobAllocationPage = 0;
-          // jobAllocationListController.jobAllocationList.clear();
-          // jobAllocationListController.getJobAllocation();
-          // Get.offAndToNamed(Routes.jobAllocationList,arguments: "Job Allocation List");
+          // myOpenJobBidController.jobBidPage = 0;
+          // myOpenJobBidController.jobBidList.clear();
+          // myOpenJobBidController.getJobBidList();
           Get.back();
           Ui.SuccessSnackBar(title:'Successful',message:'Job allocated successfully done');
         } else {
           Get.back();
-          jobAllocationListController.jobAllocationPage = 0;
-          jobAllocationListController.jobAllocationList.clear();
-          jobAllocationListController.getJobAllocation();
+          myOpenJobBidController.jobBidPage = 0;
+          myOpenJobBidController.jobBidList.clear();
+          myOpenJobBidController.getJobBidList();
           Ui.SuccessSnackBar(title:'Successful',message:'Job Updated Successfully done ');
         }
       }else if(successModel.msgType == 1){

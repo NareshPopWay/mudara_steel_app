@@ -9,8 +9,10 @@ import 'package:intl/intl.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/open_job-list_controller.dart';
 import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/job_allocation_list_controller.dart';
 import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/job_list_controller.dart';
+import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_open_job_controller.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_allocation_model.dart';
 import 'package:mudara_steel_app/model/success_model.dart';
@@ -42,7 +44,7 @@ class ApplyJobController extends GetxController {
 
 
   RxString userTypeID = "".obs;
-  JobListController jobListController = Get.put(JobListController());
+  MyOpenJobController myOpenJobController = Get.put(MyOpenJobController());
 
   @override
   void onInit() async {
@@ -66,6 +68,20 @@ class ApplyJobController extends GetxController {
     log('jobId = ${jobId.value}');
     super.onInit();
   }
+
+
+
+  // getJobIdWiseData() async {
+  //   isLoading.value = true;
+  //   print("=============get getJobIdWiseData");
+  //   clientIdWiseDataModel = await APIProvider().getClientIdWiseData(clientID: selectedClientId.value);
+  //   phone.text = clientIdWiseDataModel!.phone!;
+  //   name.text = clientIdWiseDataModel!.clientName!;
+  //   address.text = clientIdWiseDataModel!.address!;
+  //   isLoading.value = false;
+  //   update();
+  // }
+
 
   Future<void> applyJob()async{
     bool isInternet = await Constants.isInternetAvail();
@@ -91,9 +107,9 @@ class ApplyJobController extends GetxController {
           Ui.SuccessSnackBar(title:'Successful',message:'Job applied successfully done');
         } else {
           Get.back();
-          // jobListController.jobPage = 0;
-          // jobListController.openJobList.clear();
-          // jobListController.getOpenJob();
+          myOpenJobController.jobPage = 0;
+          myOpenJobController.jobList.clear();
+          myOpenJobController.getJob();
           Ui.SuccessSnackBar(title:'Successful',message:'Job applied Successfully done ');
         }
       }else if(successModel.msgType == 1){

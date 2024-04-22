@@ -12,6 +12,7 @@ class Constants{
   static const String token = 'token';
   static const String password = 'password';
   static const String userTypeID = 'userTypeID';
+  static const String appName = 'userTypeID';
   static Future<bool> isInternetAvail() async {
     try {
       final result = await InternetAddress.lookup('google.com');

@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mudara_steel_app/common/constant.dart';
+import 'package:mudara_steel_app/model/admin_block_model.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 
 class RootController extends GetxController with GetTickerProviderStateMixin {
+  RxString appVersion = "".obs;
   RxInt currentTab = 0.obs;
   RxBool shearShow = false.obs;
   RxString userName = "".obs;
@@ -29,6 +32,9 @@ class RootController extends GetxController with GetTickerProviderStateMixin {
     userTypeID.value = GetStorage().read(Constants.userTypeID) ?? "";
     currentTab.value =0;
 
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    appVersion.value = packageInfo.version;
+
   }
 
   void changeTab(int index){
@@ -36,6 +42,21 @@ class RootController extends GetxController with GetTickerProviderStateMixin {
     update();
   }
 
+  RxList<AdminBlockModel> adminBlocks = <AdminBlockModel>[
+    AdminBlockModel(title: 'Register Vendor', imgUrl: 'assets/drawer_icon/add-user1.png'),
+    AdminBlockModel(title: 'Vendor List', imgUrl: 'assets/drawer_icon/vendor_list.png'),
+    AdminBlockModel(title: 'Create Job', imgUrl: 'assets/drawer_icon/create_job.png'),
+    AdminBlockModel(title: 'Job List', imgUrl: 'assets/drawer_icon/job_list.png'),
+    AdminBlockModel(title: 'Job Bid', imgUrl: 'assets/drawer_icon/bid_list.png'),
+    AdminBlockModel(title: 'Allocated Job List', imgUrl: 'assets/drawer_icon/joballocation_list.png'),
+  ].obs;
+
+  RxList<AdminBlockModel> vendorBlock = <AdminBlockModel>[
+    // AdminBlockModel(title: 'Apply Job', imgUrl: 'assets/drawer_icon/applyjob.png'),
+    AdminBlockModel(title: 'All Job', imgUrl: 'assets/drawer_icon/job_list.png'),
+    AdminBlockModel(title: 'My Bid', imgUrl: 'assets/drawer_icon/bid_list.png'),
+    AdminBlockModel(title: 'My Allocated Job', imgUrl: 'assets/drawer_icon/joballocation_list.png'),
+  ].obs;
 
 @override
   void dispose() {

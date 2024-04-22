@@ -91,7 +91,7 @@ class VendorProfileController extends GetxController {
         Get.back();
         await APIProvider().getVendorProfileData();
         rootController.userName.value = GetStorage().read(Constants.userName) ?? "";
-        Ui.SuccessSnackBar(title:'Successful',message:'Vendor profile updated successfully done');
+        Ui.SuccessSnackBar(title:'Successful',message:'Vendor profile successfully updated');
       }else if(successModel.msgType == 1){
         isLoading.value = false;
         Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);

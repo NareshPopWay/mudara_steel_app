@@ -12,7 +12,7 @@ import 'package:mudara_steel_app/model/field_item_value_model.dart';
 import 'package:mudara_steel_app/model/job_bid_model.dart';
 
 
-class BidListController extends GetxController {
+class MyCompletedJobBidController extends GetxController {
 
   RxList<JobBidModel> jobBidList = RxList();
   RxBool isSearching = RxBool(false);
@@ -26,9 +26,6 @@ class BidListController extends GetxController {
   RxString userTypeID = "".obs;
   RxString fromDate = "".obs;
   RxString toDate = "".obs;
-
-  RxString jobId = "".obs;
-
 
   var showCount = [10, 15, 20, 25, 50, 100];
   RxInt showCountVal = 10.obs;
@@ -66,21 +63,14 @@ class BidListController extends GetxController {
     super.onInit();
     userTypeID.value = await GetStorage().read(Constants.userTypeID) ?? "";
     leadScrollController.addListener(jobScrollListener);
-
-
-    if(Get.arguments != null && Get.arguments is String){
-      jobId.value = Get.arguments;
-      getJobBidList();
-    }
-
-
+    getJobBidList();
     if(userTypeID.value == "1"){
-      // jobNameList.value = await APIProvider().getJobNameList(userTypeID.value);
+      jobNameList.value = await APIProvider().getJobNameList(userTypeID.value);
       jobStatusList.value = await APIProvider().getJobStatusList(userTypeID.value);
       jobTypeList.value = await APIProvider().getJobTypeList(userTypeID.value);
       vendorNameList.value = await APIProvider().getVendorName();
     }else{
-      // jobNameList.value = await APIProvider().getJobNameList(userTypeID.value);
+      jobNameList.value = await APIProvider().getJobNameList(userTypeID.value);
       jobStatusList.value = await APIProvider().getJobStatusList(userTypeID.value);
       jobTypeList.value = await APIProvider().getJobTypeList(userTypeID.value);
     }
@@ -96,14 +86,14 @@ class BidListController extends GetxController {
     }
   }
 
-  // RxList<FieldItemValueModel> jobNameList = <FieldItemValueModel>[].obs;
-  // RxBool isJobNameExpanded = false.obs;
-  // RxString selectedJobName = "".obs;
-  // RxString selectedJobNameId = "".obs;
-  // RxString tampSelectedJobName = "".obs;
-  // RxString tampSelectedJobNameId = "".obs;
-  // RxBool isJobNameSearching = RxBool(false);
-  // Rx<TextEditingController> textJobName = TextEditingController().obs;
+  RxList<FieldItemValueModel> jobNameList = <FieldItemValueModel>[].obs;
+  RxBool isJobNameExpanded = false.obs;
+  RxString selectedJobName = "".obs;
+  RxString selectedJobNameId = "".obs;
+  RxString tampSelectedJobName = "".obs;
+  RxString tampSelectedJobNameId = "".obs;
+  RxBool isJobNameSearching = RxBool(false);
+  Rx<TextEditingController> textJobName = TextEditingController().obs;
 
 
   RxList<FieldItemValueModel> vendorNameList = <FieldItemValueModel>[].obs;
@@ -137,18 +127,19 @@ class BidListController extends GetxController {
     isJobBidListLoading.value = true;
 
     var leadResponse = await APIProvider().getJobBidList(
-      userTypeID : userTypeID.value,
-      pageNumber: jobBidPage,
-      rowsOfPage: showCountVal,
-      orderByName: selectedShortByVal,
-      searchVal: searchTextEditController.text,
-      fromDate: fromDate.value,
-      toDate: toDate.value,
-      sortDirection: isDescending.value == true ? ascending.value: descending.value,
-      jobId: jobId.value,
-      jobStatusId:selectedJobStatusId.value,
-      jobType:selectedJobTypeId.value,
-      vendorID: selectedVendorNameId.value
+        userTypeID : userTypeID.value,
+        pageNumber: jobBidPage,
+        rowsOfPage: showCountVal,
+        orderByName: selectedShortByVal,
+        searchVal: searchTextEditController.text,
+        fromDate: fromDate.value,
+        toDate: toDate.value,
+        sortDirection: isDescending.value == true ? ascending.value: descending.value,
+        jobId: selectedJobNameId.value,
+        jobStatusId:"0",
+        tempStatusID:"2",
+        jobType:selectedJobTypeId.value,
+        vendorID: selectedVendorNameId.value
     );
     if (leadResponse.isNotEmpty) {
       jobBidPage++;
