@@ -57,10 +57,10 @@ Future<void> main() async {
         projectId: "mudrasteel-711c1");
   } else {
     options = const FirebaseOptions(
-        apiKey: "AIzaSyA_Tc2htTkxcGWQVhLXRUxb2j1qssjV-QA",
-        appId: "1:851415038414:ios:161a82264c21e3c7fb939f",
-        messagingSenderId: "851415038414",
-        projectId: "sakhiya-175a5");
+        apiKey: "AIzaSyCqCY576bDq3h-ntKZYpQSsv5zm66iHpww",
+        appId: "1:600149927142:ios:4b5dc96535b35675644727",
+        messagingSenderId: "600149927142",
+        projectId: "mudrasteel-711c1");
   }
   await Firebase.initializeApp(options: options);
   try {
