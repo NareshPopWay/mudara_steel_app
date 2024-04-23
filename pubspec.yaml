@@ -69,7 +69,7 @@ flutter_app_name:
   name: "Mudra Steel"
 
 flutter_icons:
-  image_path: "assets/logo.png"
+  image_path: "assets/logo2.jpg"
   android: true
   ios: true
 
