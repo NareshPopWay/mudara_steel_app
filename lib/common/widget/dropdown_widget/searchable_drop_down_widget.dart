@@ -132,7 +132,7 @@ buildListView({
     height: dataList.isEmpty
         ? AppSpacings.s150
         : dataList.length <= 2
-            ? AppSpacings.s180
+            ? AppSpacings.s220
             : dataList.length == 3
                 ? AppSpacings.s250
                 : AppSpacings.s300,
@@ -174,9 +174,8 @@ buildListView({
             //     onTab:onTap,
             //   ),
             // ),
-            Container(
-              margin: EdgeInsets.fromLTRB(AppSpacings.s15, AppSpacings.s15,
-                  AppSpacings.s15, 0),
+             Container(
+              margin: EdgeInsets.fromLTRB(AppSpacings.s15, AppSpacings.s15, AppSpacings.s15, 0),
               child: Center(
                 child: CupertinoSearchTextField(
                   borderRadius: BorderRadius.circular(20),
@@ -246,6 +245,7 @@ buildListView({
                         }
                       },
                       child: ListTile(
+                        dense: true,
                         title: Text(
                           dataList[index].text ?? "",
                           style: Get.textTheme.bodyLarge?.copyWith(
