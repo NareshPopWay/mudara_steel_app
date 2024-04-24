@@ -534,7 +534,7 @@ class VendorRegScreen extends GetView<VendorRegController> {
                             ),
                             validator: (e) {
                               if (e!.isEmpty) {
-                                return "company name";
+                                return "company name is Required";
                               }
                               return null;
                             },

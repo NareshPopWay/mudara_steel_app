@@ -289,7 +289,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "password name",
+                                    labelText: "password",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
