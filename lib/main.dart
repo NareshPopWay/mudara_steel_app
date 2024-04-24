@@ -6,8 +6,11 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/demo_localization.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/responsive_layout_builder.dart';
 import 'package:mudara_steel_app/common/scale_factors.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -105,25 +108,110 @@ Future<void> main() async {
   Get.lazyPut(() => ThemeService());
 }
 
-class MyApp extends StatelessWidget {
+// class MyApp extends StatelessWidget {
+//   final ThemeData lightTheme;
+//   final ThemeData darkTheme;
+//
+//   const MyApp({Key? key, required this.lightTheme, required this.darkTheme})
+//       : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+//     return GetMaterialApp(
+//       title: "Mudra Steel",
+//       initialRoute: PageRoutes.initial,
+//       getPages: PageRoutes.routes,
+//       defaultTransition: Transition.cupertino,
+//       themeMode: Get.find<ThemeService>().getThemeMode(),
+//       theme: lightTheme,
+//       darkTheme: darkTheme,
+//       debugShowCheckedModeBanner: false,
+//     );
+//   }
+// }
+
+class MyApp extends StatefulWidget {
   final ThemeData lightTheme;
   final ThemeData darkTheme;
 
   const MyApp({Key? key, required this.lightTheme, required this.darkTheme})
       : super(key: key);
 
+  static void setLocale(BuildContext context, Locale newLocale) {
+    _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
+    state!.setLocale(newLocale);
+  }
+
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  Locale? _locale;
+
+  setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    getLocale().then((locale) {
+      setState(() {
+        _locale = locale;
+      });
+    });
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-    return GetMaterialApp(
-      title: "Mudra Steel",
-      initialRoute: PageRoutes.initial,
-      getPages: PageRoutes.routes,
-      defaultTransition: Transition.cupertino,
-      themeMode: Get.find<ThemeService>().getThemeMode(),
-      theme: lightTheme,
-      darkTheme: darkTheme,
-      debugShowCheckedModeBanner: false,
-    );
+    if (_locale == null) {
+      return Container(
+        child: Center(
+          child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[800]!)),
+        ),
+      );
+    } else {
+      return GetMaterialApp(
+        title: "Mudra Steel",
+        initialRoute: PageRoutes.initial,
+        getPages: PageRoutes.routes,
+        defaultTransition: Transition.cupertino,
+        themeMode: Get.find<ThemeService>().getThemeMode(),
+        theme: widget.lightTheme,
+        darkTheme: widget.darkTheme,
+        debugShowCheckedModeBanner: false,
+        locale: _locale,
+        localizationsDelegates: const [
+          DemoLocalization.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale("en", "US"),
+          Locale("hi", "IN"),
+        ],
+        localeResolutionCallback: (locale, supportedLocales) {
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale!.languageCode &&
+                supportedLocale.countryCode == locale.countryCode) {
+              return supportedLocale;
+            }
+          }
+          // If the current locale doesn't match with any of the
+          // supportedLocales, use the first supportedLocale, i.e., English.
+          return supportedLocales.first;
+        },
+      );
+    }
   }
 }
+
