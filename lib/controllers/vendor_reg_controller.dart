@@ -60,7 +60,7 @@ class VendorRegController extends GetxController {
     }
     try{
       isLoading.value = true;
-      SuccessModel successModel =  await  APIProvider().registerVendor(
+      SuccessModel successModel =  await  APIProvider().registerVendor(context,
           data: {
               "VendorName": vendorName.text,
               "Email": email.text,

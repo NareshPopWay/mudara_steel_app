@@ -19,7 +19,7 @@ Future<Locale> setLocale(String languageCode) async {
 }
 
 Future<Locale> getLocale() async {
-  String languageCode = GetStorage().read(LAGUAGE_CODE).toString() ?? "en";
+  String languageCode = GetStorage().read(LAGUAGE_CODE).toString() ?? "hi";
 
   return _locale(languageCode);
 }

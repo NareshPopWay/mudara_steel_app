@@ -113,7 +113,7 @@ class RegisterVendorController extends GetxController {
             "VehicleInsuranceNumber": vehicleInNO.text,
             "IsApproved":"false"
           },
-          path: selectedFile.value != null ?selectedFile.value!.path : "");
+          path: selectedFile.value != null ? selectedFile.value!.path : File(getFilePath.value).path);
       if(successModel.msgType == 0){
         isLoading.value = false;
         if (vendorId.value == "") {
@@ -159,7 +159,7 @@ class RegisterVendorController extends GetxController {
        companyName.text= vendorModel.companyName!;
        drLicenseNo.text= vendorModel.driverLicenseNumber!;
        vehicleInNO.text= vendorModel.vehicleInsuranceNumber!;
-       selectedFile.value = vendorModel.aadharCardUpload!;
+       getFilePath.value = vendorModel.aadharCardUpload!;
 
       isLoading.value = false;
     }

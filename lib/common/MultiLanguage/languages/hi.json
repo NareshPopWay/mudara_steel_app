@@ -11,6 +11,9 @@
   "Admin" : "ॲडमिन",
   "Version" : "ऐप वरसन",
   "NoDataFound" : "डाटा प्राप्त नहीं हुआ!!",
+  "ImageNotAvailable" : "फोटो उपलब्ध नही हे",
+  "PleaseTryAgainLatter" : "कृपया करके थोडी देर बाद प्रयाश करे",
+  "UnableToLogin" : "लॉगिन करनेमे  मे असमर्थ ",
 
   "Register Vendor": "विक्रेता पंजीकरण",
   "Vendor name": "विक्रेता का नाम",

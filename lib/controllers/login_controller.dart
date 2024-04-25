@@ -22,7 +22,7 @@ class LoginController extends GetxController {
   void onInit() async {
     super.onInit();
 
-    toggleValue.value = GetStorage().read("selectedLanguage");
+    toggleValue.value = GetStorage().read("selectedLanguage") ?? 0;
 
   }
 
@@ -35,7 +35,7 @@ class LoginController extends GetxController {
     }
     try {
       isLoading.value = true;
-      bool login = await APIProvider().login(userName: userName.value.text, password:password.value.text);
+      bool login = await APIProvider().login(userName: userName.value.text, password:password.value.text,context);
       // log('${verifyOtpList!.patientList!.length}');
       // await Future.delayed(const Duration(milliseconds: 500));
       if (login == true) {

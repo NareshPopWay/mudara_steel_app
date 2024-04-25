@@ -160,7 +160,7 @@ class VendorModel {
     // vendorTypeId: json["VendorTypeID"],
     driverName: json["DriverName"]??"",
     driverAge: json["DriverAge"]??"",
-    aadharCardUpload: json["AadharCardUpload"],
+    aadharCardUpload: json["AadharCardUpload"]??"",
     // file: json["file"],
     driverLicenseNumber: json["DriverLicenseNumber"]??"",
     vehicleInsuranceNumber: json["VehicleInsuranceNumber"]??"",

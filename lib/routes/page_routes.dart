@@ -30,7 +30,7 @@ import 'package:mudara_steel_app/ui/drawer/AdminLogin/vendor/register_vendor.dar
 import 'package:mudara_steel_app/ui/drawer/AdminLogin/vendor/vendor_list.dart';
 import 'package:mudara_steel_app/ui/home/home_screen.dart';
 import 'package:mudara_steel_app/ui/login_screen.dart';
-import 'package:mudara_steel_app/ui/vendor_profile.dart';
+import 'package:mudara_steel_app/ui/drawer/VendorLogin/vendor_profile.dart';
 import 'package:mudara_steel_app/ui/vendor_reg_screen.dart';
 import '../common/widget/auth_widget.dart';
 import 'app_routes.dart';

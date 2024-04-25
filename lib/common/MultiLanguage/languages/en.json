@@ -51,6 +51,9 @@
   "Job Bid" : "Job Bid",
   "Job List" : "Job List",
   "Allocated Job List" : "Allocated Job List",
+  "ImageNotAvailable" : "Image Not Available",
+  "PleaseTryAgainLatter" : "Please try again latter",
+  "UnableToLogin" : "Unable to login",
 
   "All Job" : "All Job",
   "My Bid" : "My Bid",

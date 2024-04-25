@@ -9,6 +9,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/custom_exceptions.dart';
 import 'package:mudara_steel_app/common/ui.dart';
@@ -35,16 +36,16 @@ class APIProvider {
   // String password = Get.find<RootController>().password.value != "" ? Get.find<RootController>().password.value : "furniture";
 
 
-
+  String languageCode = GetStorage().read(LAGUAGE_CODE).toString() ?? "hi";
   RootController  rootController = Get.put(RootController());
 
   ///------------------------ Login -----------------------------------///
 
 
-  Future<bool> login({required userName, required password}) async {
+  Future<bool> login(context,{required userName, required password}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: getTranslated(context, 'NoInternetConnection')!,message:getTranslated(context, 'ConnectWithNetwork')!);
     }
     var responseJson;
     try {
@@ -84,7 +85,7 @@ class APIProvider {
             responseJson['access_token'] != "") {
           GetStorage().write(Constants.token, responseJson['access_token'].toString());
           GetStorage().write(Constants.userTypeID, responseJson['UserTypeID'].toString());
-          APIProvider().updateFCMToken(userTypeID: responseJson['UserTypeID'].toString());
+          APIProvider().updateFCMToken(context,userTypeID: responseJson['UserTypeID'].toString());
           if(responseJson['UserTypeID'].toString() == "1"){
             GetStorage().write(Constants.userName, responseJson['UserType'].toString());
           }else{
@@ -93,22 +94,22 @@ class APIProvider {
           return true;
         }
         else {
-          Ui.ErrorSnackBar(title:'Unable to login',message:'${responseJson['error_description']}');
+          Ui.ErrorSnackBar(title:getTranslated(context, 'UnableToLogin')!,message:'${responseJson['error_description']}');
           return false;
         }
       } else {
-        Ui.ErrorSnackBar(title:'Unable to login',message:'${responseJson['error_description']}');
+        Ui.ErrorSnackBar(title:getTranslated(context, 'UnableToLogin')!,message:'${responseJson['error_description']}');
         return false;
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:getTranslated(context, 'SomethingWentWrong')!,message:getTranslated(context, 'PleaseTryAgainLatter')!);
     } catch (e) {
       print("error ...login ...... $e");
     }
     return false;
   }
 
-  Future<void> updateFCMToken({userTypeID}) async {
+  Future<void> updateFCMToken(context,{userTypeID}) async {
     var responseJson;
     apiToken.value = GetStorage().read(Constants.token);
     log("apiToken => ${apiToken.value}");
@@ -141,7 +142,7 @@ class APIProvider {
       responseJson = _response(response);
       log('updateFCMToken :- $responseJson');
     } on SocketException {
-      Ui.ErrorSnackBar(title: 'No Internet connection');
+     Ui.worningSnackBar(title: getTranslated(context, 'NoInternetConnection')!,message:getTranslated(context, 'ConnectWithNetwork')!);
     } catch (e) {
       log("error ...updateFCMToken ...... $e");
     }
@@ -150,7 +151,7 @@ class APIProvider {
 
 ///---------------------------- Vendor Reg ---------------------------------------////
 
-  Future<SuccessModel> registerVendor(
+  Future<SuccessModel> registerVendor(context,
       {required Map<String, String> data,
         String? path}) async {
     var responseJson;
@@ -187,7 +188,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.ErrorSnackBar(title: 'No Internet connection');
+      Ui.worningSnackBar(title:getTranslated(context, 'SomethingWentWrong')!);
       return SuccessModel.fromJson(Map());
     } catch (e) {
       log("error ...registerVendor ...... $e");
@@ -195,7 +196,7 @@ class APIProvider {
     return SuccessModel.fromJson(Map());
   }
 
-  Future<SuccessModel> updateVendor(
+  Future<SuccessModel> updateVendor(context,
       {required Map<String, String> data,
         String? path}) async {
     var responseJson;
@@ -237,7 +238,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.ErrorSnackBar(title: 'No Internet connection');
+      Ui.worningSnackBar(title:getTranslated(context, 'SomethingWentWrong')!);
       return SuccessModel.fromJson(Map());
     } catch (e) {
       log("error ...registerVendor ...... $e");
@@ -248,7 +249,7 @@ class APIProvider {
   Future<VendorModel> getVendorProfileData() async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
 
@@ -280,7 +281,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return VendorModel.fromJson(Map());
     } catch (e) {
       print("error ...getVendorProfileData ...... $e");
@@ -305,7 +306,7 @@ class APIProvider {
   }) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     List<JobListModel> list = [];
@@ -352,7 +353,7 @@ class APIProvider {
         list.add(JobListModel.fromJson(responseJson['data'][i]));
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
     } catch (e) {
       print("error ...getLeadList ...... $e");
     }
@@ -362,7 +363,7 @@ class APIProvider {
   Future<List<FieldItemValueModel>> getJobNameList(userTypeID) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     List<FieldItemValueModel> list = [];
@@ -394,7 +395,7 @@ class APIProvider {
         list.add(FieldItemValueModel.fromJson(responseJson[i]));
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
     } catch (e) {
       print("error ...getJobName ...... $e");
     }
@@ -404,7 +405,7 @@ class APIProvider {
   Future<List<FieldItemValueModel>> getJobStatusList(userTypeID) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     List<FieldItemValueModel> list = [];
@@ -435,7 +436,7 @@ class APIProvider {
         list.add(FieldItemValueModel.fromJson(responseJson[i]));
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
     } catch (e) {
       print("error ...getJobName ...... $e");
     }
@@ -445,7 +446,7 @@ class APIProvider {
   Future<List<FieldItemValueModel>> getJobTypeList(userTypeID) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     List<FieldItemValueModel> list = [];
@@ -478,7 +479,7 @@ class APIProvider {
         list.add(FieldItemValueModel.fromJson(responseJson[i]));
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
     } catch (e) {
       print("error ...getJobName ...... $e");
     }
@@ -489,7 +490,7 @@ class APIProvider {
   Future<SuccessModel> deleteJob({int? jobId}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     apiToken.value = GetStorage().read(Constants.token);
@@ -518,7 +519,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return SuccessModel.fromJson(Map());
     } catch (e) {
       print("error ...deleteJobAllocation ...... $e");
@@ -529,7 +530,7 @@ class APIProvider {
   Future<SuccessModel> createJob({required data}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     apiToken.value = GetStorage().read(Constants.token);
@@ -562,7 +563,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return SuccessModel.fromJson(Map());
     } catch (e) {
       print("error ...createJobAllocation ...... $e");
@@ -575,7 +576,7 @@ class APIProvider {
   }) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
 
@@ -610,7 +611,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return JobModel.fromJson(Map());
     } catch (e) {
       print("error ...getJobById ...... $e");
@@ -622,7 +623,7 @@ class APIProvider {
   Future<SuccessModel> saveBide({int? jobId,double? cost}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
 
@@ -651,7 +652,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return SuccessModel.fromJson(Map());
     } catch (e) {
       print("error ...deleteJobAllocation ...... $e");
@@ -677,7 +678,7 @@ class APIProvider {
   }) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     List<JobBidModel> list = [];
@@ -726,7 +727,7 @@ class APIProvider {
         list.add(JobBidModel.fromJson(responseJson['data'][i]));
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
     } catch (e) {
       print("error ...getJobBidList ...... $e");
     }
@@ -738,7 +739,7 @@ class APIProvider {
   Future<SuccessModel> applyJob({required data}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     apiToken.value = GetStorage().read(Constants.token);
@@ -770,7 +771,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return SuccessModel.fromJson(Map());
     } catch (e) {
       print("error ...createJobAllocation ...... $e");
@@ -784,7 +785,7 @@ class APIProvider {
   Future<SuccessModel> createJobAllocation({required data}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     apiToken.value = GetStorage().read(Constants.token);
@@ -817,7 +818,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return SuccessModel.fromJson(Map());
     } catch (e) {
       print("error ...createJobAllocation ...... $e");
@@ -828,7 +829,7 @@ class APIProvider {
   Future<List<FieldItemValueModel>> getVendorJobBide({jobId}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     List<FieldItemValueModel> list = [];
@@ -853,7 +854,7 @@ class APIProvider {
         list.add(FieldItemValueModel.fromJson(responseJson[i]));
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
     } catch (e) {
       print("error ...getJobName ...... $e");
     }
@@ -878,7 +879,7 @@ class APIProvider {
   }) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     List<JobAllocationListModel> list = [];
@@ -924,7 +925,7 @@ class APIProvider {
         list.add(JobAllocationListModel.fromJson(responseJson['data'][i]));
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
     } catch (e) {
       print("error ...getJobAllocationList ...... $e");
     }
@@ -934,7 +935,7 @@ class APIProvider {
   Future<List<FieldItemValueModel>> getJobName() async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     List<FieldItemValueModel> list = [];
@@ -959,7 +960,7 @@ class APIProvider {
         list.add(FieldItemValueModel.fromJson(responseJson[i]));
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
     } catch (e) {
       print("error ...getJobName ...... $e");
     }
@@ -969,7 +970,7 @@ class APIProvider {
   Future<List<FieldItemValueModel>> getVendorName() async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     List<FieldItemValueModel> list = [];
@@ -994,7 +995,7 @@ class APIProvider {
         list.add(FieldItemValueModel.fromJson(responseJson[i]));
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
     } catch (e) {
       print("error ...getJobName ...... $e");
     }
@@ -1004,7 +1005,7 @@ class APIProvider {
   Future<SuccessModel> deleteJobAllocation({int? jobAllocationId}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     apiToken.value = GetStorage().read(Constants.token);
@@ -1033,7 +1034,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return SuccessModel.fromJson(Map());
     } catch (e) {
       print("error ...deleteJobAllocation ...... $e");
@@ -1046,7 +1047,7 @@ class APIProvider {
   }) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
 
@@ -1081,7 +1082,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return JobAllocationModel.fromJson(Map());
     } catch (e) {
       print("error ...getJobAllocationById ...... $e");
@@ -1095,7 +1096,7 @@ class APIProvider {
   Future<SuccessModel> checkVendorPhone({String? phone}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
 
@@ -1120,7 +1121,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return SuccessModel.fromJson(Map());
     } catch (e) {
       print("error ...checkVendorPhone ...... $e");
@@ -1139,7 +1140,7 @@ class APIProvider {
   }) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     List<VendorListModel> list = [];
@@ -1170,7 +1171,7 @@ class APIProvider {
         list.add(VendorListModel.fromJson(responseJson['data'][i]));
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
     } catch (e) {
       print("error ...getVendorList ...... $e");
     }
@@ -1219,7 +1220,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.ErrorSnackBar(title: 'No Internet connection');
+      Ui.ErrorSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection');
       return SuccessModel.fromJson(Map());
     } catch (e) {
       log("error ...vendorRegistration ...... $e");
@@ -1232,7 +1233,7 @@ class APIProvider {
   }) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
 
@@ -1267,7 +1268,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return VendorModel.fromJson(Map());
     } catch (e) {
       print("error ...getVendorById ...... $e");
@@ -1278,7 +1279,7 @@ class APIProvider {
   Future<SuccessModel> deleteVendor({int? vendorId}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     apiToken.value = GetStorage().read(Constants.token);
@@ -1307,7 +1308,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return SuccessModel.fromJson(Map());
     } catch (e) {
       print("error ...deleteJobAllocation ...... $e");
@@ -1318,7 +1319,7 @@ class APIProvider {
   Future<SuccessModel> approveVendor({int? vendorId,bool? isApprove}) async {
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: languageCode == "IN" ? "कोई इंटरनेट कनेक्शन नहीं" : 'No Internet connection',message:languageCode == "IN" ? "नेटवर्क से जुड़ें" :'please connect with network');
     }
     var responseJson;
     apiToken.value = GetStorage().read(Constants.token);
@@ -1347,7 +1348,7 @@ class APIProvider {
         Get.offNamed(Routes.login);
       }
     } on SocketException {
-      Ui.worningSnackBar(title: 'Something went wrong ',message:'Please try again latter');
+      Ui.worningSnackBar(title:  languageCode == "IN" ? "कुछ गलत हो गया!" :'Something went wrong ',message:languageCode == "IN" ? "कृपया करके थोडी देर बाद प्रयाश करे" :'Please try again latter');
       return SuccessModel.fromJson(Map());
     } catch (e) {
       print("error ...deleteJobAllocation ...... $e");

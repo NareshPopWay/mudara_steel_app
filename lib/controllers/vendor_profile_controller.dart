@@ -70,7 +70,7 @@ class VendorProfileController extends GetxController {
     }
     try{
       isLoading.value = true;
-      SuccessModel successModel =  await  APIProvider().updateVendor(
+      SuccessModel successModel =  await  APIProvider().updateVendor(context,
           data: {
             "VendorID" : vendorId.value,
             "VendorName": vendorName.text,
@@ -85,7 +85,7 @@ class VendorProfileController extends GetxController {
             "VehicleInsuranceNumber": vehicleInNO.text,
             "IsApproved":"false"
           },
-          path: selectedFile.value != null ?selectedFile.value!.path : "");
+          path: selectedFile.value != null ?selectedFile.value!.path :File(getFilePath.value).path);
       if(successModel.msgType == 0){
         isLoading.value = false;
         // Get.offAndToNamed(Routes.jobList,arguments: "Job List");
@@ -122,7 +122,7 @@ class VendorProfileController extends GetxController {
       companyName.text= vendorModel.companyName!;
       drLicenseNo.text= vendorModel.driverLicenseNumber!;
       vehicleInNO.text= vendorModel.vehicleInsuranceNumber!;
-      selectedFile.value = vendorModel.aadharCardUpload!;
+      getFilePath.value = vendorModel.aadharCardUpload! ??"";
 
       isLoading.value = false;
     }
