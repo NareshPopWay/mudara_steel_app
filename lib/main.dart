@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:mudara_steel_app/common/MultiLanguage/localization/demo_localization.dart';
 import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/phoenix.dart';
 import 'package:mudara_steel_app/common/responsive_layout_builder.dart';
 import 'package:mudara_steel_app/common/scale_factors.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -79,29 +80,37 @@ Future<void> main() async {
 
   runApp(
     ResponsiveLayoutBuilder(
-      small: (BuildContext context, Widget? child) => MyApp(
-        lightTheme: Get.find<ThemeService>()
-            .getLightTheme(scaleFactor: DeviceScaleFactors.smallScaleFactor),
-        darkTheme: Get.find<ThemeService>()
-            .getDarkTheme(scaleFactor: DeviceScaleFactors.smallScaleFactor),
+      small: (BuildContext context, Widget? child) => DemoGeofence(
+        child: MyApp(
+          lightTheme: Get.find<ThemeService>()
+              .getLightTheme(scaleFactor: DeviceScaleFactors.smallScaleFactor),
+          darkTheme: Get.find<ThemeService>()
+              .getDarkTheme(scaleFactor: DeviceScaleFactors.smallScaleFactor),
+        ),
       ),
-      medium: (BuildContext context, Widget? child) => MyApp(
-        lightTheme: Get.find<ThemeService>()
-            .getLightTheme(scaleFactor: DeviceScaleFactors.mediumScaleFactor),
-        darkTheme: Get.find<ThemeService>()
-            .getDarkTheme(scaleFactor: DeviceScaleFactors.mediumScaleFactor),
+      medium: (BuildContext context, Widget? child) => DemoGeofence(
+        child: MyApp(
+          lightTheme: Get.find<ThemeService>()
+              .getLightTheme(scaleFactor: DeviceScaleFactors.mediumScaleFactor),
+          darkTheme: Get.find<ThemeService>()
+              .getDarkTheme(scaleFactor: DeviceScaleFactors.mediumScaleFactor),
+        ),
       ),
-      large: (BuildContext context, Widget? child) => MyApp(
-        lightTheme: Get.find<ThemeService>()
-            .getLightTheme(scaleFactor: DeviceScaleFactors.largeScaleFactor),
-        darkTheme: Get.find<ThemeService>()
-            .getDarkTheme(scaleFactor: DeviceScaleFactors.largeScaleFactor),
+      large: (BuildContext context, Widget? child) => DemoGeofence(
+        child: MyApp(
+          lightTheme: Get.find<ThemeService>()
+              .getLightTheme(scaleFactor: DeviceScaleFactors.largeScaleFactor),
+          darkTheme: Get.find<ThemeService>()
+              .getDarkTheme(scaleFactor: DeviceScaleFactors.largeScaleFactor),
+        ),
       ),
-      xLarge: (BuildContext context, Widget? child) => MyApp(
-        lightTheme: Get.find<ThemeService>()
-            .getLightTheme(scaleFactor: DeviceScaleFactors.xLargeScaleFactor),
-        darkTheme: Get.find<ThemeService>()
-            .getDarkTheme(scaleFactor: DeviceScaleFactors.xLargeScaleFactor),
+      xLarge: (BuildContext context, Widget? child) => DemoGeofence(
+        child: MyApp(
+          lightTheme: Get.find<ThemeService>()
+              .getLightTheme(scaleFactor: DeviceScaleFactors.xLargeScaleFactor),
+          darkTheme: Get.find<ThemeService>()
+              .getDarkTheme(scaleFactor: DeviceScaleFactors.xLargeScaleFactor),
+        ),
       ),
     ),
   );
@@ -196,8 +205,8 @@ class _MyAppState extends State<MyApp> {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: const [
-          Locale("en", "US"),
           Locale("hi", "IN"),
+          Locale("en", "US"),
         ],
         localeResolutionCallback: (locale, supportedLocales) {
           for (var supportedLocale in supportedLocales) {

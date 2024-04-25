@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 
 class EmptyDataWidget extends StatelessWidget {
@@ -15,8 +16,8 @@ class EmptyDataWidget extends StatelessWidget {
         width: AppSpacings.s200,
         ),
          SizedBox(height: AppSpacings.s15),
-        const Text(
-          "No Data Found!!",
+         Text(
+          getTranslated(context, 'NoDataFound')!,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,

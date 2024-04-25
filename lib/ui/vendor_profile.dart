@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -117,7 +118,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                             ),
                             SizedBox(width: AppSpacings.s10),
                             Text(
-                              "Profile",
+                              getTranslated(context, 'Profile')!,
                               style: Get.textTheme.headlineSmall!.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: ThemeService.primaryColor,
@@ -218,7 +219,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Vendor name",
+                                    labelText: "${getTranslated(context, 'Vendor name')!}",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -289,7 +290,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "password",
+                                    labelText: "${getTranslated(context, 'Password')!}",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -360,7 +361,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Driver name",
+                                    labelText: getTranslated(context, 'DriverName')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -431,7 +432,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Driver Age",
+                                    labelText: getTranslated(context, 'DriverAge')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -502,7 +503,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Address",
+                                    labelText: getTranslated(context, 'Address(as per Aadhar)')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -574,7 +575,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Email",
+                                    labelText: getTranslated(context, 'VEmail')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -616,10 +617,10 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                   validator:(e){
                                     if (e!.isEmpty) {
                                       // controller.noteFocus.requestFocus();
-                                      return "Phone Number is Required";
+                                      return "${getTranslated(context, 'PhoneNoValidator')!}";
                                     }else if(e.length < 10){
                                       // controller.noteFocus.requestFocus();
-                                      return "phone number must be 10 digits";
+                                      return  "${getTranslated(context, 'PhoneNoValidator2')!}";
                                     }
                                     return null;
                                   },
@@ -659,7 +660,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Phone",
+                                    labelText:  "${getTranslated(context, 'Phone')!}",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -729,7 +730,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Company name",
+                                    labelText: "${getTranslated(context, 'CompanyName')!}",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -800,7 +801,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Drivers license number",
+                                    labelText:"${getTranslated(context, 'DriversLicenseNumber')!}",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -872,7 +873,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Vehicle insurance Number",
+                                    labelText: "${getTranslated(context, 'VehicleInsuranceNumber')!}",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -892,7 +893,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                   height: AppSpacings.s15,
                                 ),
                                 Text(
-                                  "Upload Aadhar",
+                                  "${getTranslated(context, 'UploadAadhar')!}",
                                   style: Get.textTheme.bodyText1?.copyWith(
                                     fontSize: AppSpacings.s15,
                                     fontWeight: FontWeight.w600,
@@ -930,7 +931,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                         fontWeight: FontWeight.w600,
                                         color: ThemeService.primaryColor,
                                       ),
-                                    ) :  Text('Browse to choose file',
+                                    ) :  Text('${getTranslated(context, 'BrowseToChooseFile')!}',
                                       style: Get.textTheme.bodyText1?.copyWith(
                                         fontSize: AppSpacings.s15,
                                         color: ThemeService.black,
@@ -950,7 +951,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(10),
                                           child: Text(
-                                            "Upload",
+                                            getTranslated(context, 'Upload')!,
                                             style: Get.textTheme.bodyText1?.copyWith(
                                               fontSize: AppSpacings.s20,
                                               fontWeight: FontWeight.w600,
@@ -981,7 +982,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                           // } else {
 
                             FocusScope.of(context).unfocus();
-                            controller.updateVendor();
+                            controller.updateVendor(context);
 
                           // }
                         }else{
@@ -1011,7 +1012,7 @@ class VendorProfileScreen extends GetView<VendorProfileController> {
                           ),
                           child: Center(
                             child: Text(
-                              "Update",
+                              getTranslated(context, 'Update')!,
                               style: Get.textTheme.headline1!.copyWith(
                                 color: ThemeService.primaryColor,
                                 fontSize: AppSpacings.s25,

@@ -33,7 +33,7 @@ Locale _locale(String languageCode) {
     case HINDI:
       return const Locale(HINDI, "IN");
     default:
-      return const Locale(ENGLISH, 'US');
+      return const Locale(HINDI, 'IN');
   }
 }
 

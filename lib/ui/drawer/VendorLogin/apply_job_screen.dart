@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -63,7 +64,7 @@ class ApplyJobScreen extends GetView<ApplyJobController> {
                             ),
                             SizedBox(width: AppSpacings.s10),
                             Text(
-                              "Apply Job",
+                              getTranslated(context, 'ApplyJob')!,
                               style: Get.textTheme.headlineSmall!.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: ThemeService.primaryColor,
@@ -112,7 +113,7 @@ class ApplyJobScreen extends GetView<ApplyJobController> {
                                 searchDropDwonWidget(
                                   selectedValue: controller.selectedJobName,
                                   selectedId: controller.selectedJobNameId,
-                                  emptyTitle: "Job Name",
+                                  emptyTitle: getTranslated(context, 'JobName')!,
                                   list: controller.jobNameList,
                                   isExpanded: controller.isJobNameExpanded,
                                   isSearching: controller.isJobNameSearching,
@@ -168,7 +169,7 @@ class ApplyJobScreen extends GetView<ApplyJobController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Cost",
+                                    labelText: getTranslated(context, 'Cost')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -233,7 +234,7 @@ class ApplyJobScreen extends GetView<ApplyJobController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Remark",
+                                    labelText: getTranslated(context, 'Remark')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -262,10 +263,10 @@ class ApplyJobScreen extends GetView<ApplyJobController> {
                       duration: const Duration(milliseconds: 150),
                       onPressed: (){
                         if(controller.selectedJobNameId.value == ""){
-                          Ui.ErrorSnackBar(title: "Select Job Name",message: "Please Select Job Name");
+                          Ui.ErrorSnackBar(title: "${getTranslated(context, 'SelectJobNameValidator')!}",message: "${getTranslated(context, 'PleaseSelectJobName')!}");
                         }else{
                           FocusScope.of(context).unfocus();
-                          controller.applyJob();
+                          controller.applyJob(context);
                         }
                       },
                       child: Container(
@@ -290,7 +291,7 @@ class ApplyJobScreen extends GetView<ApplyJobController> {
                           ),
                           child: Center(
                             child: Text(
-                              "Apply",
+                              getTranslated(context, 'Apply')!,
                               style: Get.textTheme.headline1!.copyWith(
                                 color: ThemeService.primaryColor,
                                 fontSize: AppSpacings.s25,

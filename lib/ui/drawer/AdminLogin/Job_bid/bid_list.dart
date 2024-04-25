@@ -9,6 +9,7 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -64,7 +65,7 @@ class BidListScreen extends GetView<BidListController> {
                       ),
                       SizedBox(width: AppSpacings.s10),
                       Text(
-                        'Job Bid',
+                        getTranslated(context, 'Job Bid')!,
                         style: Get.textTheme.headlineSmall!.copyWith(
                           fontWeight: FontWeight.w600,
                           color: ThemeService.primaryColor,
@@ -183,12 +184,12 @@ class BidListScreen extends GetView<BidListController> {
               });
 
             },
-            tabs: const [
+            tabs:  [
               Tab(
-                text: "Open",
+                text: getTranslated(context, 'Open')!,
               ),
               Tab(
-                text: "Completed",
+                text: getTranslated(context, 'Completed')!,
               ),
             ],
           ),

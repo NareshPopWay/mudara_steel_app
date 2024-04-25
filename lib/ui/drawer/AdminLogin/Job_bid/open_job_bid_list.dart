@@ -9,6 +9,7 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -57,7 +58,7 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                       child: Row(
                         children: [
                           Text(
-                            "Show",
+                            getTranslated(context, 'Show')!,
                             style: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s18),
                           ),
                           SizedBox(
@@ -141,7 +142,7 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                           ),
                           // backgroundColor: ThemeService.grayScale.withOpacity(.7),
                           itemColor: ThemeService.black,
-                          placeholder: 'Search Job',
+                          placeholder: getTranslated(context, 'Search')!,
                           controller: controller.searchTextEditController,
                           placeholderStyle: TextStyle(
                               fontSize: AppSpacings.s18,
@@ -341,9 +342,9 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                                           color: ThemeService.primaryColor,
                                           thickness: 2),
                                       dataRow(
-                                        title1: "Job Name",
+                                        title1: getTranslated(context, 'JobName')!,
                                         value1: controller.jobBidList[index].jobName??"-",
-                                        title2: "Vendor Name",
+                                        title2: getTranslated(context, 'VendorName')!,
                                         value2:  controller.jobBidList[index].vendorName ??  "-",
                                       ),
                                       Divider(
@@ -353,11 +354,11 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                                           color: ThemeService.primaryColor.withOpacity(0.2),
                                           thickness: 1),
                                       dataRow(
-                                        title1: "Cost",
+                                        title1: getTranslated(context, 'Cost')!,
                                         value1: controller.jobBidList[index].cost.toString() ?? "-",
                                         valueColor1: Colors.redAccent,
                                         titleColor1: Colors.red,
-                                        title2: "Remark",
+                                        title2: getTranslated(context, 'Remark')!,
                                         value2: controller.jobBidList[index].remark??"-",
                                       ),
                                       Divider(
@@ -367,9 +368,9 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                                           color: ThemeService.primaryColor.withOpacity(0.2),
                                           thickness: 1),
                                       dataRow(
-                                        title1: "Job Status",
+                                        title1: getTranslated(context, 'JobStatus')!,
                                         value1: controller.jobBidList[index].jobStatus ?? "-",
-                                        title2: "Job Type",
+                                        title2: getTranslated(context, 'JobType')!,
                                         value2: controller.jobBidList[index].jobType ??"-",
                                       ),
                                       // Divider(
@@ -529,7 +530,7 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                       ),
                       SizedBox(width: AppSpacings.s6),
                       Text(
-                        "Filter",
+                        getTranslated(context, 'Filter')!,
                         style: Get.textTheme.headlineSmall!.copyWith(
                           fontWeight: FontWeight.w400,
                           fontSize: AppSpacings.s25,
@@ -576,7 +577,7 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                       // Get.back();
                     },
                     child: Text(
-                      "Clear all",
+                      getTranslated(context, 'ClearAll')!,
                       style: Get.textTheme.headlineSmall!.copyWith(
                         fontWeight: FontWeight.w400,
                         color: ThemeService.primaryColor,
@@ -673,7 +674,7 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(10)),
                             ),
-                            labelText: "From Date",
+                            labelText: getTranslated(context, 'FromDate')!,
                             suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
                             contentPadding:
                             const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -740,7 +741,7 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(10)),
                             ),
-                            labelText: "To Date",
+                            labelText: getTranslated(context, 'ToDate')!,
                             suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
                             contentPadding:
                             const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -759,7 +760,7 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                         searchDropDwonWidget(
                           selectedValue: controller.tampSelectedJobName,
                           selectedId: controller.tampSelectedJobNameId,
-                          emptyTitle: "Job Name",
+                          emptyTitle: getTranslated(context, 'JobName')!,
                           list: controller.jobNameList,
                           isExpanded: controller.isJobNameExpanded,
                           isSearching: controller.isJobNameSearching,
@@ -772,7 +773,7 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                           searchDropDwonWidget(
                             selectedValue: controller.tampSelectedVendorName,
                             selectedId: controller.tampSelectedVendorNameId,
-                            emptyTitle: "Vendor Name",
+                            emptyTitle: getTranslated(context, 'VendorName')!,
                             list: controller.vendorNameList,
                             isExpanded: controller.isVendorNameExpanded,
                             isSearching: controller.isVendorNameSearching,
@@ -797,7 +798,7 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                         searchDropDwonWidget(
                           selectedValue: controller.tampSelectedJobType,
                           selectedId: controller.tampSelectedJobTypeId,
-                          emptyTitle: "Job Type",
+                          emptyTitle: getTranslated(context, 'JobType')!,
                           list: controller.jobTypeList,
                           isExpanded: controller.isJobTypeExpanded,
                           isSearching: controller.isJobTypeSearching,
@@ -872,7 +873,7 @@ class OpenJobBidListScreen extends GetView<OpenJobBidListController> {
                       AppSpacings.s12,
                     ),
                     child: Text(
-                      "Apply",
+                      getTranslated(context, 'Apply')!,
                       style: Get.textTheme.headline1!.copyWith(
                         color: ThemeService.black,
                         fontSize: AppSpacings.s22,

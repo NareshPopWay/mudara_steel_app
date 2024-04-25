@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
@@ -70,29 +71,29 @@ class RegisterVendorController extends GetxController {
     }
   }
 
-  Future<void> checkVendorPhone()async{
+  Future<void> checkVendorPhone(context)async{
     try{
       isLoading.value = true;
       SuccessModel successModel =  await  APIProvider().checkVendorPhone(phone: phone.text);
       if(successModel.msgType == 0){
         isLoading.value = false;
         /// Api Call
-         vendorRegistration();
+         vendorRegistration(context);
       }else if(successModel.msgType == 1){
         isLoading.value = false;
         Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
       }
     }catch(e){
       isLoading.value = false;
-      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Vendor not deleted");
+      Ui.ErrorSnackBar(title: getTranslated(context, 'SomethingWentWrong')!);
     }
   }
 
-  Future<void> vendorRegistration()async{
+  Future<void> vendorRegistration(context)async{
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
       isLoading.value = false;
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: getTranslated(context, 'NoInternetConnection')!,message:getTranslated(context, 'ConnectWithNetwork')!);
       return;
     }
     try{
@@ -118,25 +119,25 @@ class RegisterVendorController extends GetxController {
         if (vendorId.value == "") {
           // Get.offAndToNamed(Routes.jobList,arguments: "Job List");
           Get.back();
-          Ui.SuccessSnackBar(title:'Successful',message:'Vendor Register Successfully done');
+          Ui.SuccessSnackBar(title:getTranslated(context, 'Successful')!,message:getTranslated(context, 'VendorRegisterSuccessfullyUpdated')!);
         }else{
           Get.back();
           vendorListController.vendorPage = 0;
           vendorListController.vendorList.clear();
           vendorListController.getVendor();
-          Ui.SuccessSnackBar(title:'Successful',message:'vendorId Updated Successfully done');
+          Ui.SuccessSnackBar(title:getTranslated(context, 'Successful')!,message:getTranslated(context, 'VendorProfileSuccessfullyUpdated')!);
         }
         // Get.offAndToNamed(Routes.jobList,arguments: "Job List");
 
       }else if(successModel.msgType == 1){
         isLoading.value = false;
-        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+        Ui.ErrorSnackBar(title:getTranslated(context, 'SomethingWentWrong')!,message: successModel.message);
       }
 
     }catch(e){
       isLoading.value = false;
       log(e.toString());
-      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Vendor not Register");
+      Ui.ErrorSnackBar(title:getTranslated(context, 'SomethingWentWrong')!,message:getTranslated(context, 'VendorNotRegister')!);
     }
   }
 
@@ -158,6 +159,7 @@ class RegisterVendorController extends GetxController {
        companyName.text= vendorModel.companyName!;
        drLicenseNo.text= vendorModel.driverLicenseNumber!;
        vehicleInNO.text= vendorModel.vehicleInsuranceNumber!;
+       selectedFile.value = vendorModel.aadharCardUpload!;
 
       isLoading.value = false;
     }

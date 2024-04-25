@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
@@ -60,11 +61,11 @@ class VendorProfileController extends GetxController {
     }
   }
 
-  Future<void> updateVendor()async{
+  Future<void> updateVendor(context)async{
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
       isLoading.value = false;
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: getTranslated(context, 'NoInternetConnection')!,message:getTranslated(context, 'ConnectWithNetwork')!);
       return;
     }
     try{
@@ -91,16 +92,16 @@ class VendorProfileController extends GetxController {
         Get.back();
         await APIProvider().getVendorProfileData();
         rootController.userName.value = GetStorage().read(Constants.userName) ?? "";
-        Ui.SuccessSnackBar(title:'Successful',message:'Vendor profile successfully updated');
+        Ui.SuccessSnackBar(title:getTranslated(context, 'Successful')!,message:getTranslated(context, 'VendorProfileSuccessfullyUpdated')!);
       }else if(successModel.msgType == 1){
         isLoading.value = false;
-        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+        Ui.ErrorSnackBar(title: getTranslated(context, 'SomethingWentWrong')!,message: successModel.message);
       }
 
     }catch(e){
       isLoading.value = false;
       log(e.toString());
-      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Vendor not Register");
+      Ui.ErrorSnackBar(title: getTranslated(context, 'SomethingWentWrong')!,message: "Vendor not Register");
     }
   }
 
@@ -121,6 +122,7 @@ class VendorProfileController extends GetxController {
       companyName.text= vendorModel.companyName!;
       drLicenseNo.text= vendorModel.driverLicenseNumber!;
       vehicleInNO.text= vendorModel.vehicleInsuranceNumber!;
+      selectedFile.value = vendorModel.aadharCardUpload!;
 
       isLoading.value = false;
     }

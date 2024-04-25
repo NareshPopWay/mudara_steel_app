@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
 
+
 class AnimatedToggle extends StatefulWidget {
   final List<String> values;
   final ValueChanged onToggleCallback;
@@ -9,6 +10,8 @@ class AnimatedToggle extends StatefulWidget {
   bool initialPosition;
   final Color buttonColor;
   final Color textColor;
+  final double width;
+  final double height;
 
   AnimatedToggle({
     required this.values,
@@ -16,6 +19,8 @@ class AnimatedToggle extends StatefulWidget {
     this.backgroundColor = const Color(0xFFe7e7e8),
     this.buttonColor = const Color(0xFFFFFFFF),
     this.textColor = const Color(0xFF000000),
+    required this.width,
+    required this.height,
     this.initialPosition = false,
   });
   @override
@@ -26,8 +31,8 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: Get.width * 0.5,
-      height: Get.width * 0.12,
+      width: widget.width ,
+      height: widget.height,
       // margin: EdgeInsets.all(20),
       child: Stack(
         children: <Widget>[
@@ -42,8 +47,8 @@ class _AnimatedToggleState extends State<AnimatedToggle> {
               setState(() {});
             },
             child: Container(
-              width: Get.width * 0.5,
-              height: Get.width * 0.12,
+              width: widget.width,
+              height: widget.height,
               decoration: ShapeDecoration(
                 color: widget.backgroundColor,
                 shape: RoundedRectangleBorder(

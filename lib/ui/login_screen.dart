@@ -1,15 +1,21 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
+
 import 'package:blurrycontainer/blurrycontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/phoenix.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
 import 'package:mudara_steel_app/common/ui.dart';
+import 'package:mudara_steel_app/common/widget/animated_toggle.dart';
 import 'package:mudara_steel_app/controllers/login_controller.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 import 'package:particles_fly/particles_fly.dart';
@@ -39,6 +45,55 @@ class LoginScreen extends GetView<LoginController> {
                     particleColor: ThemeService.grayScale,
                     lineColor: ThemeService.grayScale,
                     numberOfParticles:50
+                ),
+                Positioned(
+                  bottom: AppSpacings.s50,
+                  right: AppSpacings.s20,
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    decoration:
+                    BoxDecoration(
+                      color: ThemeService.white,
+                      borderRadius: BorderRadius.circular(AppSpacings.s10)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                        getTranslated(context, 'selectLanguage')!,
+                          style: Get.textTheme.bodyText1?.copyWith(
+                            fontSize: AppSpacings.s20,
+                            fontWeight: FontWeight.w600,
+                            color: ThemeService.primaryColor,
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppSpacings.s8,
+                        ),
+                        AnimatedToggle(
+                          width: Get.width * 0.5,
+                          height: Get.width * 0.12,
+                          values: ['हिंदी', 'English'],
+                          onToggleCallback: (value) async{
+                            controller.toggleValue.value = value;
+                            log('${controller.toggleValue.value}');
+
+                            controller.languageCode.value = controller.toggleValue.value == 1 ? "en" :"hi";
+                            await GetStorage().write("selected", controller.languageCode.value);
+                            await GetStorage().write("selectedLanguage", value);
+                            await setLocale(controller.languageCode.value);
+                            DemoGeofence.rebirth(context);
+                          },
+                          initialPosition: controller.toggleValue.value == 0 ? true : false ,
+                          buttonColor: ThemeService.primaryColor,
+                          backgroundColor:ThemeService.primaryColor.withOpacity(0.1),
+                          textColor:ThemeService.white,
+                        ),
+                        SizedBox(
+                          height: AppSpacings.s8,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Container(
                   // constraints: const BoxConstraints.expand(),
@@ -79,7 +134,7 @@ class LoginScreen extends GetView<LoginController> {
                                   padding: const EdgeInsets.all(10),
                                   child: Center(
                                     child: Image.asset(
-                                      'assets/logo1.png',
+                                      getTranslated(context, 'LoginLogoPath')!,
                                       fit: BoxFit.fill,
                                     ),
                                   ),
@@ -196,7 +251,7 @@ class LoginScreen extends GetView<LoginController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Email / Phone Number",
+                                    labelText: getTranslated(context, 'LoginEmail')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -338,7 +393,7 @@ class LoginScreen extends GetView<LoginController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Password",
+                                    labelText: getTranslated(context, 'LoginPassword')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -367,7 +422,7 @@ class LoginScreen extends GetView<LoginController> {
                                     } else {
 
                                       FocusScope.of(context).unfocus();
-                                      controller.login();
+                                      controller.login(context);
                                       // Get.toNamed(Routes.home);
                                     }
 
@@ -394,7 +449,7 @@ class LoginScreen extends GetView<LoginController> {
                                           AppSpacings.s15,
                                         ),
                                         child: Text(
-                                          "Login",
+                                          getTranslated(context, 'Login')!,
                                           style: Get.textTheme.headline1!
                                               .copyWith(
                                             color: ThemeService.white,
@@ -419,7 +474,7 @@ class LoginScreen extends GetView<LoginController> {
                                     ),
                                     SizedBox(width: AppSpacings.s10),
                                     Text(
-                                      "OR",
+                                      getTranslated(context, 'OR')!,
                                       style: Get.textTheme.headline1!
                                           .copyWith(
                                         color: ThemeService.primaryColor,
@@ -442,7 +497,7 @@ class LoginScreen extends GetView<LoginController> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "For Vendor Registration",
+                                      getTranslated(context, 'ForVendorRegistration')!,
                                       style: Get.textTheme.headline1!
                                           .copyWith(
                                         color: ThemeService.primaryColor.withOpacity(0.8),
@@ -457,7 +512,7 @@ class LoginScreen extends GetView<LoginController> {
                                         Get.toNamed(Routes.vendorReg);
                                       },
                                       child: Text(
-                                        "Click here",
+                                        getTranslated(context, 'ClickHere')!,
                                         style: Get.textTheme.headline1!
                                             .copyWith(
                                           color: Colors.blueAccent,
@@ -469,6 +524,43 @@ class LoginScreen extends GetView<LoginController> {
                                   ],
                                 ),
                                 SizedBox(height: AppSpacings.s20),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.end,
+                                //   children: [
+                                //     Column(
+                                //       mainAxisAlignment: MainAxisAlignment.start,
+                                //       children: [
+                                //         Text(
+                                //           "Select Language",
+                                //           style: Get.textTheme.bodyText1?.copyWith(
+                                //             fontSize: AppSpacings.s20,
+                                //             fontWeight: FontWeight.w600,
+                                //             color: ThemeService.primaryColor,
+                                //           ),
+                                //         ),
+                                //         SizedBox(
+                                //           height: AppSpacings.s8,
+                                //         ),
+                                //         AnimatedToggle(
+                                //           width: Get.width * 0.5,
+                                //           height: Get.width * 0.12,
+                                //           values: ['Hindi', 'English'],
+                                //           onToggleCallback: (value) {
+                                //             controller.toggleValue.value = value;
+                                //             log('${controller.toggleValue.value}');
+                                //           },
+                                //           initialPosition: controller.toggleValue.value == 0 ? true : false ,
+                                //           buttonColor: ThemeService.primaryColor,
+                                //           backgroundColor:ThemeService.primaryColor.withOpacity(0.1),
+                                //           textColor:ThemeService.white,
+                                //         ),
+                                //         SizedBox(
+                                //           height: AppSpacings.s8,
+                                //         ),
+                                //       ],
+                                //     ),
+                                //   ],
+                                // ),
                               ],
                             ),
                           ),
@@ -477,6 +569,7 @@ class LoginScreen extends GetView<LoginController> {
                     ),
                   ),
                 ),
+
               ],
             ),
           ),

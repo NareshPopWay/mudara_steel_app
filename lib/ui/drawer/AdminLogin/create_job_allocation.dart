@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -62,7 +63,7 @@ class CreateJobAllocationScreen extends GetView<CreateJobAllocationController> {
                             ),
                             SizedBox(width: AppSpacings.s10),
                             Text(
-                              "Create Job Allocation",
+                              getTranslated(context, 'Create Job Allocation')!,
                               style: Get.textTheme.headlineSmall!.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: ThemeService.primaryColor,
@@ -111,7 +112,7 @@ class CreateJobAllocationScreen extends GetView<CreateJobAllocationController> {
                                 searchDropDwonWidget(
                                   selectedValue: controller.selectedJobName,
                                   selectedId: controller.selectedJobNameId,
-                                  emptyTitle: "Job Name",
+                                  emptyTitle: getTranslated(context, 'JobName')!,
                                   list: controller.jobNameList,
                                   isExpanded: controller.isJobNameExpanded,
                                   isSearching: controller.isJobNameSearching,
@@ -123,7 +124,7 @@ class CreateJobAllocationScreen extends GetView<CreateJobAllocationController> {
                                 searchDropDwonWidget(
                                   selectedValue: controller.selectedVendorJobBid,
                                   selectedId: controller.selectedVendorJobBidId,
-                                  emptyTitle: "Vendor Job Bid",
+                                  emptyTitle: getTranslated(context, 'VendorJobBid')!,
                                   list: controller.vendorJobBidList,
                                   isExpanded: controller.isVendorJobBidExpanded,
                                   isSearching: controller.isVendorJobBidSearching,
@@ -178,7 +179,7 @@ class CreateJobAllocationScreen extends GetView<CreateJobAllocationController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Cost",
+                                    labelText: getTranslated(context, 'Cost')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -243,7 +244,7 @@ class CreateJobAllocationScreen extends GetView<CreateJobAllocationController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Remark",
+                                    labelText: getTranslated(context, 'Remark')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -272,12 +273,12 @@ class CreateJobAllocationScreen extends GetView<CreateJobAllocationController> {
                       duration: const Duration(milliseconds: 150),
                       onPressed: (){
                         if(controller.selectedJobNameId.value == ""){
-                          Ui.ErrorSnackBar(title: "Select Job Name",message: "Please Select Job Name");
+                          Ui.ErrorSnackBar(title: "${getTranslated(context, 'SelectJobNameValidator')!}",message: "${getTranslated(context, 'PleaseSelectJobName')!}");
                         }else if(controller.selectedVendorJobBidId.value == ""){
-                          Ui.ErrorSnackBar(title: "Select Vendor Bid",message: "Please Select Vendor Bid");
+                          Ui.ErrorSnackBar(title: "${getTranslated(context, 'SelectVendorBidValidator')!}",message: "${getTranslated(context, 'SelectVendorBidValidator1')!}");
                         }else{
                           FocusScope.of(context).unfocus();
-                          controller.createJobAllocation();
+                          controller.createJobAllocation(context);
                         }
                       },
                       child: Container(
@@ -302,7 +303,7 @@ class CreateJobAllocationScreen extends GetView<CreateJobAllocationController> {
                           ),
                           child: Center(
                             child: Text(
-                              "Submit",
+                              getTranslated(context, 'Submit')!,
                               style: Get.textTheme.headline1!.copyWith(
                                 color: ThemeService.primaryColor,
                                 fontSize: AppSpacings.s25,

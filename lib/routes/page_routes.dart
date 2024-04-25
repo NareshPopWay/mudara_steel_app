@@ -20,7 +20,7 @@ import 'package:mudara_steel_app/ui/drawer/AdminLogin/Job/job_list_screen.dart';
 import 'package:mudara_steel_app/ui/drawer/VendorLogin/JobBid/edit_job_bid_screen.dart';
 import 'package:mudara_steel_app/ui/drawer/VendorLogin/my_allocated_job_screen.dart';
 import 'package:mudara_steel_app/ui/drawer/VendorLogin/JobBid/my_bid_screen.dart';
-import 'package:mudara_steel_app/ui/drawer/VendorLogin/my_job_screen.dart';
+import 'package:mudara_steel_app/ui/drawer/VendorLogin/MyJob/my_job_screen.dart';
 import 'package:mudara_steel_app/ui/drawer/AdminLogin/Job_bid/bid_list.dart';
 import 'package:mudara_steel_app/ui/drawer/VendorLogin/apply_job_screen.dart';
 import 'package:mudara_steel_app/ui/drawer/AdminLogin/create_job.dart';

@@ -9,6 +9,7 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -68,7 +69,7 @@ class VendorListScreen extends GetView<VendorListController> {
                           ),
                           SizedBox(width: AppSpacings.s10),
                           Text(
-                            "Vendor",
+                            getTranslated(context, 'Vendor')!,
                             style: Get.textTheme.headlineSmall!.copyWith(
                               fontWeight: FontWeight.w600,
                               color: ThemeService.primaryColor,
@@ -84,7 +85,7 @@ class VendorListScreen extends GetView<VendorListController> {
                             child: Row(
                               children: [
                                 Text(
-                                  "Show",
+                                  getTranslated(context, 'Show')!,
                                   style: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s18),
                                 ),
                                 SizedBox(
@@ -180,7 +181,7 @@ class VendorListScreen extends GetView<VendorListController> {
                           ),
                           // backgroundColor: ThemeService.grayScale.withOpacity(.7),
                           itemColor: ThemeService.black,
-                          placeholder: 'Search vendor',
+                          placeholder:  getTranslated(context, 'Search')!,
                           controller: controller.searchTextEditController,
                           placeholderStyle: TextStyle(
                               fontSize: AppSpacings.s18,
@@ -366,9 +367,9 @@ class VendorListScreen extends GetView<VendorListController> {
                                           color: ThemeService.primaryColor,
                                           thickness: 2),
                                       dataRow(
-                                        title1: "Vendor Name",
+                                        title1:  getTranslated(context, 'Vendor name')!,
                                         value1: controller.vendorList[index].vendorName ?? "-",
-                                        title2: "Phone",
+                                        title2:  getTranslated(context, 'Phone')!,
                                         value2:  controller.vendorList[index].phone ?? "-",
                                       ),
                                       Divider(
@@ -378,9 +379,9 @@ class VendorListScreen extends GetView<VendorListController> {
                                           color: ThemeService.primaryColor.withOpacity(0.2),
                                           thickness: 1),
                                       dataRow(
-                                        title1: "Driver Name",
+                                        title1:  getTranslated(context, 'DriverName')!,
                                         value1: controller.vendorList[index].driverName ?? "-",
-                                        title2: "Driver Age",
+                                        title2:  getTranslated(context, 'DriverAge')!,
                                         value2: controller.vendorList[index].driverAge ?? "-",
                                       ),
                                       Divider(
@@ -390,9 +391,9 @@ class VendorListScreen extends GetView<VendorListController> {
                                           color: ThemeService.primaryColor.withOpacity(0.2),
                                           thickness: 1),
                                       dataRow(
-                                        title1: "Driving License No",
+                                        title1: getTranslated(context, 'DriversLicenseNumber')!,
                                         value1: controller.vendorList[index].driverLicenseNumber ?? "-",
-                                        title2: "Vehicle Insurance No",
+                                        title2:  getTranslated(context, 'VehicleInsuranceNumber')!,
                                         value2: controller.vendorList[index].vehicleInsuranceNumber ?? "-",
                                       ),
                                       Divider(
@@ -402,9 +403,9 @@ class VendorListScreen extends GetView<VendorListController> {
                                           color: ThemeService.primaryColor.withOpacity(0.2),
                                           thickness: 1),
                                       dataRow(
-                                        title1: "City",
+                                        title1:  getTranslated(context, 'City')!,
                                         value1: controller.vendorList[index].city ?? "-",
-                                        title2: "Remark",
+                                        title2:  getTranslated(context, 'Remark')!,
                                         value2: controller.vendorList[index].remark ?? "-",
                                       ),
                                       Divider(
@@ -415,7 +416,7 @@ class VendorListScreen extends GetView<VendorListController> {
                                           thickness: 1),
 
                                       dataRow(
-                                        title1: "Company Name",
+                                        title1:  getTranslated(context, 'CompanyName')!,
                                         value1: controller.vendorList[index].companyName ?? "-",
                                         isSingle: true
                                       ),
@@ -553,7 +554,7 @@ class VendorListScreen extends GetView<VendorListController> {
                                                     borderRadius: BorderRadius.circular(12)),
                                                 child: Center(
                                                   child: Text(
-                                                     controller.vendorList[index].isApproved == true ? "DisApprove" : "Approve",
+                                                     controller.vendorList[index].isApproved == true ?  getTranslated(context, 'DisApprove')! : getTranslated(context, 'Approve')!,
                                                     style: Get.textTheme.headlineLarge!.copyWith(
                                                       color: ThemeService.primaryColor,
                                                       fontSize: AppSpacings.s20,
@@ -630,7 +631,7 @@ class VendorListScreen extends GetView<VendorListController> {
                        ),
                        SizedBox(width: AppSpacings.s6),
                        Text(
-                         "Filter",
+                         getTranslated(context, 'Filter')!,
                          style: Get.textTheme.headlineSmall!.copyWith(
                            fontWeight: FontWeight.w400,
                            fontSize: AppSpacings.s25,
@@ -660,7 +661,7 @@ class VendorListScreen extends GetView<VendorListController> {
                        // Get.back();
                      },
                      child: Text(
-                       "Clear all",
+                       getTranslated(context, 'ClearAll')!,
                        style: Get.textTheme.headlineSmall!.copyWith(
                          fontWeight: FontWeight.w400,
                          color: ThemeService.primaryColor,
@@ -757,7 +758,7 @@ class VendorListScreen extends GetView<VendorListController> {
                                borderRadius: const BorderRadius.all(
                                    Radius.circular(10)),
                              ),
-                             labelText: "From Date",
+                             labelText: getTranslated(context, 'FromDate')!,
                              suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
                              contentPadding:
                              const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -824,7 +825,7 @@ class VendorListScreen extends GetView<VendorListController> {
                                borderRadius: const BorderRadius.all(
                                    Radius.circular(10)),
                              ),
-                             labelText: "To Date",
+                             labelText: getTranslated(context, 'ToDate')!,
                              suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
                              contentPadding:
                              const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -912,7 +913,7 @@ class VendorListScreen extends GetView<VendorListController> {
                        AppSpacings.s12,
                      ),
                      child: Text(
-                       "Apply",
+                       getTranslated(context, 'Apply')!,
                        style: Get.textTheme.headline1!.copyWith(
                          color: ThemeService.black,
                          fontSize: AppSpacings.s22,
@@ -960,7 +961,7 @@ class VendorListScreen extends GetView<VendorListController> {
              height: Get.width * 0.05,
            ),
            Text(
-             'Are you sure?',
+             getTranslated(context, 'AreYouSure')!,
              style: Get.textTheme.titleSmall!.copyWith(
                color: ThemeService.primaryColor,
                fontSize: AppSpacings.s25,
@@ -971,7 +972,7 @@ class VendorListScreen extends GetView<VendorListController> {
              height: Get.width * 0.05,
            ),
            Text(
-             'You want to delete this Vendor\n( $jobName )',
+             '${getTranslated(context, 'YouWantToDeleteThisVendor')!}\n( $jobName )',
              style: Get.textTheme.bodyLarge!.copyWith(
                color: ThemeService.black,
                fontSize: AppSpacings.s20,
@@ -998,7 +999,7 @@ class VendorListScreen extends GetView<VendorListController> {
                    ),
                    child: Center(
                      child: Text(
-                       "Cancel",
+                       getTranslated(context, 'Cancel')!,
                        style: Get.textTheme.bodyLarge!.copyWith(
                          fontSize: Get.width * 0.040,
                          fontWeight: FontWeight.w600,
@@ -1030,7 +1031,7 @@ class VendorListScreen extends GetView<VendorListController> {
                    ),
                    child: Center(
                      child: Text(
-                       "Delete",
+                       getTranslated(context, 'Delete')!,
                        style: Get.textTheme.bodyLarge!.copyWith(
                          fontSize: Get.width * 0.040,
                          fontWeight: FontWeight.w600,
