@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/model/field_item_value_model.dart';
@@ -130,15 +131,15 @@ class VendorListController extends GetxController {
         vendorPage = 0;
         vendorList.clear();
         getVendor();
-        Ui.SuccessSnackBar(title:'Successful',message: isApprove == true ? 'Vendor Approved successfully done' : 'Vendor DisApproved successfully done');
+        Ui.SuccessSnackBar(title:getTranslated(context, 'Successful')!,message: isApprove == true ? getTranslated(context, 'VendorApprovedSuccessfullyDone')! : getTranslated(context, 'VendorDisApprovedSuccessfullyDone')!);
       }else if(successModel.msgType == 1){
         isLoading.value = false;
-        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+        Ui.ErrorSnackBar(title:getTranslated(context, 'SomethingWentWrong')!,message: successModel.message);
       }
 
     }catch(e){
       isLoading.value = false;
-      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Vendor not deleted");
+      Ui.ErrorSnackBar(title:getTranslated(context, 'SomethingWentWrong')!,message:getTranslated(context, 'Approved/DisApproved')!);
     }
   }
 
@@ -155,15 +156,15 @@ class VendorListController extends GetxController {
         vendorPage = 0;
         vendorList.clear();
         getVendor();
-        Ui.SuccessSnackBar(title:'Successful',message:'Vendor deleted successful');
+        Ui.SuccessSnackBar(title:getTranslated(context, 'Successful')!,message:getTranslated(context, 'VendorDeletedSuccessful')!);
       }else if(successModel.msgType == 1){
         isDeleteVendor.value = false;
-        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+        Ui.ErrorSnackBar(title:getTranslated(context, 'SomethingWentWrong')!,message: successModel.message);
       }
 
     }catch(e){
       isDeleteVendor.value = false;
-      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Vendor not deleted");
+      Ui.ErrorSnackBar(title: getTranslated(context, 'SomethingWentWrong')!,message:getTranslated(context, 'VendorNotDeleted')!);
     }
   }
 
@@ -178,11 +179,11 @@ class VendorListController extends GetxController {
 
       }else if(successModel.msgType == 1){
         isLoading.value = false;
-        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+        Ui.ErrorSnackBar(title:getTranslated(context, 'SomethingWentWrong')!,message: successModel.message);
       }
     }catch(e){
       isLoading.value = false;
-      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Vendor not deleted");
+      Ui.ErrorSnackBar(title:getTranslated(context, 'SomethingWentWrong')!,message: getTranslated(context, 'VendorNotDeleted')!);
     }
   }
 }

@@ -7,6 +7,7 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -69,7 +70,7 @@ class HomeScreen extends GetView<RootController> {
                             child: Text(
                               controller.userName.value != ""
                                   ? controller.userName.value
-                                  : "Admin",
+                                  : getTranslated(context, 'Admin')!,
                               style: TextStyle(
                                 fontSize: AppSpacings.s28,
                                 color: ThemeService.primaryColor,
@@ -119,7 +120,7 @@ class HomeScreen extends GetView<RootController> {
                       ],
                     )
                   : Tooltip(
-                      message: 'Profile',
+                      message: getTranslated(context, 'Profile')!,
                       child: GestureDetector(
                         onTap: () {
                           Get.toNamed(Routes.vendorProfile);
@@ -149,7 +150,7 @@ class HomeScreen extends GetView<RootController> {
                                 child: Text(
                                   controller.userName.value != ""
                                       ? controller.userName.value
-                                      : "Vendor",
+                                      : getTranslated(context, 'Vendor')!,
                                   style: TextStyle(
                                     fontSize: AppSpacings.s25,
                                     color: ThemeService.primaryColor,
@@ -217,7 +218,7 @@ class HomeScreen extends GetView<RootController> {
               // ),
               actions: [
                 Tooltip(
-                  message: 'Log Out',
+                  message: getTranslated(context, 'Log Out')!,
                   child: Bounce(
                     duration: const Duration(milliseconds: 90),
                     onPressed: () async {
@@ -241,18 +242,18 @@ class HomeScreen extends GetView<RootController> {
                                   shadowColor:
                                       ThemeService.primaryColor.withOpacity(.5),
                                   contentPadding: const EdgeInsets.all(5.0),
-                                  shape: RoundedRectangleBorder(
+                                  shape: const RoundedRectangleBorder(
                                     side: BorderSide(
                                       color: ThemeService.primaryColor,
                                       style: BorderStyle.solid,
                                     ),
-                                    borderRadius: const BorderRadius.all(
+                                    borderRadius: BorderRadius.all(
                                       Radius.circular(10.0),
                                     ),
                                   ),
                                   // titlePadding: EdgeInsets.only(top: Get.height*0.02),
                                   title: Text(
-                                    'Are you sure?',
+                                    getTranslated(context, 'AreYouSure')!,
                                     style: Get.textTheme.headline1!.copyWith(
                                         color: ThemeService.primaryColor,
                                         fontSize: Get.width * .050,
@@ -271,11 +272,11 @@ class HomeScreen extends GetView<RootController> {
                                           height: Get.width * 0.02,
                                         ),
                                         Text(
-                                          'Do you want to LogOut ',
+                                          getTranslated(context, 'DoYouWantToLogOut')!,
                                           style:
                                               Get.textTheme.bodyLarge!.copyWith(
                                             color: ThemeService.textColor,
-                                            fontSize: Get.width * .045,
+                                            fontSize: Get.width * .040,
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
@@ -303,7 +304,7 @@ class HomeScreen extends GetView<RootController> {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "Close",
+                                                    getTranslated(context, 'Close')!,
                                                     style: Get
                                                         .textTheme.bodyLarge!
                                                         .copyWith(
@@ -341,7 +342,7 @@ class HomeScreen extends GetView<RootController> {
                                                 ;
                                               },
                                               child: Container(
-                                                width: Get.width * 0.2,
+                                                width: Get.width * 0.3,
                                                 padding: EdgeInsets.all(
                                                     Get.width * .02),
                                                 decoration: BoxDecoration(
@@ -353,7 +354,7 @@ class HomeScreen extends GetView<RootController> {
                                                 ),
                                                 child: Center(
                                                   child: Text(
-                                                    "Logout",
+                                                    getTranslated(context, 'LogOut')!,
                                                     style: Get
                                                         .textTheme.bodyLarge!
                                                         .copyWith(
@@ -403,7 +404,7 @@ class HomeScreen extends GetView<RootController> {
                   right: AppSpacings.s20,
                 ),
                 child: Text(
-                  "Version : ${controller.appVersion.value}",
+                  "${getTranslated(context, 'Version')!} : ${controller.appVersion.value}",
                   style: Get.textTheme.bodyLarge!.copyWith(
                     fontSize: AppSpacings.s20,
                     fontWeight: FontWeight.w700,
@@ -456,7 +457,7 @@ class HomeScreen extends GetView<RootController> {
                                     height: Get.width * 0.05,
                                   ),
                                   Text(
-                                    'Do you want to exit the app?',
+                                    getTranslated(context, 'DoYouWantToExitTheApp')!,
                                     style: Get.textTheme.bodyLarge!.copyWith(
                                       color: ThemeService.black,
                                       fontSize: AppSpacings.s20,
@@ -486,7 +487,7 @@ class HomeScreen extends GetView<RootController> {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              "Cancel",
+                                              getTranslated(context, 'Cancel')!,
                                               style: Get.textTheme.bodyLarge!
                                                   .copyWith(
                                                 fontSize: Get.width * 0.040,
@@ -517,7 +518,7 @@ class HomeScreen extends GetView<RootController> {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              "Exit",
+                                              getTranslated(context, 'Exit')!,
                                               style: Get.textTheme.bodyLarge!
                                                   .copyWith(
                                                 fontSize: Get.width * 0.040,
@@ -565,12 +566,12 @@ class HomeScreen extends GetView<RootController> {
                         itemBuilder: (context, index) => Obx(() =>
                             AnimationConfiguration.staggeredGrid(
                               position: index,
-                              duration: Duration(milliseconds: 375),
+                              duration: const Duration(milliseconds: 375),
                               columnCount: controller.adminBlocks.length,
                               child: ScaleAnimation(
                                 child: FadeInAnimation(
                                   child: Bounce(
-                                    duration: Duration(milliseconds: 100),
+                                    duration: const Duration(milliseconds: 100),
                                     onPressed: () {
                                       if (index == 0) {
                                         Get.toNamed(Routes.registerVendor);
@@ -618,8 +619,7 @@ class HomeScreen extends GetView<RootController> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             AppSpacings.s2),
-                                                    child: Image.asset(
-                                                        '${controller.adminBlocks.value[index].imgUrl}'),
+                                                    child: Image.asset('${controller.adminBlocks.value[index].imgUrl}'),
                                                     // CachedNetworkImage(
                                                     //   imageUrl: AppConstants.imageUrl ?? "",
                                                     //   height: AppSpacings.s200,
@@ -662,11 +662,7 @@ class HomeScreen extends GetView<RootController> {
                                                   child: Text(
                                                     textAlign: TextAlign.center,
                                                     maxLines: 2,
-                                                    controller
-                                                            .adminBlocks
-                                                            .value[index]
-                                                            .title ??
-                                                        "",
+                                                    getTranslated(context, '${controller.adminBlocks.value[index].title}')!,
                                                     style: Get
                                                         .textTheme.titleMedium
                                                         ?.copyWith(
@@ -708,12 +704,12 @@ class HomeScreen extends GetView<RootController> {
                         itemBuilder: (context, index) => Obx(() =>
                             AnimationConfiguration.staggeredGrid(
                               position: index,
-                              duration: Duration(milliseconds: 375),
+                              duration: const Duration(milliseconds: 375),
                               columnCount: controller.adminBlocks.length,
                               child: ScaleAnimation(
                                 child: FadeInAnimation(
                                     child: Bounce(
-                                  duration: Duration(milliseconds: 100),
+                                  duration: const Duration(milliseconds: 100),
                                   onPressed: () {
                                     if (index == 0) {
                                       Get.toNamed(Routes.myJob);
@@ -799,9 +795,7 @@ class HomeScreen extends GetView<RootController> {
                                                 child: Text(
                                                   textAlign: TextAlign.center,
                                                   maxLines: 2,
-                                                  controller.vendorBlock
-                                                          .value[index].title ??
-                                                      "",
+                                                  getTranslated(context, '${controller.vendorBlock.value[index].title}')!,
                                                   style: Get
                                                       .textTheme.titleMedium
                                                       ?.copyWith(

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
@@ -83,11 +84,11 @@ class ApplyJobController extends GetxController {
   // }
 
 
-  Future<void> applyJob()async{
+  Future<void> applyJob(context)async{
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
       isLoading.value = false;
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: getTranslated(context, 'NoInternetConnection')!,message:getTranslated(context, 'ConnectWithNetwork')!);
       return;
     }
     try{
@@ -104,22 +105,22 @@ class ApplyJobController extends GetxController {
         isLoading.value = false;
         if (jobId.value == "") {
           Get.back();
-          Ui.SuccessSnackBar(title:'Successful',message:'Job applied successfully done');
+          Ui.SuccessSnackBar(title:getTranslated(context, 'Successful')!,message:getTranslated(context, 'JobAppliedSuccessfullyDone')!);
         } else {
           Get.back();
           myOpenJobController.jobPage = 0;
           myOpenJobController.jobList.clear();
           myOpenJobController.getJob();
-          Ui.SuccessSnackBar(title:'Successful',message:'Job applied Successfully done ');
+          Ui.SuccessSnackBar(title:getTranslated(context, 'Successful')!,message:getTranslated(context, 'JobAppliedSuccessfullyDone')!);
         }
       }else if(successModel.msgType == 1){
         isLoading.value = false;
-        Ui.ErrorSnackBar(title: "Something went wrong ",message: successModel.message);
+        Ui.ErrorSnackBar(title:getTranslated(context, 'SomethingWentWrong')!,message: successModel.message);
       }
 
     }catch(e){
       isLoading.value = false;
-      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Lead not added");
+      Ui.ErrorSnackBar(title: getTranslated(context, 'SomethingWentWrong')!,message: getTranslated(context, 'JobNotApplied')!);
     }
   }
 

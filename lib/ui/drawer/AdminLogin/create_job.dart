@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -120,7 +121,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                             ),
                             SizedBox(width: AppSpacings.s10),
                             Text(
-                              "Create Job",
+                              getTranslated(context, 'Create Job')!,
                               style: Get.textTheme.headlineSmall!.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: ThemeService.primaryColor,
@@ -166,6 +167,9 @@ class CreateJobScreen extends GetView<CreateJobController> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children:[
+                                SizedBox(
+                                  height: AppSpacings.s10,
+                                ),
                                 TextFormField(
                                   controller: controller.jobName,
                                   enabled: true,
@@ -178,7 +182,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                   ),
                                   validator: (e) {
                                     if (e!.isEmpty) {
-                                      return "Job name is Required";
+                                      return getTranslated(context, 'JobNameValidator')!;
                                     }
                                     return null;
                                   },
@@ -218,7 +222,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Job name*",
+                                    labelText: "${getTranslated(context, 'JobName')!}*",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -249,7 +253,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                   ),
                                   validator: (e) {
                                     if (e!.isEmpty) {
-                                      return "From Location is Required";
+                                      return getTranslated(context, 'FromLocationValidator')!;
                                     }
                                     return null;
                                   },
@@ -289,7 +293,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "From Location*",
+                                    labelText: "${getTranslated(context, 'FromLocation')!}*",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -320,7 +324,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                   ),
                                   validator: (e) {
                                     if (e!.isEmpty) {
-                                      return "To Location is Required";
+                                      return getTranslated(context, 'ToLocationValidator')!;
                                     }
                                     return null;
                                   },
@@ -360,7 +364,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "To Location*",
+                                    labelText: "${getTranslated(context, 'ToLocation')!}*",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -390,7 +394,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                   ),
                                   validator: (e) {
                                     if (e!.isEmpty) {
-                                      return "Delivery Date is Required";
+                                      return getTranslated(context, 'DeliveryDateValidator')!;
                                     }
                                     return null;
                                   },
@@ -435,7 +439,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Delivery Date",
+                                    labelText: getTranslated(context, 'DeliveryDate')!,
                                     suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -503,7 +507,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Weight",
+                                    labelText: getTranslated(context, 'Weight')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -574,7 +578,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Weight Unit",
+                                    labelText: getTranslated(context, 'WeightUnit')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -645,7 +649,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Remark",
+                                    labelText: getTranslated(context, 'Remark')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -667,7 +671,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                 searchDropDwonWidget(
                                   selectedValue: controller.selectedJobType,
                                   selectedId: controller.selectedJobTypeId,
-                                  emptyTitle: "Job Type",
+                                  emptyTitle: getTranslated(context, 'JobType')!,
                                   list: controller.jobTypeList,
                                   isExpanded: controller.isJobTypeExpanded,
                                   isSearching: controller.isJobTypeSearching,
@@ -679,7 +683,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                 searchDropDwonWidget(
                                   selectedValue: controller.selectedJobStatus,
                                   selectedId: controller.selectedJobStatusId,
-                                  emptyTitle: "Job Status",
+                                  emptyTitle: getTranslated(context, 'JobStatus')!,
                                   list: controller.jobStatusList,
                                   isExpanded: controller.isJobStatusExpanded,
                                   isSearching: controller.isJobStatusSearching,
@@ -700,7 +704,9 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                   height: AppSpacings.s8,
                                 ),
                                 AnimatedToggle(
-                                  values: ['Trailer', 'Truck'],
+                                  width: Get.width * 0.5,
+                                  height: Get.width * 0.12,
+                                  values: ['${getTranslated(context, 'Trailer')!}', '${getTranslated(context, 'Truck')!}'],
                                   onToggleCallback: (value) {
                                       controller.toggleValue.value = value;
                                       log('${controller.toggleValue.value}');
@@ -724,12 +730,12 @@ class CreateJobScreen extends GetView<CreateJobController> {
                           FocusScope.of(context).unfocus();
                           controller.key.currentState!.save();
                             if(controller.selectedJobTypeId.value == ""){
-                            Ui.ErrorSnackBar(title: "Select Job Type",message: "Please Select Job Type");
+                            Ui.ErrorSnackBar(title: "${getTranslated(context, 'SelectJobTypeValidator')!}",message: "${getTranslated(context, 'SelectJobTypeValidator2')!}");
                             }else if(controller.selectedJobStatusId.value == ""){
-                            Ui.ErrorSnackBar(title: "Select Job Status",message: "Please Select Job Status");
+                            Ui.ErrorSnackBar(title: "${getTranslated(context, 'SelectJobStatusValidator')!}",message: "${getTranslated(context, 'SelectJobStatusValidator2')!}");
                             }else{
                             FocusScope.of(context).unfocus();
-                            controller.createJob();
+                            controller.createJob(context);
                           }
                         }
                       },
@@ -755,7 +761,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                           ),
                           child: Center(
                             child: Text(
-                              "Submit",
+                              getTranslated(context, 'Submit')!,
                               style: Get.textTheme.headline1!.copyWith(
                                 color: ThemeService.primaryColor,
                                 fontSize: AppSpacings.s25,

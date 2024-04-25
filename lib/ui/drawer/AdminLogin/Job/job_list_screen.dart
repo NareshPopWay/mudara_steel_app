@@ -9,6 +9,7 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
 import 'package:mudara_steel_app/common/widget/dropdown_widget/dropdown_below.dart';
@@ -56,7 +57,7 @@ class JobListScreen extends GetView<JobListController> {
                       ),
                       SizedBox(width: AppSpacings.s10),
                       Text(
-                        'Job List',
+                        getTranslated(context, 'Job List')!,
                         style: Get.textTheme.headlineSmall!.copyWith(
                           fontWeight: FontWeight.w600,
                           color: ThemeService.primaryColor,
@@ -175,12 +176,12 @@ class JobListScreen extends GetView<JobListController> {
               });
 
             },
-            tabs: const [
+            tabs:  [
               Tab(
-                text: "Open",
+                text: getTranslated(context, 'Open')!,
               ),
               Tab(
-                text: "Completed",
+                text: getTranslated(context, 'Completed')!,
               ),
             ],
           ),

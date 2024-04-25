@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/ui.dart';
@@ -87,11 +88,11 @@ class CreateJobAllocationController extends GetxController {
     super.onInit();
   }
 
-  Future<void> createJobAllocation()async{
+  Future<void> createJobAllocation(context)async{
     bool isInternet = await Constants.isInternetAvail();
     if (!isInternet) {
       isLoading.value = false;
-      Ui.worningSnackBar(title: 'No Internet connection',message:'please connect with network');
+      Ui.worningSnackBar(title: getTranslated(context, 'NoInternetConnection')!,message:getTranslated(context, 'ConnectWithNetwork')!);
       return;
     }
     try{
@@ -118,7 +119,7 @@ class CreateJobAllocationController extends GetxController {
           // jobAllocationListController.getJobAllocation();
           // Get.offAndToNamed(Routes.jobAllocationList,arguments: "Job Allocation List");
           Get.back();
-          Ui.SuccessSnackBar(title:'Successful',message:'Job allocated successfully done');
+          Ui.SuccessSnackBar(title:getTranslated(context, 'Successful')!,message:getTranslated(context, 'JobAllocatedSuccessfullyDone')!);
         } else {
           Get.back();
           // jobAllocationListController.jobAllocationPage = 0;
@@ -131,7 +132,7 @@ class CreateJobAllocationController extends GetxController {
           completedJobBidListController.jobBidPage = 0;
           completedJobBidListController.jobBidList.clear();
           completedJobBidListController.getJobBidList();
-          Ui.SuccessSnackBar(title:'Successful',message:'Job Updated Successfully done ');
+          Ui.SuccessSnackBar(title:getTranslated(context, 'Successful')!,message:getTranslated(context, 'JobUpdatedSuccessfullyDone')!);
         }
       }else if(successModel.msgType == 1){
         isLoading.value = false;
@@ -140,7 +141,7 @@ class CreateJobAllocationController extends GetxController {
 
     }catch(e){
       isLoading.value = false;
-      Ui.ErrorSnackBar(title: "Something went wrong ",message: "Lead not added");
+      Ui.ErrorSnackBar(title: "Something went wrong ",message:getTranslated(context, 'JobNotAllocated')!);
     }
   }
 

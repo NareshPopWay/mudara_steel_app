@@ -6,12 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:get/get.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
+import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
 import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/controllers/AdminLoginControllers/vendor_controller/register_vendor_conteoller.dart';
 import 'package:path/path.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 class RegisterVendorScreen extends GetView<RegisterVendorController> {
   const RegisterVendorScreen({Key? key}) : super(key: key);
@@ -117,7 +121,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                             ),
                             SizedBox(width: AppSpacings.s10),
                             Text(
-                              "Register Vendor",
+                              getTranslated(context, 'Register Vendor')!,
                               style: Get.textTheme.headlineSmall!.copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: ThemeService.primaryColor,
@@ -178,7 +182,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                   ),
                                   validator: (e) {
                                     if (e!.isEmpty) {
-                                      return "Vendor name is Required";
+                                      return "${getTranslated(context, 'vNameValidator')!}";
                                     }
                                     return null;
                                   },
@@ -218,7 +222,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Vendor name*",
+                                    labelText:"${getTranslated(context, 'Vendor name')!}*",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -251,11 +255,11 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                   validator: (e) {
                                     if (e!.isEmpty) {
                                       controller.noteFocus.requestFocus();
-                                      return "password is Required";
+                                      return "${getTranslated(context, 'PasswordValidator')!}";
                                     }else if (!controller.passwordRegex.hasMatch(e)) {
                                       controller.noteFocus.requestFocus();
                                       // Return an error message if the input doesn't match the pattern
-                                      return 'Password must be at least 8 characters long,\nwith at least one uppercase letter,\none lowercase letter, one number,\nand one special character.';
+                                      return "${getTranslated(context, 'PasswordValidator1')!}";
                                     }
                                     return null;
                                   },
@@ -295,7 +299,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "password*",
+                                    labelText: "${getTranslated(context, 'Password')!}*",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -367,7 +371,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Driver name",
+                                    labelText: getTranslated(context, 'DriverName')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -438,7 +442,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Driver Age",
+                                    labelText: getTranslated(context, 'DriverAge')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -509,7 +513,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Address(as per Aadhar)",
+                                    labelText: getTranslated(context, 'Address(as per Aadhar)')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -581,7 +585,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Email",
+                                    labelText: getTranslated(context, 'VEmail')!,
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -623,10 +627,10 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                   validator:(e){
                                     if (e!.isEmpty) {
                                       // controller.noteFocus.requestFocus();
-                                      return "Phone Number is Required";
+                                      return "${getTranslated(context, 'PhoneNoValidator')!}";
                                     }else if(e.length < 10){
                                       // controller.noteFocus.requestFocus();
-                                      return "phone number must be 10 digits";
+                                      return "${getTranslated(context, 'PhoneNoValidator2')!}";
                                     }
                                     return null;
                                   },
@@ -666,7 +670,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Phone*",
+                                    labelText: "${getTranslated(context, 'Phone')!}*",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -696,7 +700,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                   ),
                                   validator: (e) {
                                     if (e!.isEmpty) {
-                                      return "company name";
+                                      return "${getTranslated(context, 'CompanyValidator')!}";
                                     }
                                     return null;
                                   },
@@ -736,7 +740,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Company name*",
+                                    labelText: "${getTranslated(context, 'CompanyName')!}*",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -807,7 +811,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Drivers license number",
+                                    labelText: "${getTranslated(context, 'DriversLicenseNumber')!}",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -878,7 +882,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
-                                    labelText: "Vehicle insurance Number",
+                                    labelText:"${getTranslated(context, 'VehicleInsuranceNumber')!}",
                                     contentPadding:
                                     const EdgeInsets.fromLTRB(10, 10, 0, 0),
                                     labelStyle: TextStyle(
@@ -897,13 +901,117 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                 SizedBox(
                                   height: AppSpacings.s15,
                                 ),
-                                Text(
-                                  "Upload Aadhar",
-                                  style: Get.textTheme.bodyText1?.copyWith(
-                                    fontSize: AppSpacings.s15,
-                                    fontWeight: FontWeight.w600,
-                                    color: ThemeService.primaryColor,
-                                  ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "${getTranslated(context, 'UploadAadhar')!}",
+                                      style: Get.textTheme.bodyText1?.copyWith(
+                                        fontSize: AppSpacings.s18,
+                                        fontWeight: FontWeight.w600,
+                                        color: ThemeService.primaryColor,
+                                      ),
+                                    ),
+                                    // if(controller.getFilePath.value != "")
+                                    // GestureDetector(
+                                    //    onTap :(){
+                                    //      showGeneralDialog(
+                                    //          transitionDuration: const Duration(milliseconds: 400),
+                                    //          barrierDismissible: true,
+                                    //          barrierLabel: '',
+                                    //          pageBuilder: (ctx, a1, a2) {
+                                    //            return Container();
+                                    //          },
+                                    //          context: context,
+                                    //          transitionBuilder: (ctx, a1, a2, child) {
+                                    //            var curve = Curves.easeInOut.transform(a1.value);
+                                    //            return Transform.scale(
+                                    //                scale: curve,
+                                    //                child: Opacity(
+                                    //                    opacity: a1.value,
+                                    //                    child: AlertDialog(
+                                    //                      backgroundColor: Colors.transparent,
+                                    //                      elevation: 0,
+                                    //                      contentPadding: const EdgeInsets.all(5.0),
+                                    //                      shape: const RoundedRectangleBorder(
+                                    //                        borderRadius: BorderRadius.all(
+                                    //                          Radius.circular(10.0),
+                                    //                        ),
+                                    //                      ),
+                                    //                      content: Center(
+                                    //                        child: Column(
+                                    //                          mainAxisSize: MainAxisSize.min,
+                                    //                          children: [
+                                    //                            Align(
+                                    //                              alignment: const Alignment(1.10, -2.98),
+                                    //                              child: InkWell(
+                                    //                                onTap: () {
+                                    //                                  Get.back();
+                                    //                                },
+                                    //                                child: const Icon(
+                                    //                                  Icons.close,
+                                    //                                  color: ThemeService.primaryColor,
+                                    //                                  size: 30,
+                                    //                                ),
+                                    //                              ),
+                                    //                            ),
+                                    //                            Center(
+                                    //                              child: Container(
+                                    //                                padding: EdgeInsets.only(
+                                    //                                  // left: AppSpacings.s40,
+                                    //                                  // right: AppSpacings.s50,
+                                    //                                    top: AppSpacings.s10,
+                                    //                                    bottom: AppSpacings.s10),
+                                    //                                decoration: BoxDecoration(
+                                    //                                  color: Colors.white,
+                                    //                                  borderRadius:
+                                    //                                  BorderRadius.circular(14),
+                                    //                                ),
+                                    //                                child: InteractiveViewer(
+                                    //                                  panEnabled: true,
+                                    //                                  maxScale: 4,
+                                    //                                  trackpadScrollCausesScale: true,
+                                    //                                  child: CachedNetworkImage(
+                                    //                                    imageUrl: controller.getFilePath.value != null ? APIProvider().baseUrl+controller.getFilePath.value :'http://103.209.145.199:5062' ,
+                                    //                                    // height: AppSpacings.s130,
+                                    //                                    // width: AppSpacings.s200,
+                                    //                                    fit: BoxFit.contain,
+                                    //                                    placeholder: (context, url) => SizedBox(
+                                    //                                      // height: AppSpacings.s100,
+                                    //                                      child: Shimmer.fromColors(
+                                    //                                        baseColor: Colors.grey.shade300,
+                                    //                                        highlightColor: Colors.grey.shade100,
+                                    //                                        direction: ShimmerDirection.ltr,
+                                    //                                        child: Container(
+                                    //                                          color: Colors.white,
+                                    //                                        ),
+                                    //                                      ),
+                                    //                                    ),
+                                    //                                    errorWidget: (context, url, error) => Center(
+                                    //                                      child: Text(
+                                    //                                        getTranslated(context, 'ImageNotAvailable')!,
+                                    //                                        textAlign: TextAlign.center,
+                                    //                                        style: TextStyle(
+                                    //                                          color: ThemeService.black,
+                                    //                                          fontSize: AppSpacings.s30,
+                                    //                                        ),
+                                    //                                      ),
+                                    //                                    ),
+                                    //                                  ),
+                                    //                                ),
+                                    //                              ),
+                                    //                            )
+                                    //                          ],
+                                    //                        ),
+                                    //                      ),
+                                    //                    )
+                                    //                  // AlertDialog(
+                                    //                ));
+                                    //          });
+                                    //
+                                    //    },
+                                    //     child: Icon(Icons.info_outline,color: ThemeService.primaryColor,weight: AppSpacings.s25,))
+                                  ],
                                 ),
                                 // Text(
                                 //   "Word and Excel fiels are allowed",
@@ -936,7 +1044,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                         fontWeight: FontWeight.w600,
                                         color: ThemeService.primaryColor,
                                       ),
-                                    ) :  Text('Browse to choose file',
+                                    ) :  Text('${getTranslated(context, 'BrowseToChooseFile')!}',
                                       style: Get.textTheme.bodyText1?.copyWith(
                                         fontSize: AppSpacings.s15,
                                         color: ThemeService.black,
@@ -956,7 +1064,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(10),
                                           child: Text(
-                                            "Upload",
+                                            getTranslated(context, 'Upload')!,
                                             style: Get.textTheme.bodyText1?.copyWith(
                                               fontSize: AppSpacings.s20,
                                               fontWeight: FontWeight.w600,
@@ -987,7 +1095,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                           // } else {
 
                             FocusScope.of(context).unfocus();
-                            controller.vendorRegistration();
+                            controller.vendorRegistration(context);
                             // controller.checkVendorPhone();
 
                           // }
@@ -1018,7 +1126,7 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                           ),
                           child: Center(
                             child: Text(
-                              "Submit",
+                              getTranslated(context, 'Submit')!,
                               style: Get.textTheme.headline1!.copyWith(
                                 color: ThemeService.primaryColor,
                                 fontSize: AppSpacings.s25,

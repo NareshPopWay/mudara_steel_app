@@ -9,6 +9,7 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -170,7 +171,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                       child: Row(
                         children: [
                           Text(
-                            "Show",
+                            getTranslated(context, 'Show')!,
                             style: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s18),
                           ),
                           SizedBox(
@@ -254,7 +255,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                           ),
                           // backgroundColor: ThemeService.grayScale.withOpacity(.7),
                           itemColor: ThemeService.black,
-                          placeholder: 'Search Job',
+                          placeholder: getTranslated(context, 'Search')!,
                           controller: controller.searchTextEditController,
                           placeholderStyle: TextStyle(
                               fontSize: AppSpacings.s18,
@@ -468,9 +469,9 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                               color: ThemeService.primaryColor,
                                               thickness: 2),
                                           dataRow(
-                                            title1: "From Location",
+                                            title1: getTranslated(context, 'FromLocation')!,
                                             value1: controller.openJobList[index].fromLocation ?? "-",
-                                            title2: "To Location",
+                                            title2: getTranslated(context, 'ToLocation')!,
                                             value2:  controller.openJobList[index].toLocation ?? "-",
                                           ),
                                           Divider(
@@ -480,11 +481,11 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                               color: ThemeService.primaryColor.withOpacity(0.2),
                                               thickness: 1),
                                           dataRow(
-                                            title1: "Delivery Date",
+                                            title1: getTranslated(context, 'DeliveryDate')!,
                                             value1: controller.openJobList[index].deliveryDate != null
                                                 ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.openJobList[index].deliveryDate.toString()))
                                                 : "-",
-                                            title2: "Weight",
+                                            title2: getTranslated(context, 'Weight')!,
                                             value2: controller.openJobList[index].weight.toString() ?? "-",
                                           ),
                                           Divider(
@@ -494,9 +495,9 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                               color: ThemeService.primaryColor.withOpacity(0.2),
                                               thickness: 1),
                                           dataRow(
-                                            title1: "Job Status",
+                                            title1: getTranslated(context, 'JobStatus')!,
                                             value1: controller.openJobList[index].jobStatus ?? "-",
-                                            title2: "Job Type",
+                                            title2: getTranslated(context, 'JobType')!,
                                             value2: controller.openJobList[index].jobType ?? "-",
                                           ),
                                           Divider(
@@ -519,14 +520,14 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        "Truck/Trailer",
+                                                        getTranslated(context, 'Truck/Trailer')!,
                                                         style: Get.textTheme.bodyText2!.copyWith(
                                                           color: ThemeService.disable,
                                                           fontSize: AppSpacings.s15,
                                                         ),
                                                       ),
                                                       Text(
-                                                        controller.openJobList[index].isTruck == true ? "Truck" : "Trailer",
+                                                        controller.openJobList[index].isTruck == true ? getTranslated(context, 'Truck')! : getTranslated(context, 'Trailer')!,
                                                         style: Get.textTheme.headline4!.copyWith(
                                                           fontSize: AppSpacings.s18,
                                                           color: ThemeService.black,
@@ -661,14 +662,14 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    "Truck/Trailer",
+                                                    getTranslated(context, 'Truck/Trailer')!,
                                                     style: Get.textTheme.bodyText2!.copyWith(
                                                       color: ThemeService.disable,
                                                       fontSize: AppSpacings.s15,
                                                     ),
                                                   ),
                                                   Text(
-                                                    controller.openJobList[index].isTruck == true ? "Truck" : "Trailer",
+                                                    controller.openJobList[index].isTruck == true ? getTranslated(context, 'Truck')! : getTranslated(context, 'Trailer')!,
                                                     style: Get.textTheme.headline4!.copyWith(
                                                       fontSize: AppSpacings.s18,
                                                       color: ThemeService.black,
@@ -705,7 +706,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                                     borderRadius: BorderRadius.circular(12)),
                                                 child: Center(
                                                   child: Text(
-                                                    "Apply",
+                                                    getTranslated(context, 'Apply')!,
                                                     style: Get.textTheme.headlineLarge!.copyWith(
                                                       color: ThemeService.primaryColor,
                                                       fontSize: AppSpacings.s20,
@@ -751,7 +752,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                                       ),
                                       child:  Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text('Job Code : ${controller.openJobList[index].code}',
+                                        child: Text('${getTranslated(context, 'JobCode')!} : ${controller.openJobList[index].code}',
                                           overflow: TextOverflow.ellipsis,
                                           style: Get.textTheme.headline4!.copyWith(
                                             fontSize: AppSpacings.s18,
@@ -832,7 +833,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                       ),
                       SizedBox(width: AppSpacings.s6),
                       Text(
-                        "Filter",
+                        getTranslated(context, 'Filter')!,
                         style: Get.textTheme.headlineSmall!.copyWith(
                           fontWeight: FontWeight.w400,
                           fontSize: AppSpacings.s25,
@@ -873,7 +874,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                       // Get.back();
                     },
                     child: Text(
-                      "Clear all",
+                      getTranslated(context, 'ClearAll')!,
                       style: Get.textTheme.headlineSmall!.copyWith(
                         fontWeight: FontWeight.w400,
                         color: ThemeService.primaryColor,
@@ -970,7 +971,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(10)),
                             ),
-                            labelText: "From Date",
+                            labelText: getTranslated(context, 'FromDate')!,
                             suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
                             contentPadding:
                             const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -1037,7 +1038,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(10)),
                             ),
-                            labelText: "To Date",
+                            labelText: getTranslated(context, 'ToDate')!,
                             suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
                             contentPadding:
                             const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -1056,7 +1057,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                         searchDropDwonWidget(
                           selectedValue: controller.tampSelectedJobName,
                           selectedId: controller.tampSelectedJobNameId,
-                          emptyTitle: "Job Name",
+                          emptyTitle: getTranslated(context, 'JobName')!,
                           list: controller.jobNameList,
                           isExpanded: controller.isJobNameExpanded,
                           isSearching: controller.isJobNameSearching,
@@ -1080,7 +1081,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                         searchDropDwonWidget(
                           selectedValue: controller.tampSelectedJobType,
                           selectedId: controller.tampSelectedJobTypeId,
-                          emptyTitle: "Job Type",
+                          emptyTitle: getTranslated(context, 'JobType')!,
                           list: controller.jobTypeList,
                           isExpanded: controller.isJobTypeExpanded,
                           isSearching: controller.isJobTypeSearching,
@@ -1150,7 +1151,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                       AppSpacings.s12,
                     ),
                     child: Text(
-                      "Apply",
+                      getTranslated(context, 'Apply')!,
                       style: Get.textTheme.headline1!.copyWith(
                         color: ThemeService.black,
                         fontSize: AppSpacings.s22,
@@ -1188,7 +1189,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
 
   
   deleteJob(context,jobId,jobName){
-    return Obx(() => Padding(
+    return  Padding(
       padding:
       EdgeInsets.only(left: Get.width / 25.0, right: Get.width / 25.0),
       child: Column(
@@ -1199,7 +1200,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
             height: Get.width * 0.05,
           ),
           Text(
-            'Are you sure?',
+            getTranslated(context, 'AreYouSure')!,
             style: Get.textTheme.titleSmall!.copyWith(
               color: ThemeService.primaryColor,
               fontSize: AppSpacings.s25,
@@ -1210,7 +1211,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
             height: Get.width * 0.05,
           ),
           Text(
-            'You want to delete this job\n( $jobName )',
+            '${getTranslated(context, 'YouWantToDeleteThisJob')!}\n( $jobName )',
             style: Get.textTheme.bodyLarge!.copyWith(
               color: ThemeService.black,
               fontSize: AppSpacings.s20,
@@ -1237,7 +1238,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                   ),
                   child: Center(
                     child: Text(
-                      "Cancel",
+                      getTranslated(context, 'Cancel')!,
                       style: Get.textTheme.bodyLarge!.copyWith(
                         fontSize: Get.width * 0.040,
                         fontWeight: FontWeight.w600,
@@ -1265,7 +1266,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
                   ),
                   child: Center(
                     child: Text(
-                      "Delete",
+                      getTranslated(context, 'Delete')!,
                       style: Get.textTheme.bodyLarge!.copyWith(
                         fontSize: Get.width * 0.040,
                         fontWeight: FontWeight.w600,
@@ -1282,7 +1283,7 @@ class OpenJobListScreen extends GetView<OpenJobController> {
           ),
         ],
       ),
-    ),);
+    );
   }
 
 

@@ -9,6 +9,7 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -16,15 +17,16 @@ import 'package:mudara_steel_app/common/widget/dropdown_widget/dropdown_below.da
 import 'package:mudara_steel_app/common/widget/dropdown_widget/searchable_drop_down_widget.dart';
 import 'package:mudara_steel_app/common/widget/empty_widget.dart';
 import 'package:mudara_steel_app/common/widget/lead_card_widget.dart';
-import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_completed_job_controller.dart';
+import 'package:mudara_steel_app/controllers/AdminLoginControllers/job_controller/Job_list_controller/open_job-list_controller.dart';
 import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_job_controller.dart';
+import 'package:mudara_steel_app/controllers/VendorLoginControllers/my_open_job_controller.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
 
-class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
-  MyCompletedJobScreen({Key? key}) : super(key: key);
+class MyOpenJobScreen extends GetView<MyOpenJobController> {
+  MyOpenJobScreen({Key? key}) : super(key: key);
 
-  MyCompletedJobController controller = Get.put(MyCompletedJobController());
+  MyOpenJobController controller = Get.put(MyOpenJobController());
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                       child: Row(
                         children: [
                           Text(
-                            "Show",
+                            getTranslated(context, 'Show')!,
                             style: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s18),
                           ),
                           SizedBox(
@@ -137,7 +139,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                           ),
                           // backgroundColor: ThemeService.grayScale.withOpacity(.7),
                           itemColor: ThemeService.black,
-                          placeholder: 'Search Job',
+                          placeholder: getTranslated(context, 'Search')!,
                           controller: controller.searchTextEditController,
                           placeholderStyle: TextStyle(
                               fontSize: AppSpacings.s18,
@@ -252,6 +254,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount: controller.jobList.length,
                             itemBuilder:(context,index){
+
                               return  Padding(
                                 padding: EdgeInsets.only(
                                   bottom: AppSpacings.s20,
@@ -296,9 +299,9 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                                               color: ThemeService.primaryColor,
                                               thickness: 2),
                                           dataRow(
-                                            title1: "From Location",
+                                            title1:  getTranslated(context, 'FromLocation')!,
                                             value1: controller.jobList[index].fromLocation ?? "-",
-                                            title2: "To Location",
+                                            title2: getTranslated(context, 'ToLocation')!,
                                             value2:  controller.jobList[index].toLocation ?? "-",
                                           ),
                                           Divider(
@@ -308,11 +311,11 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                                               color: ThemeService.primaryColor.withOpacity(0.2),
                                               thickness: 1),
                                           dataRow(
-                                            title1: "Delivery Date",
+                                            title1: getTranslated(context, 'DeliveryDate')!,
                                             value1: controller.jobList[index].deliveryDate != null
                                                 ? DateFormat("dd/MM/yyyy").format(DateTime.parse(controller.jobList[index].deliveryDate.toString()))
                                                 : "-",
-                                            title2: "Weight",
+                                            title2: getTranslated(context, 'Weight')!,
                                             value2: controller.jobList[index].weight.toString() ?? "-",
                                           ),
                                           Divider(
@@ -322,9 +325,9 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                                               color: ThemeService.primaryColor.withOpacity(0.2),
                                               thickness: 1),
                                           dataRow(
-                                            title1: "Job Status",
+                                            title1:  getTranslated(context, 'JobStatus')!,
                                             value1: controller.jobList[index].jobStatus ?? "-",
-                                            title2: "Job Type",
+                                            title2: getTranslated(context, 'JobType')!,
                                             value2: controller.jobList[index].jobType ?? "-",
                                           ),
                                           Divider(
@@ -345,14 +348,14 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        "Truck/Trailer",
+                                                        getTranslated(context, 'Truck/Trailer')!,
                                                         style: Get.textTheme.bodyText2!.copyWith(
                                                           color: ThemeService.disable,
                                                           fontSize: AppSpacings.s15,
                                                         ),
                                                       ),
                                                       Text(
-                                                        controller.jobList[index].isTruck == true ? "Truck" : "Trailer",
+                                                        controller.jobList[index].isTruck == true ? getTranslated(context, 'Truck')! : getTranslated(context, 'Trailer')!,
                                                         style: Get.textTheme.headline4!.copyWith(
                                                           fontSize: AppSpacings.s18,
                                                           color: ThemeService.black,
@@ -362,43 +365,51 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                                                     ],
                                                   ),
                                                 ),
-                                                // Bounce(
-                                                //   duration: const Duration(milliseconds: 100),
-                                                //   onPressed: (){
-                                                //     Get.toNamed(
-                                                //       Routes.applyJob,
-                                                //       arguments: controller.jobList[index].jobId.toString(),
-                                                //     );
-                                                //   },
-                                                //   child: Container(
-                                                //     padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
-                                                //     decoration: BoxDecoration(
-                                                //         color: ThemeService.white,
-                                                //         boxShadow:  [
-                                                //           BoxShadow(
-                                                //               color: ThemeService.primaryColor.withOpacity(0.5),
-                                                //               blurRadius: 9.5,
-                                                //               blurStyle: BlurStyle.inner,
-                                                //               offset: const Offset(1.5,1.5),
-                                                //               spreadRadius: 1.0
-                                                //           )
-                                                //         ],
-                                                //         border: Border.all(
-                                                //           color: ThemeService.primaryColor,
-                                                //         ),
-                                                //         borderRadius: BorderRadius.circular(12)),
-                                                //     child: Center(
-                                                //       child: Text(
-                                                //         "Apply",
-                                                //         style: Get.textTheme.headlineLarge!.copyWith(
-                                                //           color: ThemeService.primaryColor,
-                                                //           fontSize: AppSpacings.s20,
-                                                //           fontWeight: FontWeight.w600,
-                                                //         ),
-                                                //       ),
-                                                //     ),
-                                                //   ),
-                                                // ),
+                                                controller.jobList[index].isApply == true ? Text(
+                                                  getTranslated(context, 'AlreadyApplied')!,
+                                                  style: Get.textTheme.headlineLarge!.copyWith(
+                                                    color: ThemeService.completedColor,
+                                                    fontSize: AppSpacings.s20,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ):
+                                                Bounce(
+                                                  duration: const Duration(milliseconds: 100),
+                                                  onPressed: (){
+                                                    Get.toNamed(
+                                                      Routes.applyJob,
+                                                      arguments: controller.jobList[index].jobId.toString(),
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    padding: EdgeInsets.symmetric(horizontal: AppSpacings.s20, vertical: AppSpacings.s8),
+                                                    decoration: BoxDecoration(
+                                                        color: ThemeService.white,
+                                                        boxShadow:  [
+                                                          BoxShadow(
+                                                              color: ThemeService.primaryColor.withOpacity(0.5),
+                                                              blurRadius: 9.5,
+                                                              blurStyle: BlurStyle.inner,
+                                                              offset: const Offset(1.5,1.5),
+                                                              spreadRadius: 1.0
+                                                          )
+                                                        ],
+                                                        border: Border.all(
+                                                          color: ThemeService.primaryColor,
+                                                        ),
+                                                        borderRadius: BorderRadius.circular(12)),
+                                                    child: Center(
+                                                      child: Text(
+                                                        getTranslated(context, 'Apply')!,
+                                                        style: Get.textTheme.headlineLarge!.copyWith(
+                                                          color: ThemeService.primaryColor,
+                                                          fontSize: AppSpacings.s20,
+                                                          fontWeight: FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -434,7 +445,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                                       ),
                                       child:  Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text('Job Code : ${controller.jobList[index].code}',
+                                        child: Text('${getTranslated(context, 'JobCode')!} : ${controller.jobList[index].code}',
                                           overflow: TextOverflow.ellipsis,
                                           style: Get.textTheme.headline4!.copyWith(
                                             fontSize: AppSpacings.s18,
@@ -514,7 +525,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                       ),
                       SizedBox(width: AppSpacings.s6),
                       Text(
-                        "Filter",
+                        getTranslated(context, 'Filter')!,
                         style: Get.textTheme.headlineSmall!.copyWith(
                           fontWeight: FontWeight.w400,
                           fontSize: AppSpacings.s25,
@@ -555,7 +566,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                       // Get.back();
                     },
                     child: Text(
-                      "Clear all",
+                      getTranslated(context, 'ClearAll')!,
                       style: Get.textTheme.headlineSmall!.copyWith(
                         fontWeight: FontWeight.w400,
                         color: ThemeService.primaryColor,
@@ -652,7 +663,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(10)),
                             ),
-                            labelText: "From Date",
+                            labelText: getTranslated(context, 'FromDate')!,
                             suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
                             contentPadding:
                             const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -719,7 +730,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(10)),
                             ),
-                            labelText: "To Date",
+                            labelText: getTranslated(context, 'ToDate')!,
                             suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
                             contentPadding:
                             const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -738,7 +749,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                         searchDropDwonWidget(
                           selectedValue: controller.tampSelectedJobName,
                           selectedId: controller.tampSelectedJobNameId,
-                          emptyTitle: "Job Name",
+                          emptyTitle: getTranslated(context, 'JobName')!,
                           list: controller.jobNameList,
                           isExpanded: controller.isJobNameExpanded,
                           isSearching: controller.isJobNameSearching,
@@ -762,7 +773,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                         searchDropDwonWidget(
                           selectedValue: controller.tampSelectedJobType,
                           selectedId: controller.tampSelectedJobTypeId,
-                          emptyTitle: "Job Type",
+                          emptyTitle: getTranslated(context, 'JobType')!,
                           list: controller.jobTypeList,
                           isExpanded: controller.isJobTypeExpanded,
                           isSearching: controller.isJobTypeSearching,
@@ -832,7 +843,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                       AppSpacings.s12,
                     ),
                     child: Text(
-                      "Apply",
+                      getTranslated(context, 'Apply')!,
                       style: Get.textTheme.headline1!.copyWith(
                         color: ThemeService.black,
                         fontSize: AppSpacings.s22,
@@ -881,7 +892,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
             height: Get.width * 0.05,
           ),
           Text(
-            'Are you sure?',
+            getTranslated(context, 'AreYouSure')!,
             style: Get.textTheme.titleSmall!.copyWith(
               color: ThemeService.primaryColor,
               fontSize: AppSpacings.s25,
@@ -892,7 +903,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
             height: Get.width * 0.05,
           ),
           Text(
-            'You want to delete this job\n( $jobName )',
+            '${getTranslated(context, 'YouWantToDeleteThisJob')!}\n( $jobName )',
             style: Get.textTheme.bodyLarge!.copyWith(
               color: ThemeService.black,
               fontSize: AppSpacings.s20,
@@ -919,7 +930,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                   ),
                   child: Center(
                     child: Text(
-                      "Cancel",
+                      getTranslated(context, 'Cancel')!,
                       style: Get.textTheme.bodyLarge!.copyWith(
                         fontSize: Get.width * 0.040,
                         fontWeight: FontWeight.w600,
@@ -947,7 +958,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                   ),
                   child: Center(
                     child: Text(
-                      "Delete",
+                      getTranslated(context, 'Delete')!,
                       style: Get.textTheme.bodyLarge!.copyWith(
                         fontSize: Get.width * 0.040,
                         fontWeight: FontWeight.w600,

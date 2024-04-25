@@ -34,8 +34,8 @@ class AuthController extends GetxController  with GetTickerProviderStateMixin {
     AppNotification().notificationListener();
 
 
-    firebaseToken = await FirebaseMessaging.instance.getToken();
-    log('FirebaseToken : $firebaseToken');
+    // firebaseToken = await FirebaseMessaging.instance.getToken();
+    // log('FirebaseToken : $firebaseToken');
 
     checkUserIsLoginOrNot();
 

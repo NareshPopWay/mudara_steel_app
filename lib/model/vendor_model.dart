@@ -49,7 +49,7 @@ class VendorModel {
   // int? vendorTypeId;
   String? driverName;
   String? driverAge;
-  // dynamic aadharCardUpload;
+  dynamic aadharCardUpload;
   // dynamic file;
   String? driverLicenseNumber;
   String? vehicleInsuranceNumber;
@@ -104,7 +104,7 @@ class VendorModel {
      // this.vendorTypeId,
      this.driverName,
      this.driverAge,
-     // this.aadharCardUpload,
+     this.aadharCardUpload,
      // this.file,
      this.driverLicenseNumber,
      this.vehicleInsuranceNumber,
@@ -160,7 +160,7 @@ class VendorModel {
     // vendorTypeId: json["VendorTypeID"],
     driverName: json["DriverName"]??"",
     driverAge: json["DriverAge"]??"",
-    // aadharCardUpload: json["AadharCardUpload"],
+    aadharCardUpload: json["AadharCardUpload"]??"",
     // file: json["file"],
     driverLicenseNumber: json["DriverLicenseNumber"]??"",
     vehicleInsuranceNumber: json["VehicleInsuranceNumber"]??"",
@@ -216,7 +216,7 @@ class VendorModel {
     // "VendorTypeID": vendorTypeId,
     "DriverName": driverName,
     "DriverAge": driverAge,
-    // "AadharCardUpload": aadharCardUpload,
+    "AadharCardUpload": aadharCardUpload,
     // "file": file,
     "DriverLicenseNumber": driverLicenseNumber,
     "VehicleInsuranceNumber": vehicleInsuranceNumber,

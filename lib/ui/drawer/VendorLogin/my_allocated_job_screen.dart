@@ -9,6 +9,7 @@ import 'package:flutter_bounce/flutter_bounce.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/api_provider.dart';
 import 'package:mudara_steel_app/common/loader/custome_loader.dart';
 import 'package:mudara_steel_app/common/spacing.dart';
@@ -75,7 +76,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                           ),
                           SizedBox(width: AppSpacings.s10),
                           Text(
-                           "Allocated Job",
+                            getTranslated(context, 'AllocatedJob')!,
                             style: Get.textTheme.headlineSmall!.copyWith(
                               fontWeight: FontWeight.w600,
                               color: ThemeService.primaryColor,
@@ -91,7 +92,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                             child: Row(
                               children: [
                                 Text(
-                                  "Show",
+                                  getTranslated(context, 'Show')!,
                                   style: Get.textTheme.displaySmall!.copyWith(fontSize: AppSpacings.s18),
                                 ),
                                 SizedBox(
@@ -187,7 +188,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                           ),
                           // backgroundColor: ThemeService.grayScale.withOpacity(.7),
                           itemColor: ThemeService.black,
-                          placeholder: 'Search Job',
+                          placeholder: getTranslated(context, 'Search')!,
                           controller: controller.searchTextEditController,
                           placeholderStyle: TextStyle(
                               fontSize: AppSpacings.s18,
@@ -373,9 +374,9 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                                         color: ThemeService.primaryColor,
                                         thickness: 2),
                                     dataRow(
-                                      title1: "Job Name",
+                                      title1: getTranslated(context, 'JobName')!,
                                       value1: controller.jobAllocationList[index].jobName ?? "-",
-                                      title2: "Vendor Name",
+                                      title2: getTranslated(context, 'VendorName')!,
                                       value2:  controller.jobAllocationList[index].vendorName ?? "-",
                                     ),
                                     Divider(
@@ -385,9 +386,9 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                                         color: ThemeService.primaryColor.withOpacity(0.2),
                                         thickness: 1),
                                     dataRow(
-                                      title1: "Cost",
+                                      title1: getTranslated(context, 'Cost')!,
                                       value1: controller.jobAllocationList[index].cost.toString() ?? "-",
-                                      title2: "Remark",
+                                      title2: getTranslated(context, 'Remark')!,
                                       value2: controller.jobAllocationList[index].remark ?? "-",
                                     ),
                                     if(controller.userTypeID.value == "1")
@@ -464,7 +465,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                       ),
                       SizedBox(width: AppSpacings.s6),
                       Text(
-                        "Filter",
+                        getTranslated(context, 'Filter')!,
                         style: Get.textTheme.headlineSmall!.copyWith(
                           fontWeight: FontWeight.w400,
                           fontSize: AppSpacings.s25,
@@ -500,7 +501,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                       // Get.back();
                     },
                     child: Text(
-                      "Clear all",
+                      getTranslated(context, 'ClearAll')!,
                       style: Get.textTheme.headlineSmall!.copyWith(
                         fontWeight: FontWeight.w400,
                         color: ThemeService.primaryColor,
@@ -597,7 +598,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(10)),
                             ),
-                            labelText: "From Date",
+                            labelText: getTranslated(context, 'FromDate')!,
                             suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
                             contentPadding:
                             const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -663,7 +664,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(10)),
                             ),
-                            labelText: "To Date",
+                            labelText: getTranslated(context, 'ToDate')!,
                             suffixIcon:  Icon(Icons.calendar_month,color: ThemeService.primaryColor.withOpacity(0.7)),
                             contentPadding:
                             const EdgeInsets.fromLTRB(10, 10, 0, 0),
@@ -682,7 +683,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                         searchDropDwonWidget(
                           selectedValue: controller.tampSelectedJobName,
                           selectedId: controller.tampSelectedJobNameId,
-                          emptyTitle: "Job Name",
+                          emptyTitle: getTranslated(context, 'JobName')!,
                           list: controller.jobNameList,
                           isExpanded: controller.isJobNameExpanded,
                           isSearching: controller.isJobNameSearching,
@@ -696,7 +697,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                           searchDropDwonWidget(
                             selectedValue: controller.tampSelectedVendorName,
                             selectedId: controller.tampSelectedVendorNameId,
-                            emptyTitle: "Vendor Name",
+                            emptyTitle: getTranslated(context, 'VendorName')!,
                             list: controller.vendorNameList,
                             isExpanded: controller.isVendorNameExpanded,
                             isSearching: controller.isVendorNameSearching,
@@ -761,7 +762,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                       AppSpacings.s12,
                     ),
                     child: Text(
-                      "Apply",
+                      getTranslated(context, 'Apply')!,
                       style: Get.textTheme.headline1!.copyWith(
                         color: ThemeService.black,
                         fontSize: AppSpacings.s22,
@@ -791,7 +792,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
             height: Get.width * 0.05,
           ),
           Text(
-            'Are you sure?',
+            getTranslated(context, 'AreYouSure')!,
             style: Get.textTheme.titleSmall!.copyWith(
               color: ThemeService.primaryColor,
               fontSize: AppSpacings.s25,
@@ -802,7 +803,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
             height: Get.width * 0.05,
           ),
           Text(
-            'You want to delete this job\n( $jobName )',
+            '${getTranslated(context, 'YouWantToDeleteThisJob')!}\n( $jobName )',
             style: Get.textTheme.bodyLarge!.copyWith(
               color: ThemeService.black,
               fontSize: AppSpacings.s20,
@@ -829,7 +830,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                   ),
                   child: Center(
                     child: Text(
-                      "Cancel",
+                      getTranslated(context, 'Cancel')!,
                       style: Get.textTheme.bodyLarge!.copyWith(
                         fontSize: Get.width * 0.040,
                         fontWeight: FontWeight.w600,
@@ -861,7 +862,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                   ),
                   child: Center(
                     child: Text(
-                      "Delete",
+                      getTranslated(context, 'Delete')!,
                       style: Get.textTheme.bodyLarge!.copyWith(
                         fontSize: Get.width * 0.040,
                         fontWeight: FontWeight.w600,

@@ -1,0 +1,161 @@
+{
+  "selectLanguage" : "Select Language",
+  "SplashScreenLogo" : "assets/english-logo.png",
+  "LoginLogoPath" : "assets/english-logo.png",
+  "LoginEmail" : "Email / Phone Number",
+  "LoginPassword" : "Password",
+  "Login" : "Login",
+  "OR" : "OR",
+  "ForVendorRegistration" : "For Vendor Registration",
+  "ClickHere" : "Click here",
+  "Admin" : "Admin",
+  "Version" : "Version",
+  "NoDataFound" : "No Data Found!!",
+
+
+  "Register Vendor" : "Register Vendor",
+  "Vendor name" : "Vendor Name",
+  "vNameValidator" : "Vendor name is Required",
+  "DriverName" : "Driver Name",
+  "DriverAge" : "Driver Age",
+  "Address(as per Aadhar)" : "Address(as per Aadhar)",
+  "VEmail" : "Email",
+  "PhoneNoValidator" : "Phone Number is Required",
+  "PhoneNoValidator2" : "phone number must be 10 digits",
+  "Phone" : "Phone",
+  "CompanyValidator" : "company name is Required",
+  "CompanyName" : "Company Name",
+  "DriversLicenseNumber" : "Drivers license number",
+  "VehicleInsuranceNumber" : "Vehicle insurance Number",
+  "Password" : "password",
+  "PasswordValidator" : "password is Required",
+  "PasswordValidator1" : "Password must be at least 8 characters long,\nwith at least one uppercase letter,\none lowercase letter, one number,\nand one special character.",
+  "UploadAadhar" : "Upload Aadhar",
+  "BrowseToChooseFile" : "Browse to choose file",
+  "Upload" : "Upload",
+  "Register" : "Register",
+
+  "Profile" : "Profile",
+  "Update" : "Update",
+
+  "Log Out" : "Log Out",
+  "LogOut" : "Logout",
+  "AreYouSure" : "Are you sure?",
+  "DoYouWantToLogOut" : "Do you want to LogOut",
+  "DoYouWantToExitTheApp" : "Do you want to exit the app?",
+  "Close" : "Close",
+  "Cancel" : "Cancel",
+  "Exit" : "Exit",
+  "Vendor List" : "Vendor List",
+  "Create Job" : "Create Job",
+  "Job Bid" : "Job Bid",
+  "Job List" : "Job List",
+  "Allocated Job List" : "Allocated Job List",
+  "ImageNotAvailable" : "Image Not Available",
+  "PleaseTryAgainLatter" : "Please try again latter",
+  "UnableToLogin" : "Unable to login",
+
+  "All Job" : "All Job",
+  "My Bid" : "My Bid",
+  "My Allocated Job" : "My Allocated Job",
+
+  "Open" : "Open",
+  "Completed" : "Completed",
+  "Show" : "Show",
+  "Search" : "Search..",
+  "Asc" : "Asc",
+  "Desc" : "Desc",
+  "JobCode" : "Job Code",
+  "FromLocation" : "From Location",
+  "ToLocation" : "To Location",
+  "DeliveryDate" : "Delivery Date",
+  "Weight" : "Weight",
+  "WeightUnit" : "Weight Unit",
+  "JobStatus" : "Job Status",
+  "JobType" : "Job Type",
+  "Truck/Trailer" : "Truck/Trailer",
+  "Truck" : "Truck",
+  "Trailer" : "Trailer",
+  "AlreadyApplied" : "Already Applied",
+  "Apply" : "Apply",
+  "Filter" : "Filter",
+  "ClearAll" : "Clear all",
+  "FromDate" : "From Date",
+  "ToDate" : "To Date",
+  "JobName" : "Job Name",
+  "JobNameValidator" : "Job name is Required",
+  "FromLocationValidator" : "From Location is Required",
+  "ToLocationValidator" : "To Location is Required",
+  "DeliveryDateValidator" : "Delivery Date is Required",
+
+  "SelectJobTypeValidator" : "Select Job Type",
+  "SelectJobTypeValidator2" : "Please Select Job Type",
+
+  "SelectJobStatusValidator" : "Select Job Status",
+  "SelectJobStatusValidator2" : "Please Select Job Status",
+
+  "YouWantToDeleteThisJob" : "You want to delete this job",
+  "Delete" : "Delete",
+
+
+  "MyBid" : "My Bid",
+  "VendorName" : "Vendor Name",
+  "Cost" : "Cost",
+  "Remark" : "Remark",
+
+  "Edit Job Bid" : "Edit Job Bid",
+  "SelectJobNameValidator" : "Select Job Name",
+  "PleaseSelectJobName" : "Please Select Job Name",
+  "Submit" : "Submit",
+  "AllocatedJob" : "Allocated Job",
+
+  "ApplyJob" : "Apply Job",
+
+  "JobAllocation" : "Job Allocation",
+  "Vendor" : "Vendor",
+  "VehicleInsuranceNo" : "Vehicle Insurance No",
+  "City" : "City",
+  "Approve" : "Approve",
+  "DisApprove" : "DisApprove",
+  "YouWantToDeleteThisVendor" : "You want to delete this Vendor",
+
+
+  "Create Job Allocation" : "Create Job Allocation",
+  "VendorJobBid" : "Vendor Job Bid",
+  "SelectVendorBidValidator" : "Select Vendor Bid",
+  "SelectVendorBidValidator1" : "Please Select Vendor Bid",
+
+
+  "NoInternetConnection" : "No Internet connection",
+  "ConnectWithNetwork" : "Connect with network",
+  "Successful" : "Successful",
+  "LoginSuccessfullyDone" : "Login successfully done",
+  "SomethingWentWrong!" : "Something went wrong!",
+
+
+  "VendorProfileSuccessfullyUpdated" : "Vendor profile successfully updated",
+  "VendorRegisterSuccessfullyUpdated" : "Vendor Register Successfully done",
+  "VendorNotRegister" : "Vendor not Register",
+
+
+  "JobAppliedSuccessfullyDone" : "Job applied successfully done",
+  "JobNotApplied" : "Job not Applied",
+
+  "JobAllocatedSuccessfullyDone" : "Job allocated successfully done",
+  "JobUpdatedSuccessfullyDone" : "Job Updated Successfully done",
+  "JobNotAllocated" : "Job not Allocated",
+
+  "JobDeletedSuccessful" : "Job deleted successful",
+  "JobNotDelete" : "Job not Deleted",
+
+
+  "VendorApprovedSuccessfullyDone" : "Vendor Approved successfully done",
+  "VendorDisApprovedSuccessfullyDone" : "Vendor DisApproved successfully done",
+  "Approved/DisApproved" : "not Approved/DisApproved",
+
+  "VendorDeletedSuccessful" : "Vendor deleted successful",
+  "VendorNotDeleted" : "Vendor not deleted",
+
+  "JobCreatedSuccessfullyDone" : "Job Created successfully done",
+  "JobNotCreated" : "Job Not Created"
+}
