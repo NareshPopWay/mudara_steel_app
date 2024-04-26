@@ -18,12 +18,13 @@ class PdfViewScreen extends GetWidget<PdfViewController> {
         appBar: AppBar(
           scrolledUnderElevation: 0,
           systemOverlayStyle: const SystemUiOverlayStyle( statusBarColor: ThemeService.primaryColor,),
-          surfaceTintColor: ThemeService.grayScalecon,
+          surfaceTintColor: ThemeService.primaryColor.withOpacity(0.1),
+          backgroundColor: ThemeService.primaryColor.withOpacity(0.1),
           actions: [
             Container(
               padding: const EdgeInsets.all(10),
               child: Image.asset(
-                'assets/BL_logo.png',
+                'assets/logo1.png',
                 fit: BoxFit.fill,
               ),
             ),

@@ -941,16 +941,16 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                                      scale: curve,
                                                      child: Opacity(
                                                          opacity: a1.value,
-                                                         child: AlertDialog(
+                                                         child: Dialog(
                                                            backgroundColor: Colors.transparent,
                                                            elevation: 0,
-                                                           contentPadding: const EdgeInsets.all(5.0),
+                                                           insetPadding: EdgeInsets.all(15),
                                                            shape: const RoundedRectangleBorder(
                                                              borderRadius: BorderRadius.all(
                                                                Radius.circular(10.0),
                                                              ),
                                                            ),
-                                                           content: Center(
+                                                           child: Center(
                                                              child: Column(
                                                                mainAxisSize: MainAxisSize.min,
                                                                children: [
@@ -994,11 +994,12 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                                                        BorderRadius.circular(14),
                                                                      ),
                                                                      child: InteractiveViewer(
+                                                                       scaleFactor: 8.5,
                                                                        panEnabled: true,
                                                                        maxScale: 4,
                                                                        trackpadScrollCausesScale: true,
                                                                        child: CachedNetworkImage(
-                                                                         imageUrl: controller.getFilePath.value != null ? APIProvider().imageUrl+controller.getFilePath.value :'http://116.72.8.100:2202' ,
+                                                                         imageUrl: controller.getFilePath.value != null ? APIProvider().imageUrl+controller.getFilePath.value :'http://116.72.8.100:2525' ,
                                                                          // height: AppSpacings.s130,
                                                                          // width: AppSpacings.s200,
                                                                          fit: BoxFit.contain,
