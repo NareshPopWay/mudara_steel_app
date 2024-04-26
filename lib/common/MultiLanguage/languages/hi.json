@@ -114,8 +114,8 @@
   "Vendor": "विक्रेता",
   "VehicleInsuranceNo": "वाहन बीमा नंबर",
   "City": "शहर",
-  "Approve": "अनुमोदित करें",
-  "DisApprove": "अस्वीकृत करें",
+  "Approve": "मंजूर करें",
+  "DisApprove": "नामंजूर करें",
   "YouWantToDeleteThisVendor": "क्या आप इस विक्रेता को हटाना चाहते हैं?",
 
   "Create Job Allocation": "नौकरी आवंटन बनाएँ",
@@ -146,11 +146,14 @@
 
   "VendorApprovedSuccessfullyDone" : "विक्रेता का मंजूर सफलतापूर्वक हो गया",
   "VendorDisApprovedSuccessfullyDone" : "विक्रेता का नामंजूर सफलतापूर्वक हो गया",
-  "Approved/DisApproved" : "not मंजूर/नामंजूर",
+  "Approved/DisApproved" : "मंजूर/नामंजूर",
 
   "VendorDeletedSuccessful" : "विक्रेता सफलतापूर्वक हटाया गया",
   "VendorNotDeleted" : "विक्रेता हटाया नहीं गया",
 
   "JobCreatedSuccessfullyDone" : "कार्य सफलतापूर्वक बनाया गया",
-  "JobNotCreated" : "कार्य बना नहीं"
+  "JobNotCreated" : "कार्य बना नहीं",
+
+  "PngJpgAndPDFFilesAreAllowed" : "केवल पीएनजी/जेपीजी और पीडीएफ फाइलों की हीं अनुमति है",
+  "PleaseContactAdminForApproval" : "कृपया मंजूरी के लिए व्यवस्थापक से संपर्क करें।"
 }

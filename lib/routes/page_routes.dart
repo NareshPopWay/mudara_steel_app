@@ -14,6 +14,7 @@ import 'package:mudara_steel_app/binders/home_binder.dart';
 import 'package:mudara_steel_app/binders/login_binder.dart';
 import 'package:mudara_steel_app/binders/AdminLoginBinders/register_vendor_binder.dart';
 import 'package:mudara_steel_app/binders/AdminLoginBinders/vendor_list_binder.dart';
+import 'package:mudara_steel_app/binders/pdf_view_binder.dart';
 import 'package:mudara_steel_app/binders/vendor_profile_binder.dart';
 import 'package:mudara_steel_app/binders/vendor_reg_binder.dart';
 import 'package:mudara_steel_app/ui/drawer/AdminLogin/Job/job_list_screen.dart';
@@ -31,6 +32,7 @@ import 'package:mudara_steel_app/ui/drawer/AdminLogin/vendor/vendor_list.dart';
 import 'package:mudara_steel_app/ui/home/home_screen.dart';
 import 'package:mudara_steel_app/ui/login_screen.dart';
 import 'package:mudara_steel_app/ui/drawer/VendorLogin/vendor_profile.dart';
+import 'package:mudara_steel_app/ui/pdf_view_screen.dart';
 import 'package:mudara_steel_app/ui/vendor_reg_screen.dart';
 import '../common/widget/auth_widget.dart';
 import 'app_routes.dart';
@@ -123,6 +125,11 @@ class PageRoutes {
       name: Routes.editJobBid,
       page: () =>   const EditJobBidScreen(),
       binding: EditJobBidBinder(),
+    ),
+    GetPage(
+      name: Routes.pdfView,
+      page: () => const PdfViewScreen(),
+      binding: PdfViewBinder(),
     ),
   ];
 }

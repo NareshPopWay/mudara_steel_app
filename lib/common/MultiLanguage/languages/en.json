@@ -157,5 +157,8 @@
   "VendorNotDeleted" : "Vendor not deleted",
 
   "JobCreatedSuccessfullyDone" : "Job Created successfully done",
-  "JobNotCreated" : "Job Not Created"
+  "JobNotCreated" : "Job Not Created",
+
+  "PngJpgAndPDFFilesAreAllowed" : "Png/jpg and PDF files are allowed",
+  "PleaseContactAdminForApproval" : "Please Contact Admin For Approval."
 }

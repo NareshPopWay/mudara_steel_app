@@ -13,6 +13,7 @@ import 'package:mudara_steel_app/common/spacing.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
 import 'package:mudara_steel_app/common/ui.dart';
 import 'package:mudara_steel_app/controllers/AdminLoginControllers/vendor_controller/register_vendor_conteoller.dart';
+import 'package:mudara_steel_app/routes/app_routes.dart';
 import 'package:path/path.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
@@ -912,109 +913,134 @@ class RegisterVendorScreen extends GetView<RegisterVendorController> {
                                         color: ThemeService.primaryColor,
                                       ),
                                     ),
-                                    // if(controller.getFilePath.value != "")
-                                    // GestureDetector(
-                                    //    onTap :(){
-                                    //      showGeneralDialog(
-                                    //          transitionDuration: const Duration(milliseconds: 400),
-                                    //          barrierDismissible: true,
-                                    //          barrierLabel: '',
-                                    //          pageBuilder: (ctx, a1, a2) {
-                                    //            return Container();
-                                    //          },
-                                    //          context: context,
-                                    //          transitionBuilder: (ctx, a1, a2, child) {
-                                    //            var curve = Curves.easeInOut.transform(a1.value);
-                                    //            return Transform.scale(
-                                    //                scale: curve,
-                                    //                child: Opacity(
-                                    //                    opacity: a1.value,
-                                    //                    child: AlertDialog(
-                                    //                      backgroundColor: Colors.transparent,
-                                    //                      elevation: 0,
-                                    //                      contentPadding: const EdgeInsets.all(5.0),
-                                    //                      shape: const RoundedRectangleBorder(
-                                    //                        borderRadius: BorderRadius.all(
-                                    //                          Radius.circular(10.0),
-                                    //                        ),
-                                    //                      ),
-                                    //                      content: Center(
-                                    //                        child: Column(
-                                    //                          mainAxisSize: MainAxisSize.min,
-                                    //                          children: [
-                                    //                            Align(
-                                    //                              alignment: const Alignment(1.10, -2.98),
-                                    //                              child: InkWell(
-                                    //                                onTap: () {
-                                    //                                  Get.back();
-                                    //                                },
-                                    //                                child: const Icon(
-                                    //                                  Icons.close,
-                                    //                                  color: ThemeService.primaryColor,
-                                    //                                  size: 30,
-                                    //                                ),
-                                    //                              ),
-                                    //                            ),
-                                    //                            Center(
-                                    //                              child: Container(
-                                    //                                padding: EdgeInsets.only(
-                                    //                                  // left: AppSpacings.s40,
-                                    //                                  // right: AppSpacings.s50,
-                                    //                                    top: AppSpacings.s10,
-                                    //                                    bottom: AppSpacings.s10),
-                                    //                                decoration: BoxDecoration(
-                                    //                                  color: Colors.white,
-                                    //                                  borderRadius:
-                                    //                                  BorderRadius.circular(14),
-                                    //                                ),
-                                    //                                child: InteractiveViewer(
-                                    //                                  panEnabled: true,
-                                    //                                  maxScale: 4,
-                                    //                                  trackpadScrollCausesScale: true,
-                                    //                                  child: CachedNetworkImage(
-                                    //                                    imageUrl: controller.getFilePath.value != null ? APIProvider().baseUrl+controller.getFilePath.value :'http://103.209.145.199:5062' ,
-                                    //                                    // height: AppSpacings.s130,
-                                    //                                    // width: AppSpacings.s200,
-                                    //                                    fit: BoxFit.contain,
-                                    //                                    placeholder: (context, url) => SizedBox(
-                                    //                                      // height: AppSpacings.s100,
-                                    //                                      child: Shimmer.fromColors(
-                                    //                                        baseColor: Colors.grey.shade300,
-                                    //                                        highlightColor: Colors.grey.shade100,
-                                    //                                        direction: ShimmerDirection.ltr,
-                                    //                                        child: Container(
-                                    //                                          color: Colors.white,
-                                    //                                        ),
-                                    //                                      ),
-                                    //                                    ),
-                                    //                                    errorWidget: (context, url, error) => Center(
-                                    //                                      child: Text(
-                                    //                                        getTranslated(context, 'ImageNotAvailable')!,
-                                    //                                        textAlign: TextAlign.center,
-                                    //                                        style: TextStyle(
-                                    //                                          color: ThemeService.black,
-                                    //                                          fontSize: AppSpacings.s30,
-                                    //                                        ),
-                                    //                                      ),
-                                    //                                    ),
-                                    //                                  ),
-                                    //                                ),
-                                    //                              ),
-                                    //                            )
-                                    //                          ],
-                                    //                        ),
-                                    //                      ),
-                                    //                    )
-                                    //                  // AlertDialog(
-                                    //                ));
-                                    //          });
-                                    //
-                                    //    },
-                                    //     child: Icon(Icons.info_outline,color: ThemeService.primaryColor,weight: AppSpacings.s25,))
+                                    if(controller.getFilePath.value != "")
+                                    GestureDetector(
+                                       onTap :(){
+                                         var extension  = controller.getFilePath.value.toLowerCase().split(".").last;
+                                         log(extension);
+
+                                         if(extension == "pdf"){
+
+                                           Get.toNamed(Routes.pdfView,
+                                             arguments: controller.getFilePath.value != null ? APIProvider().imageUrl+controller.getFilePath.value :'http://116.72.8.100:2202' ,
+                                           );
+
+                                         }else{
+
+                                           showGeneralDialog(
+                                               transitionDuration: const Duration(milliseconds: 400),
+                                               barrierDismissible: true,
+                                               barrierLabel: '',
+                                               pageBuilder: (ctx, a1, a2) {
+                                                 return Container();
+                                               },
+                                               context: context,
+                                               transitionBuilder: (ctx, a1, a2, child) {
+                                                 var curve = Curves.easeInOut.transform(a1.value);
+                                                 return Transform.scale(
+                                                     scale: curve,
+                                                     child: Opacity(
+                                                         opacity: a1.value,
+                                                         child: AlertDialog(
+                                                           backgroundColor: Colors.transparent,
+                                                           elevation: 0,
+                                                           contentPadding: const EdgeInsets.all(5.0),
+                                                           shape: const RoundedRectangleBorder(
+                                                             borderRadius: BorderRadius.all(
+                                                               Radius.circular(10.0),
+                                                             ),
+                                                           ),
+                                                           content: Center(
+                                                             child: Column(
+                                                               mainAxisSize: MainAxisSize.min,
+                                                               children: [
+                                                                 Align(
+                                                                   alignment: const Alignment(1.10, -1.98),
+                                                                   child: InkWell(
+                                                                     onTap: () {
+                                                                       Get.back();
+                                                                     },
+                                                                     child: CircleAvatar(
+                                                                       backgroundColor: Colors.white,
+                                                                       maxRadius: 17.0,
+                                                                       child: Container(
+                                                                         height: 30,
+                                                                         decoration: const BoxDecoration(
+                                                                           shape: BoxShape.circle,
+                                                                           color: ThemeService.primaryColor,
+                                                                         ),
+                                                                         child: const Icon(
+                                                                           Icons.close,
+                                                                           color: Colors.white,
+                                                                           size: 30,
+                                                                         ),
+                                                                       ),
+                                                                     ),
+                                                                   ),
+                                                                 ),
+                                                                 SizedBox(
+                                                                   height: AppSpacings.s8,
+                                                                 ),
+                                                                 Center(
+                                                                   child: Container(
+                                                                     padding: EdgeInsets.only(
+                                                                         left: AppSpacings.s10,
+                                                                         right: AppSpacings.s10,
+                                                                         top: AppSpacings.s10,
+                                                                         bottom: AppSpacings.s10),
+                                                                     decoration: BoxDecoration(
+                                                                       color: Colors.white,
+                                                                       borderRadius:
+                                                                       BorderRadius.circular(14),
+                                                                     ),
+                                                                     child: InteractiveViewer(
+                                                                       panEnabled: true,
+                                                                       maxScale: 4,
+                                                                       trackpadScrollCausesScale: true,
+                                                                       child: CachedNetworkImage(
+                                                                         imageUrl: controller.getFilePath.value != null ? APIProvider().imageUrl+controller.getFilePath.value :'http://116.72.8.100:2202' ,
+                                                                         // height: AppSpacings.s130,
+                                                                         // width: AppSpacings.s200,
+                                                                         fit: BoxFit.contain,
+                                                                         placeholder: (context, url) => SizedBox(
+                                                                           // height: AppSpacings.s100,
+                                                                           child: Shimmer.fromColors(
+                                                                             baseColor: Colors.grey.shade300,
+                                                                             highlightColor: Colors.grey.shade100,
+                                                                             direction: ShimmerDirection.ltr,
+                                                                             child: Container(
+                                                                               color: Colors.white,
+                                                                             ),
+                                                                           ),
+                                                                         ),
+                                                                         errorWidget: (context, url, error) => Center(
+                                                                           child: Text(
+                                                                             getTranslated(context, 'ImageNotAvailable')!,
+                                                                             textAlign: TextAlign.center,
+                                                                             style: TextStyle(
+                                                                               color: ThemeService.black,
+                                                                               fontSize: AppSpacings.s30,
+                                                                             ),
+                                                                           ),
+                                                                         ),
+                                                                       ),
+                                                                     ),
+                                                                   ),
+                                                                 )
+                                                               ],
+                                                             ),
+                                                           ),
+                                                         )
+                                                       // AlertDialog(
+                                                     ));
+                                               });
+                                         }
+                                       },
+                                        child: Icon(Icons.info_outline,color: ThemeService.primaryColor,weight: AppSpacings.s25,))
                                   ],
                                 ),
                                 // Text(
-                                //   "Word and Excel fiels are allowed",
+                                //   getTranslated(context, 'PngJpgAndPDFFilesAreAllowed')!,
                                 //   style: Get.textTheme.bodyText1?.copyWith(
                                 //     fontSize: AppSpacings.s14,
                                 //     color: ThemeService.primaryColor,

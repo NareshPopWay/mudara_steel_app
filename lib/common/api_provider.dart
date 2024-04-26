@@ -26,6 +26,8 @@ import 'package:mudara_steel_app/model/vendor_model.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
 class APIProvider {
+
+  final String imageUrl = "http://116.72.8.100:2202"; // ImageUrl
   final String baseUrl = "http://116.72.8.100:2203"; // Testing
   // final String baseUrl = "http://103.209.145.199:2005"; //Live
   RxString userName = "".obs;
@@ -94,11 +96,11 @@ class APIProvider {
           return true;
         }
         else {
-          Ui.ErrorSnackBar(title:getTranslated(context, 'UnableToLogin')!,message:'${responseJson['error_description']}');
+          Ui.ErrorSnackBar(title:getTranslated(context, 'UnableToLogin')!,message:responseJson['error_description'].toString() == "Please Contact Admin For Approval." ? getTranslated(context, 'PleaseContactAdminForApproval')!: '${responseJson['error_description']}');
           return false;
         }
       } else {
-        Ui.ErrorSnackBar(title:getTranslated(context, 'UnableToLogin')!,message:'${responseJson['error_description']}');
+        Ui.ErrorSnackBar(title:getTranslated(context, 'UnableToLogin')!,message:responseJson['error_description'].toString() == "Please Contact Admin For Approval." ? getTranslated(context, 'PleaseContactAdminForApproval')!: '${responseJson['error_description']}');
         return false;
       }
     } on SocketException {

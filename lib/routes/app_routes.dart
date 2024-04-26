@@ -16,5 +16,6 @@ class Routes {
   static const myAllocatedJob = '/myAllocatedJob';
   static const vendorProfile = '/vendorProfile';
   static const editJobBid = '/editJobBid';
+  static const pdfView = '/pdfView';
 
 }
