@@ -693,7 +693,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                   height: AppSpacings.s20,
                                 ),
                                 Text(
-                                  "Select Trailer/Truck",
+                                  getTranslated(context, 'SelectTrailerTruck')!,
                                   style: Get.textTheme.bodyText1?.copyWith(
                                     fontSize: AppSpacings.s20,
                                     fontWeight: FontWeight.w600,

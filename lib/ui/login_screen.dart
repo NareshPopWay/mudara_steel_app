@@ -412,13 +412,13 @@ class LoginScreen extends GetView<LoginController> {
                                     controller.isLoading.value = true;
                                     if (controller.userName.value.text == "" && controller.password.value.text == "") {
                                       controller.isLoading.value = false;
-                                      Ui.ErrorSnackBar(title:"Flied is required",message: "username and password required");
+                                      Ui.ErrorSnackBar(title:getTranslated(context, 'FieldIsRequired')!,message: getTranslated(context, 'UsernameAndPasswordRequired')!);
                                     } else if (controller.userName.value.text == "") {
                                       controller.isLoading.value = false;
-                                      Ui.ErrorSnackBar(title: "username is required",message: "username can't be empty");
+                                      Ui.ErrorSnackBar(title:getTranslated(context, 'UsernameIsRequired')!,message:getTranslated(context, 'UsernameCantBeEmpty')!);
                                     } else if (controller.password.value.text == "") {
                                       controller.isLoading.value = false;
-                                      Ui.ErrorSnackBar(title: "password is required",message: "password can't be empty");
+                                      Ui.ErrorSnackBar(title: getTranslated(context, 'passwordIsRequired')!,message:getTranslated(context, 'passwordCantBeEmpty')!);
                                     } else {
 
                                       FocusScope.of(context).unfocus();

@@ -751,7 +751,7 @@ class VendorRegScreen extends GetView<VendorRegController> {
                               if (e!.isEmpty) {
                                 controller.noteFocus.requestFocus();
                                 return "${getTranslated(context, 'PasswordValidator')!}";
-                              }else if (!controller.passwordRegex.hasMatch(e)) {
+                              }else if (e.length < 4) {
                                 controller.noteFocus.requestFocus();
                                 // Return an error message if the input doesn't match the pattern
                                 return "${getTranslated(context, 'PasswordValidator1')!}";

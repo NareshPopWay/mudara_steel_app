@@ -26,7 +26,7 @@ class VendorRegController extends GetxController {
   TextEditingController drLicenseNo = TextEditingController();
   TextEditingController vehicleInNO = TextEditingController();
 
-  final RegExp passwordRegex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
+  // final RegExp passwordRegex = RegExp(r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
 
   RxBool secureText = true.obs;
   RxBool isLoading = false.obs;
