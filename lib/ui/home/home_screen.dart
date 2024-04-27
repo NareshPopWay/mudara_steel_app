@@ -508,7 +508,7 @@ class HomeScreen extends GetView<RootController> {
                                           await SystemNavigator.pop();
                                         },
                                         child: Container(
-                                          width: AppSpacings.s90,
+                                          width: AppSpacings.s110,
                                           padding:
                                               EdgeInsets.all(AppSpacings.s8),
                                           decoration: BoxDecoration(

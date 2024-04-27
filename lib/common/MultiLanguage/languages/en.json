@@ -29,7 +29,7 @@
   "VehicleInsuranceNumber" : "Vehicle insurance Number",
   "Password" : "password",
   "PasswordValidator" : "password is Required",
-  "PasswordValidator1" : "Password must be at least 8 characters long,\nwith at least one uppercase letter,\none lowercase letter, one number,\nand one special character.",
+  "PasswordValidator1" : "Password must be at least 4 characters long.",
   "UploadAadhar" : "Upload Aadhar",
   "BrowseToChooseFile" : "Browse to choose file",
   "Upload" : "Upload",
@@ -74,6 +74,7 @@
   "JobStatus" : "Job Status",
   "JobType" : "Job Type",
   "Truck/Trailer" : "Truck/Trailer",
+  "SelectTrailerTruck" : "Select Trailer/Truck",
   "Truck" : "Truck",
   "Trailer" : "Trailer",
   "AlreadyApplied" : "Already Applied",
@@ -157,5 +158,16 @@
   "VendorNotDeleted" : "Vendor not deleted",
 
   "JobCreatedSuccessfullyDone" : "Job Created successfully done",
-  "JobNotCreated" : "Job Not Created"
+  "JobNotCreated" : "Job Not Created",
+
+  "PngJpgAndPDFFilesAreAllowed" : "Png/jpg and PDF files are allowed",
+  "PleaseContactAdminForApproval" : "Please Contact Admin For Approval.",
+  "InvalidUsernameOrPassword" : "Invalid Username or Password.",
+
+  "FieldIsRequired" : "Field is required",
+  "UsernameAndPasswordRequired" : "username and password required",
+  "UsernameCantBeEmpty" : "username can't be empty",
+  "UsernameIsRequired" : "username is required",
+  "passwordIsRequired" : "password is required",
+  "passwordCantBeEmpty" : "password can't be empty"
 }
