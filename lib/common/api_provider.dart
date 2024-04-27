@@ -314,6 +314,8 @@ class APIProvider {
     jobStatusId,
     tempStatusID,
     jobId,
+    fromLocation,
+    toLocation,
     userTypeID
   }) async {
     bool isInternet = await Constants.isInternetAvail();
@@ -347,11 +349,11 @@ class APIProvider {
         url="/VendorApi/VendorAPI/GetJobList";
       }
 
-      log("$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType&TempStatusID=$tempStatusID");
+      log("$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType&TempStatusID=$tempStatusID&FromLocation=$fromLocation&ToLocation=$toLocation");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType&TempStatusID=$tempStatusID",
+            "$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&SearchVal=$searchVal&FromDate=$fromDate&ToDate=$toDate&JobID=$jobId&JobStatusID=$jobStatusId&JobTypeID=$jobType&TempStatusID=$tempStatusID&FromLocation=$fromLocation&ToLocation=$toLocation",
           ),
           headers: {
             'Content-Type': 'application/json',
