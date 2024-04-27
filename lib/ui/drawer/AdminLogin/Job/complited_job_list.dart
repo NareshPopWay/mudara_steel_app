@@ -88,7 +88,7 @@ class ComplitedJobListScreen extends GetView<ComplitedJobController> {
                             backgroundColor: ThemeService.white,
                             elevation: 5.5,
                             useSafeArea: true,
-                            constraints: const BoxConstraints(maxHeight:500),
+                            constraints: const BoxConstraints(maxHeight:650),
                             isScrollControlled:true,
                             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(25), topRight: Radius.circular(25))),
@@ -673,6 +673,9 @@ class ComplitedJobListScreen extends GetView<ComplitedJobController> {
     controller.tempFromDate.text = controller.fromDate.value;
     controller.tempToDate.text = controller.toDate.value;
 
+    controller.tempFromLocation.text = controller.fromLocation.value;
+    controller.tempToLocation.text = controller.toLocation.value;
+
     return Padding(
       padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -740,6 +743,12 @@ class ComplitedJobListScreen extends GetView<ComplitedJobController> {
 
                       controller.fromDate.value = "";
                       controller.toDate.value = "";
+
+                      controller.tempFromLocation.text = "";
+                      controller.tempToLocation.text = "";
+
+                      controller.fromLocation.value = "";
+                      controller.toLocation.value = "";
 
                       controller.textJobName.value.clear();
                       controller.textJobStatus.value.clear();
@@ -930,6 +939,147 @@ class ComplitedJobListScreen extends GetView<ComplitedJobController> {
                         SizedBox(
                           height: AppSpacings.s15,
                         ),
+                        TextFormField(
+                          controller: controller.tempFromLocation,
+                          enabled: true,
+                          maxLines: 1,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.next,
+                          cursorColor: ThemeService.primaryColor,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                          validator: (e) {
+                            if (e!.isEmpty) {
+                              return getTranslated(context, 'FromLocationValidator')!;
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ThemeService.primaryColor
+                                      .withOpacity(.5)),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ThemeService.primaryColor,
+                                  width: 1.5),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ThemeService.primaryColor
+                                      .withOpacity(.5)),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            errorBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.redAccent),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            focusedErrorBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.redAccent),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            labelText: "${getTranslated(context, 'FromLocation')!}*",
+                            contentPadding:
+                            const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                            labelStyle: TextStyle(
+                              color: ThemeService.primaryColor.withOpacity(0.5),
+                              fontSize: AppSpacings.s18,
+
+                            ),
+                            errorStyle:TextStyle(
+                                fontSize: AppSpacings.s16,
+                                color: Colors.redAccent
+                            ),
+                            hintStyle:
+                            const TextStyle(color: ThemeService.white),
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppSpacings.s15,
+                        ),
+                        TextFormField(
+                          controller: controller.tempToLocation,
+                          enabled: true,
+                          maxLines: 1,
+                          keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.next,
+                          cursorColor: ThemeService.primaryColor,
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                          validator: (e) {
+                            if (e!.isEmpty) {
+                              return getTranslated(context, 'ToLocationValidator')!;
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: ThemeService.primaryColor.withOpacity(0.1),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ThemeService.primaryColor
+                                      .withOpacity(.5)),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ThemeService.primaryColor,
+                                  width: 1.5),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: ThemeService.primaryColor
+                                      .withOpacity(.5)),
+                              borderRadius: const BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            focusedErrorBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.redAccent),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            errorBorder:const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.redAccent),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10)),
+                            ),
+                            labelText: "${getTranslated(context, 'ToLocation')!}*",
+                            contentPadding:
+                            const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                            labelStyle: TextStyle(
+                              color: ThemeService.primaryColor.withOpacity(0.5),
+                              fontSize: AppSpacings.s18,
+                            ),
+                            errorStyle:TextStyle(
+                                fontSize: AppSpacings.s16,
+                                color: Colors.redAccent
+                            ),
+                            hintStyle:
+                            const TextStyle(color: ThemeService.white),
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppSpacings.s15,
+                        ),
                         searchDropDwonWidget(
                           selectedValue: controller.tampSelectedJobName,
                           selectedId: controller.tampSelectedJobNameId,
@@ -996,6 +1146,12 @@ class ComplitedJobListScreen extends GetView<ComplitedJobController> {
 
                 controller.tempFromDate.text = "";
                 controller.tempToDate.text = "";
+
+                controller.toLocation.value = controller.tempToLocation.text;
+                controller.fromLocation.value = controller.tempFromLocation.text;
+
+                controller.tempFromLocation.text = "";
+                controller.tempToLocation.text = "";
 
                 controller.jobPage = 0;
                 controller.completedJobList.clear();

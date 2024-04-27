@@ -30,8 +30,13 @@ class MyOpenJobController extends GetxController {
   TextEditingController tempToDate = TextEditingController();
   TextEditingController tempFromDate = TextEditingController();
 
+  TextEditingController tempFromLocation = TextEditingController();
+  TextEditingController tempToLocation = TextEditingController();
+
   RxString fromDate = "".obs;
   RxString toDate = "".obs;
+  RxString fromLocation = "".obs;
+  RxString toLocation = "".obs;
 
   var showCount = [10, 15, 20, 25, 50, 100];
   RxInt showCountVal = 10.obs;
@@ -77,6 +82,8 @@ class MyOpenJobController extends GetxController {
     super.onInit();
   }
 
+
+
   RxList<FieldItemValueModel> jobNameList = <FieldItemValueModel>[].obs;
   RxBool isJobNameExpanded = false.obs;
   RxString selectedJobName = "".obs;
@@ -121,6 +128,8 @@ class MyOpenJobController extends GetxController {
       jobStatusId:"0",
       tempStatusID:"1",
       jobType:selectedJobTypeId.value,
+      fromLocation: fromLocation.value.trim(),
+      toLocation: toLocation.value.trim(),
     );
     if (leadResponse.isNotEmpty) {
       jobPage++;
