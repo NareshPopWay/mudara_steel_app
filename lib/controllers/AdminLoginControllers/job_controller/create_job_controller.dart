@@ -40,7 +40,7 @@ class CreateJobController extends GetxController {
   RxBool isSaveArchitech = false.obs;
   RxString userTypeID = "".obs;
   RxBool isSelected = false.obs;
-  RxInt toggleValue = 0.obs;
+  RxInt toggleValue = 1.obs;
 
   RxList<FieldItemValueModel> jobTypeList = <FieldItemValueModel>[].obs;
   RxBool isJobTypeExpanded = false.obs;

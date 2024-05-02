@@ -450,10 +450,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                               );
                             }
                         ),
-                      if (controller.isJobListLoading.value == true)  Padding(
-                        padding: EdgeInsets.fromLTRB(0, AppSpacings.s150, 0,0),
-                        child: CupertinoActivityIndicator(radius: AppSpacings.s20,),
-                      )
+                      if (controller.isJobListLoading.value == true)  CupertinoActivityIndicator(radius: AppSpacings.s20,)
                     ],
                   )
               ),

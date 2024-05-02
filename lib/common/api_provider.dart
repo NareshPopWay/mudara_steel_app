@@ -921,11 +921,11 @@ class APIProvider {
       }
 
 
-      log("$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&JobTypeID=0$jobId&VendorID=$vendorID");
+      log("$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&JobID=0$jobId&VendorID=$vendorID");
 
       final response = await http.get(
           Uri.parse(
-            "$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&JobTypeID=0$jobId&VendorID=$vendorID",
+            "$baseUrl$url?PageNumber=$pageNumber&RowsOfPage=$rowsOfPage&OrderByName=$orderByName&SortDirection=$sortDirection&FromDate=$fromDate&ToDate=$toDate&JobID=0$jobId&VendorID=$vendorID",
           ),
           headers: {
             'Content-Type': 'application/json',

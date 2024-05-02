@@ -725,10 +725,7 @@ class MyOpenJobBidScreen extends GetView<MyOpenJobBidController> {
                               );
                             }
                         ),
-                      if (controller.isJobBidListLoading.value == true)  Padding(
-                        padding: EdgeInsets.fromLTRB(0, AppSpacings.s150, 0,0),
-                        child: CupertinoActivityIndicator(radius: AppSpacings.s20,),
-                      )
+                      if (controller.isJobBidListLoading.value == true)  CupertinoActivityIndicator(radius: AppSpacings.s20,)
                     ],
                   )
               ),
