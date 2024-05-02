@@ -27,13 +27,13 @@ import 'package:mudara_steel_app/routes/app_routes.dart';
 
 class APIProvider {
 
-  // final String imageUrl = "http://116.72.8.100:2202"; // ImageUrl
-  final String imageUrl = "http://116.72.8.100:2525"; // ImageUrl Testing
+  final String imageUrl = "http://116.72.8.100:2202"; // ImageUrl
+  // final String imageUrl = "http://116.72.8.100:2525"; // ImageUrl Testing
 
 
   // final String baseUrl = "http://116.72.8.100:2203"; // Testing
-  // final String baseUrl = "http://116.72.8.100:2202"; // Testing LIVE
-  final String baseUrl = "http://116.72.8.100:2525"; // Testing Url 2
+  final String baseUrl = "http://116.72.8.100:2202"; // Testing LIVE
+  // final String baseUrl = "http://116.72.8.100:2525"; // Testing Url 2
 
   RxString userName = "".obs;
   RxString password = "".obs;
