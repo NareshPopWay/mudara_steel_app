@@ -463,10 +463,7 @@ class CompletedJobBidListScreen extends GetView<CompletedJobBidListController> {
                               );
                             }
                         ),
-                      if (controller.isJobBidListLoading.value == true)  Padding(
-                        padding: EdgeInsets.fromLTRB(0, AppSpacings.s150, 0,0),
-                        child: CupertinoActivityIndicator(radius: AppSpacings.s20,),
-                      )
+                      if (controller.isJobBidListLoading.value == true)  CupertinoActivityIndicator(radius: AppSpacings.s20,)
                     ],
                   )
               ),
@@ -484,8 +481,8 @@ class CompletedJobBidListScreen extends GetView<CompletedJobBidListController> {
     controller.tampSelectedVendorName.value = controller.selectedVendorName.value;
     controller.tampSelectedVendorNameId.value = controller.selectedVendorNameId.value;
 
-    controller.tampSelectedJobStatus.value = controller.selectedJobStatus.value;
-    controller.tampSelectedJobStatusId.value = controller.selectedJobStatusId.value;
+    // controller.tampSelectedJobStatus.value = controller.selectedJobStatus.value;
+    // controller.tampSelectedJobStatusId.value = controller.selectedJobStatusId.value;
 
     controller.tampSelectedJobType.value = controller.selectedJobType.value;
     controller.tampSelectedJobTypeId.value = controller.selectedJobTypeId.value;
@@ -548,10 +545,10 @@ class CompletedJobBidListScreen extends GetView<CompletedJobBidListController> {
                       controller.selectedVendorName.value = "";
                       controller.selectedVendorNameId.value = "";
 
-                      controller.tampSelectedJobStatus.value = "";
-                      controller.tampSelectedJobStatusId.value = "";
-                      controller.selectedJobStatus.value = "";
-                      controller.selectedJobStatusId.value = "";
+                      // controller.tampSelectedJobStatus.value = "";
+                      // controller.tampSelectedJobStatusId.value = "";
+                      // controller.selectedJobStatus.value = "";
+                      // controller.selectedJobStatusId.value = "";
 
                       controller.tampSelectedJobType.value = "";
                       controller.tampSelectedJobTypeId.value = "";
@@ -781,18 +778,18 @@ class CompletedJobBidListScreen extends GetView<CompletedJobBidListController> {
                           SizedBox(
                             height: AppSpacings.s20,
                           ),
-                        searchDropDwonWidget(
-                          selectedValue: controller.tampSelectedJobStatus,
-                          selectedId: controller.tampSelectedJobStatusId,
-                          emptyTitle: getTranslated(context, 'JobStatus')!,
-                          list: controller.jobStatusList,
-                          isExpanded: controller.isJobStatusExpanded,
-                          isSearching: controller.isJobStatusSearching,
-                          textfield: controller.textJobStatus,
-                        ),
-                        SizedBox(
-                          height: AppSpacings.s20,
-                        ),
+                        // searchDropDwonWidget(
+                        //   selectedValue: controller.tampSelectedJobStatus,
+                        //   selectedId: controller.tampSelectedJobStatusId,
+                        //   emptyTitle: getTranslated(context, 'JobStatus')!,
+                        //   list: controller.jobStatusList,
+                        //   isExpanded: controller.isJobStatusExpanded,
+                        //   isSearching: controller.isJobStatusSearching,
+                        //   textfield: controller.textJobStatus,
+                        // ),
+                        // SizedBox(
+                        //   height: AppSpacings.s20,
+                        // ),
                         searchDropDwonWidget(
                           selectedValue: controller.tampSelectedJobType,
                           selectedId: controller.tampSelectedJobTypeId,

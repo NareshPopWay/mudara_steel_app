@@ -404,10 +404,7 @@ class MyAllocatedJobScreen extends GetView<MyAllocatedJobController> {
                               );
                             }
                         ),
-                      if (controller.isJobAllocationListLoading.value == true)  Padding(
-                        padding: EdgeInsets.fromLTRB(0, AppSpacings.s150, 0,0),
-                        child: CupertinoActivityIndicator(radius: AppSpacings.s20,),
-                      )
+                      if (controller.isJobAllocationListLoading.value == true)  CupertinoActivityIndicator(radius: AppSpacings.s20,)
                     ],
                   )
               ),

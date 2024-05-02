@@ -20,7 +20,13 @@ class AppNotification{
     );
 
     const AndroidInitializationSettings androidInitializationSettings = AndroidInitializationSettings('app_icon',);
-    var initializationSettings = const InitializationSettings(android: androidInitializationSettings,);
+     DarwinInitializationSettings darwinInitializationSettings = DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+      onDidReceiveLocalNotification: (id, title, body, payload) async {}
+    );
+    var initializationSettings = InitializationSettings(android: androidInitializationSettings,iOS:darwinInitializationSettings);
 
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 

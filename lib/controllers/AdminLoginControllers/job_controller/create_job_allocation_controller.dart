@@ -114,17 +114,18 @@ class CreateJobAllocationController extends GetxController {
       if(successModel.msgType == 0){
         isLoading.value = false;
         if (selectedJobNameId.value == "") {
-          // jobAllocationListController.jobAllocationPage = 0;
-          // jobAllocationListController.jobAllocationList.clear();
-          // jobAllocationListController.getJobAllocation();
+          jobAllocationListController.jobAllocationPage = 0;
+          jobAllocationListController.jobAllocationList.clear();
+          jobAllocationListController.getJobAllocation();
           // Get.offAndToNamed(Routes.jobAllocationList,arguments: "Job Allocation List");
           Get.back();
           Ui.SuccessSnackBar(title:getTranslated(context, 'Successful')!,message:getTranslated(context, 'JobAllocatedSuccessfullyDone')!);
         } else {
           Get.back();
-          // jobAllocationListController.jobAllocationPage = 0;
-          // jobAllocationListController.jobAllocationList.clear();
-          // jobAllocationListController.getJobAllocation();
+          jobAllocationListController.jobAllocationPage = 0;
+          jobAllocationListController.jobAllocationList.clear();
+          jobAllocationListController.getJobAllocation();
+
           openJobBidListController.jobBidPage = 0;
           openJobBidListController.jobBidList.clear();
           openJobBidListController.getJobBidList();

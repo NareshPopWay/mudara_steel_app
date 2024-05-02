@@ -644,10 +644,7 @@ class ComplitedJobListScreen extends GetView<ComplitedJobController> {
                               );
                             }
                         ),
-                      if (controller.isJobListLoading.value == true)  Padding(
-                        padding: EdgeInsets.fromLTRB(0, AppSpacings.s150, 0,0),
-                        child: CupertinoActivityIndicator(radius: AppSpacings.s20,),
-                      )
+                      if (controller.isJobListLoading.value == true)  CupertinoActivityIndicator(radius: AppSpacings.s20,)
                     ],
                   )
               ),
@@ -1221,7 +1218,7 @@ class ComplitedJobListScreen extends GetView<ComplitedJobController> {
 
 
   deleteJob(context,jobId,jobName){
-    return Obx(() => Padding(
+    return Padding(
       padding:
       EdgeInsets.only(left: Get.width / 25.0, right: Get.width / 25.0),
       child: Column(
@@ -1315,7 +1312,7 @@ class ComplitedJobListScreen extends GetView<ComplitedJobController> {
           ),
         ],
       ),
-    ),);
+    );
   }
 
 
