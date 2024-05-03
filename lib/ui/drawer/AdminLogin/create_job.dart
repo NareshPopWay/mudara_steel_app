@@ -459,7 +459,7 @@ class CreateJobScreen extends GetView<CreateJobController> {
                                   controller: controller.weight,
                                   enabled: true,
                                   maxLines: 1,
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.text,
                                   textInputAction: TextInputAction.next,
                                   cursorColor: ThemeService.primaryColor,
                                   style: const TextStyle(
