@@ -11,6 +11,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 class RootController extends GetxController with GetTickerProviderStateMixin {
   RxString appVersion = "".obs;
+  RxString appVersionNo = "".obs;
   RxInt currentTab = 0.obs;
   RxBool shearShow = false.obs;
   RxString userName = "".obs;
@@ -34,6 +35,7 @@ class RootController extends GetxController with GetTickerProviderStateMixin {
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     appVersion.value = packageInfo.version;
+    appVersionNo.value = packageInfo.buildNumber;
 
   }
 

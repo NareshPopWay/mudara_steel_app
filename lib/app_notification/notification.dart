@@ -12,8 +12,8 @@ class AppNotification{
   notificationListener()async{
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
-      'sakhiya', // id
-      'sakhiya', // title
+      'mudra', // id
+      'mudra', // title
       // 'This channel is used for important notifications.', // description
       importance: Importance.max,
       showBadge: true,
