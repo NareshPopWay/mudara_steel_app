@@ -44,6 +44,7 @@ searchDropDwonWidget({
           expandedHeaderPadding: EdgeInsets.zero,
           children: [
             CustomExpansionPanel(
+              canTapOnHeader: true,
               headerBuilder: (context, isExpandeds) {
                 return Container(
                   color:  isExpanded == true ? ThemeService.primaryColor : ThemeService.primaryColor.withOpacity(0.1),

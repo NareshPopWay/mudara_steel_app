@@ -404,7 +404,7 @@ class HomeScreen extends GetView<RootController> {
                   right: AppSpacings.s20,
                 ),
                 child: Text(
-                  "${getTranslated(context, 'Version')!} : ${controller.appVersion.value}",
+                  "${getTranslated(context, 'Version')!} : ${controller.appVersion.value}(${controller.appVersionNo.value})",
                   style: Get.textTheme.bodyLarge!.copyWith(
                     fontSize: AppSpacings.s20,
                     fontWeight: FontWeight.w700,
