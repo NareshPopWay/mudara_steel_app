@@ -87,7 +87,7 @@ class MyCompletedJobScreen extends GetView<MyCompletedJobController> {
                             backgroundColor: ThemeService.white,
                             elevation: 5.5,
                             useSafeArea: true,
-                            constraints: const BoxConstraints(maxHeight:500),
+                            constraints: const BoxConstraints(maxHeight:650),
                             isScrollControlled:true,
                             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(25), topRight: Radius.circular(25))),

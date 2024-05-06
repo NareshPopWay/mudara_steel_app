@@ -429,7 +429,7 @@ class MyOpenJobBidScreen extends GetView<MyOpenJobBidController> {
                                   elevation: 5.5,
                                   useSafeArea: true,
                                   // constraints:  BoxConstraints(maxHeight: MediaQuery.of(context).viewInsets.bottom == 0 ? 500 :700),
-                                  constraints:  BoxConstraints(maxHeight: 700),
+                                  constraints:  BoxConstraints(maxHeight: 650),
                                   isScrollControlled:true,
                                   shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(
                                       topLeft: Radius.circular(25), topRight: Radius.circular(25))),

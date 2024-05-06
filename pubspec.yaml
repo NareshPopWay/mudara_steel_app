@@ -74,7 +74,8 @@ flutter_app_name:
   name: "Mudra Steel"
 
 flutter_icons:
-  image_path: "assets/mudraappicon.jpeg"
+#  image_path: "assets/mudra_ios_appicon.jpeg"
+  image_path: "assets/logo.png"
   android: true
   ios: true
 
