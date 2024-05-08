@@ -198,14 +198,13 @@ class _MyAppState extends State<MyApp> {
       // Navigate to specific screen
       if(userTypeID.value == "1"){
         if(message.data['screen'] == 'bidList'){
-          Get.toNamed(
-            Routes.bidList,
-            arguments: message.data['jobId'],
-          );
+          Get.toNamed(Routes.bidList, arguments: message.data['jobId']);
         }
       }else{
         if(message.data['screen'] == 'applyJob') {
           Get.toNamed(Routes.applyJob,arguments: message.data['jobId']);
+        }else if(message.data['screen'] == 'allocatedJobBid'){
+          Get.toNamed(Routes.myAllocatedJob,arguments: message.data['jobId']);
         }
       }
     });
