@@ -33,12 +33,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   RemoteMessage? message = await FirebaseMessaging.instance.getInitialMessage();
   log("Handling a background message: ${message!.messageId}");
-  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-    log(message.data['screen']);
-    if (message.data['screen'] == 'bidList') {
-      Get.toNamed(Routes.applyJob,arguments: message.data['jobId']);
-    }
-  });
 }
 
 Future<void> main() async {
@@ -189,8 +183,25 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    // Handle notification when the app is terminated
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published: ${message.data}');
+
+      // Navigate to specific screen
+      if (message.data['screen'] == 'bidList') {
+        Get.toNamed(Routes.applyJob,arguments: message.data['jobId']);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+
     if (_locale == null) {
       return Container(
         child: Center(

@@ -292,9 +292,7 @@ class HomeScreen extends GetView<RootController> {
                                                 Get.back();
                                               },
                                               child: Container(
-                                                width: Get.width * 0.2,
-                                                padding: EdgeInsets.all(
-                                                    Get.width * .02),
+                                                padding: EdgeInsets.all(AppSpacings.s10),
                                                 decoration: BoxDecoration(
                                                   color:
                                                       ThemeService.primaryColor,
@@ -308,8 +306,7 @@ class HomeScreen extends GetView<RootController> {
                                                     style: Get
                                                         .textTheme.bodyLarge!
                                                         .copyWith(
-                                                      fontSize:
-                                                          Get.width * 0.040,
+                                                      fontSize:AppSpacings.s22,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       color: ThemeService.white,
@@ -342,9 +339,8 @@ class HomeScreen extends GetView<RootController> {
                                                 ;
                                               },
                                               child: Container(
-                                                width: Get.width * 0.3,
                                                 padding: EdgeInsets.all(
-                                                    Get.width * .02),
+                                                    AppSpacings.s10),
                                                 decoration: BoxDecoration(
                                                   color:
                                                       ThemeService.primaryColor,
@@ -358,8 +354,7 @@ class HomeScreen extends GetView<RootController> {
                                                     style: Get
                                                         .textTheme.bodyLarge!
                                                         .copyWith(
-                                                      fontSize:
-                                                          Get.width * 0.040,
+                                                      fontSize:AppSpacings.s22,
                                                       fontWeight:
                                                           FontWeight.w600,
                                                       color: ThemeService.white,
@@ -477,9 +472,7 @@ class HomeScreen extends GetView<RootController> {
                                           Get.back();
                                         },
                                         child: Container(
-                                          width: AppSpacings.s90,
-                                          padding:
-                                              EdgeInsets.all(AppSpacings.s8),
+                                          padding: EdgeInsets.only(top: AppSpacings.s8,bottom: AppSpacings.s8,left: AppSpacings.s15,right: AppSpacings.s15),
                                           decoration: BoxDecoration(
                                             color: ThemeService.primaryColor,
                                             borderRadius: BorderRadius.circular(
@@ -490,7 +483,7 @@ class HomeScreen extends GetView<RootController> {
                                               getTranslated(context, 'Cancel')!,
                                               style: Get.textTheme.bodyLarge!
                                                   .copyWith(
-                                                fontSize: Get.width * 0.040,
+                                                fontSize: AppSpacings.s22,
                                                 fontWeight: FontWeight.w600,
                                                 color: ThemeService.white,
                                               ),
@@ -499,7 +492,7 @@ class HomeScreen extends GetView<RootController> {
                                         ),
                                       ),
                                       SizedBox(
-                                        width: AppSpacings.s20,
+                                        width: AppSpacings.s15,
                                       ),
                                       Bounce(
                                         duration:
@@ -508,9 +501,8 @@ class HomeScreen extends GetView<RootController> {
                                           await SystemNavigator.pop();
                                         },
                                         child: Container(
-                                          width: AppSpacings.s110,
-                                          padding:
-                                              EdgeInsets.all(AppSpacings.s8),
+                                          // width: AppSpacings.s110,
+                                          padding: EdgeInsets.only(top: AppSpacings.s8,bottom: AppSpacings.s8,left: AppSpacings.s20,right: AppSpacings.s20),
                                           decoration: BoxDecoration(
                                             color: ThemeService.primaryColor,
                                             borderRadius: BorderRadius.circular(
@@ -521,7 +513,7 @@ class HomeScreen extends GetView<RootController> {
                                               getTranslated(context, 'Exit')!,
                                               style: Get.textTheme.bodyLarge!
                                                   .copyWith(
-                                                fontSize: Get.width * 0.040,
+                                                fontSize: AppSpacings.s22,
                                                 fontWeight: FontWeight.w600,
                                                 color: ThemeService.white,
                                               ),
