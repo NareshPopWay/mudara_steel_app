@@ -12,6 +12,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:mudara_steel_app/common/MultiLanguage/localization/demo_localization.dart';
 import 'package:mudara_steel_app/common/MultiLanguage/localization/language_constant.dart';
 import 'package:mudara_steel_app/common/MultiLanguage/phoenix.dart';
+import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/common/responsive_layout_builder.dart';
 import 'package:mudara_steel_app/common/scale_factors.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
@@ -182,22 +183,30 @@ class _MyAppState extends State<MyApp> {
     super.didChangeDependencies();
   }
 
+  RxString userTypeID = "".obs;
+
   @override
   void initState() {
     super.initState();
+
+    userTypeID.value = GetStorage().read(Constants.userTypeID) ?? "";
 
     // Handle notification when the app is terminated
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('A new onMessageOpenedApp event was published: ${message.data}');
 
       // Navigate to specific screen
-      if (message.data['screen'] == 'applyJob') {
-        Get.toNamed(Routes.applyJob,arguments: message.data['jobId']);
-      }else if(message.data['screen'] == 'bidList'){
-        Get.toNamed(
-          Routes.bidList,
-          arguments: message.data['jobId'],
-        );
+      if(userTypeID.value == "1"){
+        if(message.data['screen'] == 'bidList'){
+          Get.toNamed(
+            Routes.bidList,
+            arguments: message.data['jobId'],
+          );
+        }
+      }else{
+        if(message.data['screen'] == 'applyJob') {
+          Get.toNamed(Routes.applyJob,arguments: message.data['jobId']);
+        }
       }
     });
   }

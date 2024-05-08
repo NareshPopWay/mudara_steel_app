@@ -3,13 +3,18 @@ import 'dart:developer';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
 class AppNotification{
 
+  RxString userTypeID = "".obs;
 
   notificationListener()async{
+
+    userTypeID.value = GetStorage().read(Constants.userTypeID) ?? "";
+   log('userTypeID :- ${userTypeID.value}');
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'mudra', // id
@@ -63,22 +68,36 @@ class AppNotification{
         );
         flutterLocalNotificationsPlugin.initialize(initializationSettings,onDidReceiveNotificationResponse: (plyLoad){
           log(message.data['screen']);
-          if (message.data['screen'] == 'bidList') {
-            Get.toNamed(Routes.applyJob,arguments: message.data['jobId']);
-            // navigatorKey.currentState!.pushNamed(Routes.notification);
+
+          if(userTypeID.value == "1"){
+            if(message.data['screen'] == 'bidList'){
+              Get.toNamed(
+                Routes.bidList,
+                arguments: message.data['jobId'],
+              );
+            }
+          }else{
+            if(message.data['screen'] == 'applyJob') {
+              Get.toNamed(Routes.applyJob,arguments: message.data['jobId']);
+            }
           }
         });
       }
     });
+
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       log(message.data['screen']);
-      if (message.data['screen'] == 'applyJob') {
-        Get.toNamed(Routes.applyJob,arguments: message.data['jobId']);
-      }else if(message.data['screen'] == 'bidList'){
-        Get.toNamed(
-          Routes.bidList,
-          arguments: message.data['jobId'],
-        );
+      if(userTypeID.value == "1"){
+        if(message.data['screen'] == 'bidList'){
+          Get.toNamed(
+            Routes.bidList,
+            arguments: message.data['jobId'],
+          );
+        }
+      }else{
+        if(message.data['screen'] == 'applyJob') {
+          Get.toNamed(Routes.applyJob,arguments: message.data['jobId']);
+        }
       }
     });
 
