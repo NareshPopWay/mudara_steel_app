@@ -72,8 +72,13 @@ class AppNotification{
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       log(message.data['screen']);
-      if (message.data['screen'] == 'bidList') {
+      if (message.data['screen'] == 'applyJob') {
         Get.toNamed(Routes.applyJob,arguments: message.data['jobId']);
+      }else if(message.data['screen'] == 'bidList'){
+        Get.toNamed(
+          Routes.bidList,
+          arguments: message.data['jobId'],
+        );
       }
     });
 

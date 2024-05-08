@@ -191,8 +191,13 @@ class _MyAppState extends State<MyApp> {
       print('A new onMessageOpenedApp event was published: ${message.data}');
 
       // Navigate to specific screen
-      if (message.data['screen'] == 'bidList') {
+      if (message.data['screen'] == 'applyJob') {
         Get.toNamed(Routes.applyJob,arguments: message.data['jobId']);
+      }else if(message.data['screen'] == 'bidList'){
+        Get.toNamed(
+          Routes.bidList,
+          arguments: message.data['jobId'],
+        );
       }
     });
   }
