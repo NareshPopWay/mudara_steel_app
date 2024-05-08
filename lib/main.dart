@@ -17,6 +17,7 @@ import 'package:mudara_steel_app/common/scale_factors.dart';
 import 'package:mudara_steel_app/common/themeService.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 import 'package:mudara_steel_app/routes/page_routes.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -51,6 +52,16 @@ Future<void> main() async {
   //     systemNavigationBarDividerColor: ThemeService.primaryColor,
   //   ),
   // );
+
+  if (Platform.isIOS) {
+    await Permission.notification.isDenied.then(
+          (bool value) {
+        if (value) {
+          Permission.notification.request();
+        }
+      },
+    );
+  }
 
   FirebaseOptions options;
   if (Platform.isAndroid) {
