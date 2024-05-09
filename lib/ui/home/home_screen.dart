@@ -1,6 +1,7 @@
 // ignore_for_file: unrelated_type_equality_checks, deprecated_member_use
 
 import 'dart:developer';
+import 'dart:io' as io;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bounce/flutter_bounce.dart';
@@ -399,7 +400,7 @@ class HomeScreen extends GetView<RootController> {
                   right: AppSpacings.s20,
                 ),
                 child: Text(
-                  "${getTranslated(context, 'Version')!} : ${controller.appVersion.value}(${controller.appVersionNo.value})",
+                  io.Platform.isAndroid ? "${getTranslated(context, 'Version')!} : ${controller.appVersion.value}" : "${getTranslated(context, 'Version')!} : ${controller.appVersion.value}(${controller.appVersionNo.value})",
                   style: Get.textTheme.bodyLarge!.copyWith(
                     fontSize: AppSpacings.s20,
                     fontWeight: FontWeight.w700,

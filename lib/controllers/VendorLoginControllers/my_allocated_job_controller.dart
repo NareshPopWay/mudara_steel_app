@@ -64,12 +64,13 @@ class MyAllocatedJobController extends GetxController {
   RxString ascending = "asc".obs;
   RxBool isDeleteJobAllocation = false.obs;
   RxBool isDescending = RxBool(false);
+
+  RxString jobId = "".obs;
   @override
   void onInit() async {
     super.onInit();
     userTypeID.value = await GetStorage().read(Constants.userTypeID) ?? "";
     jobAllocationScrollController.addListener(jobAllocationScrollListener);
-    getJobAllocation();
     log(userTypeID.value);
     if(userTypeID.value == "1"){
       jobNameList.value = await APIProvider().getJobNameList(userTypeID.value);
@@ -78,7 +79,20 @@ class MyAllocatedJobController extends GetxController {
       jobNameList.value = await APIProvider().getJobNameList(userTypeID.value);
     }
 
-
+    if(Get.arguments != null && Get.arguments is String){
+      jobId.value = Get.arguments;
+      isLoading.value= true;
+      for (int i = 0; i < jobNameList.length; i++) {
+        if (jobNameList[i].value == jobId.value.toString()) {
+          selectedJobNameId.value = jobNameList[i].value.toString();
+          selectedJobName.value = jobNameList[i].text.toString();
+          break;
+        }
+      }
+      isLoading.value= false;
+    }
+    log('jobId = ${jobId.value}');
+    getJobAllocation();
   }
 
   void jobAllocationScrollListener() async {
