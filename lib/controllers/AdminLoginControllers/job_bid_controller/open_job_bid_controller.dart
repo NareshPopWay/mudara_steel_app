@@ -67,18 +67,24 @@ class OpenJobBidListController extends GetxController {
     super.onInit();
     userTypeID.value = await GetStorage().read(Constants.userTypeID) ?? "";
     leadScrollController.addListener(jobScrollListener);
-
-    log('Job Id :- ${jobId.value}');
-    if(jobId.value != null &&  jobId.value !=  ""){
-      selectedJobNameId.value = jobId.value;
-      getJobBidList();
-    }else{
-      getJobBidList();
-    }
     jobNameList.value = await APIProvider().getJobNameList(userTypeID.value);
     // jobStatusList.value = await APIProvider().getJobStatusList(userTypeID.value);
     jobTypeList.value = await APIProvider().getJobTypeList(userTypeID.value);
     vendorNameList.value = await APIProvider().getVendorName();
+    log('Job Id :- ${jobId.value}');
+    if(jobId.value != null &&  jobId.value !=  ""){
+      for (int i = 0; i < jobNameList.length; i++) {
+        if (jobNameList[i].value == jobId.value.toString()) {
+          selectedJobNameId.value = jobNameList[i].value.toString();
+          selectedJobName.value = jobNameList[i].text.toString();
+          break;
+        }
+      }
+      getJobBidList();
+    }else{
+      getJobBidList();
+    }
+
   }
 
   void jobScrollListener() async {
