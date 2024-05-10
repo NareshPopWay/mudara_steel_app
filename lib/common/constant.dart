@@ -13,6 +13,7 @@ class Constants{
   static const String password = 'password';
   static const String userTypeID = 'userTypeID';
   static const String appName = 'userTypeID';
+  static const String privacyPolicyUrl = "https://www.mudrasteel.com/privacy-policy.html";
   static Future<bool> isInternetAvail() async {
     try {
       final result = await InternetAddress.lookup('google.com');

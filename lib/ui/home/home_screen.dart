@@ -15,6 +15,7 @@ import 'package:mudara_steel_app/common/themeService.dart';
 import 'package:mudara_steel_app/controllers/auth_controller.dart';
 import 'package:mudara_steel_app/controllers/root_controller.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends GetView<RootController> {
   const HomeScreen({Key? key}) : super(key: key);
@@ -399,13 +400,32 @@ class HomeScreen extends GetView<RootController> {
                   left: AppSpacings.s20,
                   right: AppSpacings.s20,
                 ),
-                child: Text(
-                  io.Platform.isAndroid ? "${getTranslated(context, 'Version')!} : ${controller.appVersion.value}" : "${getTranslated(context, 'Version')!} : ${controller.appVersion.value}(${controller.appVersionNo.value})",
-                  style: Get.textTheme.bodyLarge!.copyWith(
-                    fontSize: AppSpacings.s20,
-                    fontWeight: FontWeight.w700,
-                    color: ThemeService.primaryColor.withOpacity(0.8),
-                  ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        launch(Constants.privacyPolicyUrl);
+                      },
+                      child: Text(
+                        "Privacy Policy",
+                        style: TextStyle(
+                          fontSize: AppSpacings.s19,
+                          color: ThemeService.primaryColor.withOpacity(0.8),
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      io.Platform.isAndroid ? "${getTranslated(context, 'Version')!} : ${controller.appVersion.value}" : "${getTranslated(context, 'Version')!} : ${controller.appVersion.value}(${controller.appVersionNo.value})",
+                      style: Get.textTheme.bodyLarge!.copyWith(
+                        fontSize: AppSpacings.s20,
+                        fontWeight: FontWeight.w700,
+                        color: ThemeService.primaryColor.withOpacity(0.8),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
