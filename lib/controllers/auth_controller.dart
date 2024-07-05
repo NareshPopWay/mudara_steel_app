@@ -8,6 +8,7 @@ import 'package:mudara_steel_app/app_notification/notification.dart';
 import 'package:mudara_steel_app/common/constant.dart';
 import 'package:mudara_steel_app/splash_screen.dart';
 import 'package:mudara_steel_app/ui/home/home_screen.dart';
+import 'package:mudara_steel_app/ui/home/web_home_screen_1.dart';
 import 'package:mudara_steel_app/ui/login_screen.dart';
 
 
@@ -47,7 +48,8 @@ class AuthController extends GetxController  with GetTickerProviderStateMixin {
     if (isAlreadyLogin.value == true) {
       displayWidget.value = const HomeScreen();
     }else{
-      displayWidget.value = const LoginScreen();
+      displayWidget.value = const WebHomeScreen();
+      // displayWidget.value = const LoginScreen();
     }
   }
 

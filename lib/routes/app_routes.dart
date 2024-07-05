@@ -2,6 +2,7 @@ class Routes {
   static const root = '/';
   static const login = '/login';
   static const home = '/home';
+  static const webHome = '/webHome';
   static const vendorReg = '/vendorReg';
   static const registerVendor = '/registerVendor';
   static const vendorList = '/vendorList';

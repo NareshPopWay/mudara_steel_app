@@ -30,6 +30,7 @@ import 'package:mudara_steel_app/ui/drawer/AdminLogin/job_allocation_list.dart';
 import 'package:mudara_steel_app/ui/drawer/AdminLogin/vendor/register_vendor.dart';
 import 'package:mudara_steel_app/ui/drawer/AdminLogin/vendor/vendor_list.dart';
 import 'package:mudara_steel_app/ui/home/home_screen.dart';
+import 'package:mudara_steel_app/ui/home/web_home_screen_1.dart';
 import 'package:mudara_steel_app/ui/login_screen.dart';
 import 'package:mudara_steel_app/ui/drawer/VendorLogin/vendor_profile.dart';
 import 'package:mudara_steel_app/ui/pdf_view_screen.dart';
@@ -54,6 +55,11 @@ class PageRoutes {
     GetPage(
       name: Routes.home,
       page: () => const HomeScreen(),
+      binding: HomeBinder(),
+    ),
+    GetPage(
+      name: Routes.webHome,
+      page: () => const WebHomeScreen(),
       binding: HomeBinder(),
     ),
     GetPage(
