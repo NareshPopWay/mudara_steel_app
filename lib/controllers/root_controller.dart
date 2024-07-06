@@ -60,6 +60,7 @@ class RootController extends GetxController with GetTickerProviderStateMixin {
     AdminBlockModel(title: 'My Allocated Job', imgUrl: 'assets/drawer_icon/joballocation_list.png'),
   ].obs;
 
+
 @override
   void dispose() {
     // TODO: implement dispose

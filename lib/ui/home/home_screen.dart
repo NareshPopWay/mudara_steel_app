@@ -333,8 +333,7 @@ class HomeScreen extends GetView<RootController> {
                                                   Get.find<AuthController>()
                                                       .isAlreadyLogin
                                                       .value = false;
-                                                  await Get.offAllNamed(
-                                                      Routes.login);
+                                                  await Get.offAllNamed(Routes.login);
                                                 } catch (e) {
                                                   print("error...$e");
                                                 }

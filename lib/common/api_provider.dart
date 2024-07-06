@@ -25,12 +25,13 @@ import 'package:mudara_steel_app/model/vendor_list_model.dart';
 import 'package:mudara_steel_app/model/vendor_model.dart';
 import 'package:mudara_steel_app/routes/app_routes.dart';
 
-class APIProvider  {
-  // final String imageUrl = "http://103.209.145.199:2202"; // client ImageUrlLIVE
-  // final String baseUrl = "http://103.209.145.199:2202"; // Client LIVE
 
-  final String imageUrl = "http://116.72.8.100:2525"; // ImageUrl Testing
-  final String baseUrl = "http://116.72.8.100:2525"; // Testing Url 2
+class APIProvider  {
+  final String imageUrl = "http://103.209.145.199:2202"; // client ImageUrlLIVE
+  final String baseUrl = "http://103.209.145.199:2202"; // Client LIVE
+
+  // final String imageUrl = "http://116.72.8.100:2525"; // ImageUrl Testing
+  // final String baseUrl = "http://116.72.8.100:2525"; // Testing Url 2
 
   // final String imageUrl = "http://116.72.8.100:2202"; // ImageUrlLIVE
   // final String baseUrl = "http://116.72.8.100:2202"; // Testing Url

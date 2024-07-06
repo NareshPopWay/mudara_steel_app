@@ -62,7 +62,7 @@ Future<void> main() async {
   if (Platform.isAndroid) {
     options = const FirebaseOptions(
         apiKey: "AIzaSyCMPMhF9ZSKrHtGj9L79p5JyIzbdAe4Md8",
-        appId: "1:600149927142:android:5d700a946b003171644727",
+        appId: "1:600149927142:android:6123db7486cc4291644727",
         messagingSenderId: "600149927142",
         projectId: "mudrasteel-711c1");
   } else {

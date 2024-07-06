@@ -1,6 +1,7 @@
 
 import 'package:get/get.dart';
 import 'package:mudara_steel_app/controllers/login_controller.dart';
+import 'package:mudara_steel_app/controllers/web_home_controller.dart';
 import '../common/themeService.dart';
 import '../controllers/auth_controller.dart';
 
@@ -13,6 +14,7 @@ class AuthBinder extends Bindings {
     Get.lazyPut(() => ThemeService());
     Get.lazyPut(() => AuthController());
     Get.lazyPut(() => LoginController());
+    Get.lazyPut(() => WebHomeController());
 
   }
 }
