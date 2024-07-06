@@ -20,11 +20,10 @@ import 'package:mudara_steel_app/routes/app_routes.dart';
 import 'package:mudara_steel_app/routes/page_routes.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class MyHttpOverrides extends HttpOverrides{
+class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClientcreateHttpClient(SecurityContext context){
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  HttpClientcreateHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
 
@@ -50,7 +49,7 @@ Future<void> main() async {
 
   if (Platform.isIOS) {
     await Permission.notification.isDenied.then(
-          (bool value) {
+      (bool value) {
         if (value) {
           Permission.notification.request();
         }
@@ -61,16 +60,18 @@ Future<void> main() async {
   FirebaseOptions options;
   if (Platform.isAndroid) {
     options = const FirebaseOptions(
-        apiKey: "AIzaSyCMPMhF9ZSKrHtGj9L79p5JyIzbdAe4Md8",
-        appId: "1:600149927142:android:6123db7486cc4291644727",
-        messagingSenderId: "600149927142",
-        projectId: "mudrasteel-711c1");
+      apiKey: "AIzaSyCMPMhF9ZSKrHtGj9L79p5JyIzbdAe4Md8",
+      appId: "1:600149927142:android:6123db7486cc4291644727",
+      messagingSenderId: "600149927142",
+      projectId: "mudrasteel-711c1",
+    );
   } else {
     options = const FirebaseOptions(
-        apiKey: "AIzaSyCqCY576bDq3h-ntKZYpQSsv5zm66iHpww",
-        appId: "1:600149927142:ios:4b5dc96535b35675644727",
-        messagingSenderId: "600149927142",
-        projectId: "mudrasteel-711c1");
+      apiKey: "AIzaSyCMPMhF9ZSKrHtGj9L79p5JyIzbdAe4Md8",
+      appId: "1:600149927142:ios:4b5dc96535b35675644727",
+      messagingSenderId: "600149927142",
+      projectId: "mudrasteel-711c1",
+    );
   }
   await Firebase.initializeApp(options: options);
   try {
@@ -88,34 +89,26 @@ Future<void> main() async {
     ResponsiveLayoutBuilder(
       small: (BuildContext context, Widget? child) => DemoGeofence(
         child: MyApp(
-          lightTheme: Get.find<ThemeService>()
-              .getLightTheme(scaleFactor: DeviceScaleFactors.smallScaleFactor),
-          darkTheme: Get.find<ThemeService>()
-              .getDarkTheme(scaleFactor: DeviceScaleFactors.smallScaleFactor),
+          lightTheme: Get.find<ThemeService>().getLightTheme(scaleFactor: DeviceScaleFactors.smallScaleFactor),
+          darkTheme: Get.find<ThemeService>().getDarkTheme(scaleFactor: DeviceScaleFactors.smallScaleFactor),
         ),
       ),
       medium: (BuildContext context, Widget? child) => DemoGeofence(
         child: MyApp(
-          lightTheme: Get.find<ThemeService>()
-              .getLightTheme(scaleFactor: DeviceScaleFactors.mediumScaleFactor),
-          darkTheme: Get.find<ThemeService>()
-              .getDarkTheme(scaleFactor: DeviceScaleFactors.mediumScaleFactor),
+          lightTheme: Get.find<ThemeService>().getLightTheme(scaleFactor: DeviceScaleFactors.mediumScaleFactor),
+          darkTheme: Get.find<ThemeService>().getDarkTheme(scaleFactor: DeviceScaleFactors.mediumScaleFactor),
         ),
       ),
       large: (BuildContext context, Widget? child) => DemoGeofence(
         child: MyApp(
-          lightTheme: Get.find<ThemeService>()
-              .getLightTheme(scaleFactor: DeviceScaleFactors.largeScaleFactor),
-          darkTheme: Get.find<ThemeService>()
-              .getDarkTheme(scaleFactor: DeviceScaleFactors.largeScaleFactor),
+          lightTheme: Get.find<ThemeService>().getLightTheme(scaleFactor: DeviceScaleFactors.largeScaleFactor),
+          darkTheme: Get.find<ThemeService>().getDarkTheme(scaleFactor: DeviceScaleFactors.largeScaleFactor),
         ),
       ),
       xLarge: (BuildContext context, Widget? child) => DemoGeofence(
         child: MyApp(
-          lightTheme: Get.find<ThemeService>()
-              .getLightTheme(scaleFactor: DeviceScaleFactors.xLargeScaleFactor),
-          darkTheme: Get.find<ThemeService>()
-              .getDarkTheme(scaleFactor: DeviceScaleFactors.xLargeScaleFactor),
+          lightTheme: Get.find<ThemeService>().getLightTheme(scaleFactor: DeviceScaleFactors.xLargeScaleFactor),
+          darkTheme: Get.find<ThemeService>().getDarkTheme(scaleFactor: DeviceScaleFactors.xLargeScaleFactor),
         ),
       ),
     ),
@@ -150,21 +143,18 @@ class MyApp extends StatefulWidget {
   final ThemeData lightTheme;
   final ThemeData darkTheme;
 
-  const MyApp({Key? key, required this.lightTheme, required this.darkTheme})
-      : super(key: key);
+  const MyApp({Key? key, required this.lightTheme, required this.darkTheme}) : super(key: key);
 
   static void setLocale(BuildContext context, Locale newLocale) {
     _MyAppState? state = context.findAncestorStateOfType<_MyAppState>();
     state!.setLocale(newLocale);
   }
 
-
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   Locale? _locale;
 
   setLocale(Locale locale) {
@@ -196,15 +186,15 @@ class _MyAppState extends State<MyApp> {
       print('A new onMessageOpenedApp event was published: ${message.data}');
 
       // Navigate to specific screen
-      if(userTypeID.value == "1"){
-        if(message.data['screen'] == 'bidList'){
+      if (userTypeID.value == "1") {
+        if (message.data['screen'] == 'bidList') {
           Get.toNamed(Routes.bidList, arguments: message.data['jobId']);
         }
-      }else{
-        if(message.data['screen'] == 'applyJob') {
-          Get.toNamed(Routes.applyJob,arguments: message.data['jobId']);
-        }else if(message.data['screen'] == 'allocatedJobBid'){
-          Get.toNamed(Routes.myAllocatedJob,arguments: message.data['jobId']);
+      } else {
+        if (message.data['screen'] == 'applyJob') {
+          Get.toNamed(Routes.applyJob, arguments: message.data['jobId']);
+        } else if (message.data['screen'] == 'allocatedJobBid') {
+          Get.toNamed(Routes.myAllocatedJob, arguments: message.data['jobId']);
         }
       }
     });
@@ -214,12 +204,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-
     if (_locale == null) {
       return Container(
         child: Center(
-          child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[800]!)),
+          child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[800]!)),
         ),
       );
     } else {
@@ -245,8 +233,7 @@ class _MyAppState extends State<MyApp> {
         ],
         localeResolutionCallback: (locale, supportedLocales) {
           for (var supportedLocale in supportedLocales) {
-            if (supportedLocale.languageCode == locale!.languageCode &&
-                supportedLocale.countryCode == locale.countryCode) {
+            if (supportedLocale.languageCode == locale!.languageCode && supportedLocale.countryCode == locale.countryCode) {
               return supportedLocale;
             }
           }
@@ -258,4 +245,3 @@ class _MyAppState extends State<MyApp> {
     }
   }
 }
-
