@@ -68,7 +68,7 @@ Future<void> main() async {
   } else {
     options = const FirebaseOptions(
         apiKey: "AIzaSyCqCY576bDq3h-ntKZYpQSsv5zm66iHpww",
-        appId: "1:600149927142:ios:4b5dc96535b35675644727",
+        appId: "1:600149927142:ios:24b02ff26d1b13d5644727",
         messagingSenderId: "600149927142",
         projectId: "mudrasteel-711c1");
   }
