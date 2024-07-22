@@ -54,6 +54,7 @@ class AppNotification{
                 android: AndroidNotificationDetails(
                     channel.id,
                     channel.name,
+
                     // channel.description,
                     icon: 'app_icon',
                     // color: ThemeService.primaryColor,

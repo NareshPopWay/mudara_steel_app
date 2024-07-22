@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.mudrasteelApp</string>
+	<string>com.mudrasteel</string>
 	<key>PROJECT_ID</key>
 	<string>mudrasteel-711c1</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:600149927142:ios:24b02ff26d1b13d5644727</string>
+	<string>1:600149927142:ios:4b5dc96535b35675644727</string>
 </dict>
 </plist>
