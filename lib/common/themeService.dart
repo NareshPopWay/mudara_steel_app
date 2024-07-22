@@ -185,67 +185,67 @@ class ThemeService extends GetxService {
 
   TextTheme getTextTheme({double scaleFactor = 1}) {
     return TextTheme(
-        headline6: TextStyle(
+        titleLarge: TextStyle(
           fontSize: 32.0 * scaleFactor,
           fontWeight: FontWeight.w600,
           color: black,
           fontFamily: 'OpenSans',
         ),
-        headline5: TextStyle(
+        headlineSmall: TextStyle(
           fontSize: 24.0 * scaleFactor,
           fontWeight: FontWeight.w500,
           color: black,
           fontFamily: 'OpenSans',
         ),
-        headline4: TextStyle(
+        headlineMedium: TextStyle(
           fontSize: 16.0 * scaleFactor,
           fontWeight: FontWeight.w500,
           color: black,
           fontFamily: 'OpenSans',
         ),
-        headline3: TextStyle(
+        displaySmall: TextStyle(
           fontSize: 18.0 * scaleFactor,
           fontWeight: FontWeight.w500,
           color: black,
           fontFamily: 'OpenSans',
         ),
-        headline2: TextStyle(
+        displayMedium: TextStyle(
           fontSize: 18.0 * scaleFactor,
           fontWeight: FontWeight.normal,
           color: black,
           fontFamily: 'OpenSans',
         ),
-        headline1: TextStyle(
+        displayLarge: TextStyle(
           fontSize: 16.0 * scaleFactor,
           fontWeight: FontWeight.w500,
           color: black,
           fontFamily: 'OpenSans',
         ),
-        subtitle2: TextStyle(
+        titleSmall: TextStyle(
           fontSize: 16.0 * scaleFactor,
           fontWeight: FontWeight.w500,
           color: black,
           fontFamily: 'OpenSans',
         ),
-        subtitle1: TextStyle(
+        titleMedium: TextStyle(
           fontSize: 16.0 * scaleFactor,
           fontWeight: FontWeight.normal,
           color: black,
           fontFamily: 'OpenSans',
         ),
-        bodyText2: TextStyle(
+        bodyMedium: TextStyle(
           fontSize: 14.0 * scaleFactor,
           fontWeight: FontWeight.w500,
           color: black,
           fontFamily: 'OpenSans',
         ),
-        bodyText1: TextStyle(
+        bodyLarge: TextStyle(
           fontSize: 14.0 * scaleFactor,
           fontWeight: FontWeight.normal,
           color: black,
           fontFamily: 'OpenSans',
         ),
-        caption: TextStyle(
+        bodySmall: TextStyle(
           fontSize: 12.0 * scaleFactor,
           fontWeight: FontWeight.normal,
           color: black,
