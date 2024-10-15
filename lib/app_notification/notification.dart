@@ -36,7 +36,6 @@ class AppNotification{
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
 
 
-
     await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
